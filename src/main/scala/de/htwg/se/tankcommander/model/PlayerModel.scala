@@ -1,5 +1,26 @@
 package de.htwg.se.tankcommander.model
 
-class PlayerModel {
+//TODO Define a class containing all needed values and methods for a tank-object
+class PlayerModel() {
+  private val DMG = 10
+  private val Name = "Default"
+  private val Inventory = null;
+  private var HP = 100
+  private var armor = 0;
+  private var shield = 0;
+  private var position = null
+  private var facing = null
 
+  def shoot(): Unit = {
+
+  }
+
+  def move(): Unit = {
+
+  }
+
+  def useItem(): Unit = {
+
+  }
 }
+
