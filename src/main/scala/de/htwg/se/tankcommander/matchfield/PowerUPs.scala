@@ -1,4 +1,4 @@
-package de.htwg.se.tankcommander.model
+package de.htwg.se.tankcommander.matchfield
 
 class PowerUPs {
   private val itemName = "";

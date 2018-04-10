@@ -1,4 +1,6 @@
-package de.htwg.se.tankcommander.model
+package de.htwg.se.tankcommander.MainGame
+
+import de.htwg.se.tankcommander.matchfield.PowerUPs
 
 //TODO Define a class containing all needed values and methods for a Inventory-object
 class Inventory {

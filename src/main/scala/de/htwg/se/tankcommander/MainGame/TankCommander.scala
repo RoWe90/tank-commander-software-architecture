@@ -1,4 +1,4 @@
-package de.htwg.se.tankcommander
+package de.htwg.se.tankcommander.MainGame
 
 import de.htwg.se.tankcommander.model.Player
 
