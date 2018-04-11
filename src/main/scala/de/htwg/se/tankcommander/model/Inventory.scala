@@ -3,7 +3,7 @@ package de.htwg.se.tankcommander.model
 import de.htwg.se.tankcommander.model.PowerUPsSub.PowerUPs
 
 //TODO Define a class containing all needed values and methods for a Inventory-object
-class Inventory {
+class Inventory() {
   private var Items = new Array[PowerUPs](3)
 
   def addItemToInventory(itemToAdd: PowerUPs): Unit = {
