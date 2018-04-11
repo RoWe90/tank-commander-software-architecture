@@ -1,4 +1,4 @@
-package de.htwg.se.tankcommander.MainGame
+package de.htwg.se.tankcommander.controller
 
 class GameState {
   val activePlayer = null;

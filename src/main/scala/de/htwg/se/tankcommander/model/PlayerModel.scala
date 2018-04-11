@@ -2,9 +2,9 @@ package de.htwg.se.tankcommander.model
 
 //TODO Define a class containing all needed values and methods for a tank-object
 class PlayerModel() {
-  private val DMG = 10
   private val Name = "Default"
-  private val Inventory = null;
+  private val DMG = 10
+  private val Accuracy = 100;
   private var HP = 100
   private var armor = 0;
   private var shield = 0;
