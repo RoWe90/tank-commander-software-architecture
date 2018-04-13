@@ -1,6 +1,6 @@
 package de.htwg.se.tankcommander.model.items
 
-//acc up
-class Zielwasser extends Item {
+//small repairs
+class Reperaturkit {
 
 }
