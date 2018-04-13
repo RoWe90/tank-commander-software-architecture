@@ -11,7 +11,6 @@ class Inventory() {
       Items(Items.length + 1) = itemToAdd;
     }
   }
-
   //checks if Inventory is full
   def checkIfNotFull(): Boolean = {
     if (Items.length < 3) {
@@ -19,6 +18,13 @@ class Inventory() {
     }
     false
   }
+//Is this still needed?
+  class Item(){
+    private var name = ""
+    private var isUsed = false
+
+  }
+
 }
 
 
