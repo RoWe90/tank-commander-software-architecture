@@ -1,4 +1,4 @@
-package de.htwg.se.tankcommander.model.Obstacles
+package de.htwg.se.tankcommander.model.terrain_obstacles
 
 abstract class Obstacle {
   val name: String

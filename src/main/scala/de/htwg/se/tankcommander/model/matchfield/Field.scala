@@ -1,4 +1,6 @@
-package de.htwg.se.tankcommander.model
+package de.htwg.se.tankcommander.model.matchfield
+
+import de.htwg.se.tankcommander.model.playerdata.TankModel
 
 class Field {
   private var a = Array.ofDim[Cell](10, 10)

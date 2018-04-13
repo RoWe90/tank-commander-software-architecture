@@ -1,4 +1,4 @@
-package de.htwg.se.tankcommander.model.Obstacles
+package de.htwg.se.tankcommander.model.terrain_obstacles
 
 class Tree extends Obstacle {
   override val name: String = "Wald"

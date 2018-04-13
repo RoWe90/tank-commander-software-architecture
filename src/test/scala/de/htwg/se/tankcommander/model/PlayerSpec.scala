@@ -1,5 +1,6 @@
 package de.htwg.se.tankcommander.model
 
+import de.htwg.se.tankcommander.model.playerdata.Player
 import org.scalatest._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
