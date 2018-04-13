@@ -2,6 +2,8 @@ package de.htwg.se.tankcommander.controller
 
 
 import de.htwg.se.tankcommander.model._
+import de.htwg.se.tankcommander.model.matchfield.Field
+import de.htwg.se.tankcommander.model.playerdata.{Player, TankModel}
 
 object TankCommander {
   def main(args: Array[String]): Unit = {
