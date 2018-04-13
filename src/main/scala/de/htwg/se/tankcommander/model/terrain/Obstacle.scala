@@ -1,6 +1,6 @@
 package de.htwg.se.tankcommander.model.terrain
 
-abstract class Obstacle {
+trait Obstacle {
   val name: String
   val desc: String
   val passable: Boolean
