@@ -1,4 +1,4 @@
-package de.htwg.se.tankcommander.controller
+package de.htwg.se.tankcommander.model.gamestate
 
 import de.htwg.se.tankcommander.model.playerdata.Player
 
