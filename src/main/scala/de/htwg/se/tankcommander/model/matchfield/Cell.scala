@@ -1,9 +1,8 @@
 package de.htwg.se.tankcommander.model.matchfield
 
-import de.htwg.se.tankcommander.model.items.Item
+import de.htwg.se.tankcommander.model.{Item, Obstacle}
 import de.htwg.se.tankcommander.model.playerdata.TankModel
 import de.htwg.se.tankcommander.model.powerup.PowerUP
-import de.htwg.se.tankcommander.model.terrain.Obstacle
 import de.htwg.se.tankcommander.model.upgrades.Upgrade
 
 class Cell(x1: Integer, y1: Integer) {

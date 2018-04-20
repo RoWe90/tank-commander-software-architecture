@@ -1,6 +1,6 @@
 package de.htwg.se.tankcommander.model.playerdata
 
-import de.htwg.se.tankcommander.model.items.Item
+import de.htwg.se.tankcommander.model.Item
 
 //TODO Define a class containing all needed values and methods for a Inventory-object
 class Inventory() {
