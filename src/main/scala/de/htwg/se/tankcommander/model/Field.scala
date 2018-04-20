@@ -1,6 +1,4 @@
-package de.htwg.se.tankcommander.model.matchfield
-
-import de.htwg.se.tankcommander.model.playerdata.TankModel
+package de.htwg.se.tankcommander.model
 
 class Field {
   val gridsize_x = 10

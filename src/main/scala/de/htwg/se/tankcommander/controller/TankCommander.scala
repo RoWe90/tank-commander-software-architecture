@@ -1,10 +1,7 @@
 package de.htwg.se.tankcommander.controller
 
 
-import de.htwg.se.tankcommander.model._
-import de.htwg.se.tankcommander.model.gamestate.GameState
-import de.htwg.se.tankcommander.model.matchfield.Field
-import de.htwg.se.tankcommander.model.playerdata.{Player, TankModel}
+import de.htwg.se.tankcommander.model.{Field, GameState, TankModel, _}
 
 object TankCommander {
   def main(args: Array[String]): Unit = {

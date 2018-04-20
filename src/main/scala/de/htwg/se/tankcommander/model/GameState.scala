@@ -1,6 +1,4 @@
-package de.htwg.se.tankcommander.model.gamestate
-
-import de.htwg.se.tankcommander.model.playerdata.Player
+package de.htwg.se.tankcommander.model
 
 class GameState(initPlayer1: Player, initPlayer2: Player) {
   var activePlayer = initPlayer1;

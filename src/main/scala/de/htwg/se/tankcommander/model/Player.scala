@@ -1,4 +1,4 @@
-package de.htwg.se.tankcommander.model.playerdata
+package de.htwg.se.tankcommander.model
 
 case class Player(namePar: String) {
   val name = namePar;

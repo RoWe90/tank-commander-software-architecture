@@ -1,6 +1,4 @@
-package de.htwg.se.tankcommander.model.playerdata
-
-import de.htwg.se.tankcommander.model.matchfield.Cell
+package de.htwg.se.tankcommander.model
 
 
 //TODO Define a class containing all needed values and methods for a tank-object

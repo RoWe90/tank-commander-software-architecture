@@ -1,9 +1,4 @@
-package de.htwg.se.tankcommander.model.matchfield
-
-import de.htwg.se.tankcommander.model.{Item, Obstacle}
-import de.htwg.se.tankcommander.model.playerdata.TankModel
-import de.htwg.se.tankcommander.model.powerup.PowerUP
-import de.htwg.se.tankcommander.model.upgrades.Upgrade
+package de.htwg.se.tankcommander.model
 
 class Cell(x1: Integer, y1: Integer) {
   val x = x1;
