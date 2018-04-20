@@ -19,8 +19,8 @@ object TankCommander {
     print("Player 1 please name your Tank")
     val tank2 = new TankModel(scala.io.StdIn.readLine())
     val map: Field = new Field
-    map.setPositionOfModel(3, 3, tank1)
-    map.setPositionOfModel(8, 8, tank2)
+    map.setPositionTank(3, 3, tank1)
+    map.setPositionTank(8, 8, tank2)
     var gameStateActive = new GameState(player1, player2);
 
   }
