@@ -1,6 +1,7 @@
 package de.htwg.se.tankcommander.model
 
 // Temporary Buffs which are activated on cell contact. Stronger then items and upgrades but short lived
+
 trait PowerUP {
   val name: String
   val duration: Integer
@@ -13,10 +14,18 @@ trait PowerUP {
   }
 }
 
-class DMGUP
+class DMGUP {
 
-class ImpassableTerrainUP
+}
 
-class ShieldUP
+class ImpassableTerrainUP {
 
-class TurnsUP
+}
+
+class ShieldUP {
+
+}
+
+class TurnsUP {
+
+}

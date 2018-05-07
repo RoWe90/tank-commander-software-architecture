@@ -1,14 +1,33 @@
 package de.htwg.se.tankcommander.model
 
-class GameState(initPlayer1: Player, initPlayer2: Player) {
-  var activePlayer = initPlayer1;
+class GameState() {
+  var activePlayer: Player = null;
   var currentPlayerActions = 2;
 
-  var players = Array(initPlayer1, initPlayer2)
+  var players = Array(null, null)
   var turns = 0
 
   def increaseTurns(): Unit = {
     turns += 1
+  }
+
+  def setUpGame(): Unit = {
+    print("Welcome to Tank-Commander")
+    print("Player 1 please choose your Name")
+    val player1 = Player(scala.io.StdIn.readLine())
+    print("Player 2 please choose your Name")
+    val player2 = Player(scala.io.StdIn.readLine())
+    print("Player 1 please name your Tank")
+    val tank1 = new TankModel(scala.io.StdIn.readLine())
+    print("Player 1 please name your Tank")
+    val tank2 = new TankModel(scala.io.StdIn.readLine())
+    val map: Field = new Field
+    map.setPositionTank(3, 3, tank1)
+    map.setPositionTank(8, 8, tank2)
+    players
+    .0 = player1
+    players
+    .1 = player2
   }
 
   def changeActivePlayer(activePlayerX: Player, players: Array[Player]): Unit = {
