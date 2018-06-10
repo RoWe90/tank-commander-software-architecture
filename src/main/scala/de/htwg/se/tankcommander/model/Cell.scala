@@ -9,6 +9,8 @@ class Cell(x1: Integer, y1: Integer) {
   var cellItem: Item = null;
   var containsThisTank: TankModel = null
 
+  //useless in scala
+/*
   def setCellContent(x: PowerUP): Unit = {
     cellPowerUP = x;
   }
@@ -36,5 +38,5 @@ class Cell(x1: Integer, y1: Integer) {
   def removeTank(x: TankModel): Unit = {
     containsThisTank = null;
   }
-
+*/
 }

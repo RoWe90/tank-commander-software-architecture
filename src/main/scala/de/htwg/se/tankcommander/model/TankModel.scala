@@ -12,16 +12,6 @@ class TankModel(name: String) {
   var position: Cell = null
   private var facing = null
 
-  def shoot(): Unit = {
 
-  }
-
-  def move(): Unit = {
-
-  }
-
-  def useItem(): Unit = {
-
-  }
 }
 
