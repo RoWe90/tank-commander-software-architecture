@@ -9,34 +9,4 @@ class Cell(x1: Integer, y1: Integer) {
   var cellItem: Item = null;
   var containsThisTank: TankModel = null
 
-  //useless in scala
-/*
-  def setCellContent(x: PowerUP): Unit = {
-    cellPowerUP = x;
-  }
-
-  def setCellContent(x: Upgrade): Unit = {
-    cellUpgrade = x;
-  }
-
-  def setCellContent(x: Item): Unit = {
-    cellItem = x;
-  }
-
-  def setCellContent(x: Obstacle): Unit = {
-    cellterrain = x;
-  }
-
-  def removeCellContentTerrain(): Unit = {
-    cellterrain = null;
-  }
-
-  def removeCellContentPUI(): Unit = {
-    cellItem = cellUpgrade = cellPowerUP = null;
-  }
-
-  def removeTank(x: TankModel): Unit = {
-    containsThisTank = null;
-  }
-*/
 }
