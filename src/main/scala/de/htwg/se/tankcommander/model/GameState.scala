@@ -3,6 +3,7 @@ package de.htwg.se.tankcommander.model
 class GameState() {
   var activePlayer: Player = null;
   var currentPlayerActions = 2;
+  var gameStarted = false;
 
   var players = Array(null, null)
   var turns = 0
@@ -21,7 +22,7 @@ class GameState() {
     val tank1 = new TankModel(scala.io.StdIn.readLine())
     print("Player 1 please name your Tank")
     val tank2 = new TankModel(scala.io.StdIn.readLine())
-    val map: Field = new Field
+    val map: GameField = new GameField
     map.setPositionTank(3, 3, tank1)
     map.setPositionTank(8, 8, tank2)
     players
