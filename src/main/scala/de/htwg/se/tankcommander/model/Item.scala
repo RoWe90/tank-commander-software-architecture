@@ -1,13 +1,11 @@
 package de.htwg.se.tankcommander.model
 
-//Items are temporary usable buffs stored in the players inventory. Power falls in between Upgrades<Items<PowerUps
+//Items are temporary usable buffs stored in the players inventory.
 trait Item {
   val itemName: String
   val description: String
-  //time for the duration of the item, as soon as it's activated
   val duration: Integer
 
-  //activate Item, apply buffs, return duration
   def activate(item: Item): Integer = {
     duration
   }
@@ -16,6 +14,7 @@ trait Item {
   def deactivate(item: Item): Boolean = {
     false
   }
+
   override def toString: String = {
     itemName
 
@@ -23,7 +22,7 @@ trait Item {
 }
 
 //+1 this turn, -1 next turn
-class Kaffee {
+class Kaffee extends Item {
   val itemName: String = "Kaffee"
   val description: String = "+1 Turns now, -1 Turns next"
   val duration: Integer = 2
@@ -31,14 +30,14 @@ class Kaffee {
 }
 
 //small health up
-class Reparaturkit {
+class Reparaturkit extends Item {
   val itemName: String = "Reparaturkit"
   val description: String = "Small HP up"
   val duration: Integer = 0
 }
 
 //acc up
-class Zielwasser {
+class Zielwasser extends Item {
 
   val itemName: String = "Zielwasser"
   val description: String = "Increases Accuracy temporarily"

@@ -1,8 +1,7 @@
 package de.htwg.se.tankcommander.model
 
-class GameField() {
-  val gridsize_x = 10
-  val gridsize_y = 10
+case class GameField() {
+  val gridsize_x = 11
+  val gridsize_y = 11
   var matchfieldarray = Array.ofDim[Cell](gridsize_x, gridsize_y)
-
 }

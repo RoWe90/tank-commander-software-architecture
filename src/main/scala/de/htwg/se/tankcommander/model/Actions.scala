@@ -68,15 +68,7 @@ class Actions {
     }
   }
 
-  def setPositionTank(xtank: Integer, ytank: Integer, tank1: TankModel, spielfeld: GameField): Unit = {
 
-    if (tank1.position.x != null && tank1.position.y != null) {
-      spielfeld.matchfieldarray(tank1.position.x)(tank1.position.y).containsThisTank = null
-      tank1.position(null)
-      tank1.position(spielfeld.matchfieldarray(xtank)(ytank))
-      spielfeld.matchfieldarray(xtank)(ytank).containsThisTank = tank1
-    }
-  }
 
 
 }

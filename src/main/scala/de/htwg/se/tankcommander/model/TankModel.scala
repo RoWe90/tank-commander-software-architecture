@@ -7,8 +7,6 @@ class TankModel(name: String) {
   val tankBaseDamage = 10
   val accuracy = 100;
   var healthpoints = 100
-  var armor = 0;
-  var shield = 0;
   var position: Cell = null
   var facing = null
   var tankInventory: Inventory = new Inventory
