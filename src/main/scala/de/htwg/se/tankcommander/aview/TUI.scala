@@ -1,13 +1,13 @@
 package de.htwg.se.tankcommander.aview
 
-import de.htwg.se.tankcommander.model.GameField
+import de.htwg.se.tankcommander.model._
 
 class TUI {
 
   def processInputLine(input: String): Unit = {
     input match {
-      case "Start" =>   fillField()
-        setUpGame()
+      case "Start" => print("Das Spiel startet, macht euch bereit")
+
       case "Exit" =>
       case "up" =>
       case "down" =>
