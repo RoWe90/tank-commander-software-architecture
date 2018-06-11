@@ -8,7 +8,7 @@ class TankModel(name: String) {
   val accuracy = 100;
   var healthpoints = 100
   var position: Cell = null
-  var facing = null
+  var facing = "UP"
   var tankInventory: Inventory = new Inventory
 
   def getPositionAsIntY(): Integer = {

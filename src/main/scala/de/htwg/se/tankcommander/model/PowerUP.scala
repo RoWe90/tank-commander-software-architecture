@@ -15,21 +15,21 @@ trait PowerUP {
 }
 
 class DMGUP extends PowerUP {
-  override val name: String = _
-  override val duration: Integer = _
+  override val name: String = "Placeholder"
+  override val duration: Integer = 2
 }
 
 class ImpassableTerrainUP extends PowerUP {
-  override val name: String = _
-  override val duration: Integer = _
+  override val name: String = "Placeholder"
+  override val duration: Integer = 2
 }
 
 class ShieldUP extends PowerUP {
-  override val name: String = _
-  override val duration: Integer = _
+  override val name: String = "Placeholder"
+  override val duration: Integer = 2
 }
 
 class TurnsUP extends PowerUP {
-  override val name: String = _
-  override val duration: Integer = _
+  override val name: String = "Placeholder"
+  override val duration: Integer = 2
 }
