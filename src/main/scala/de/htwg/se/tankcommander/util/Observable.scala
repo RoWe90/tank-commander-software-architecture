@@ -1,4 +1,4 @@
-package de.htwg.se.sudoku.util
+package de.htwg.se.tankcommander.util
 
 trait Observer {
   def update: Unit
