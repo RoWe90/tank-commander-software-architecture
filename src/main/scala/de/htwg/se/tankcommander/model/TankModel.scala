@@ -5,12 +5,12 @@ package de.htwg.se.tankcommander.model
 class TankModel(name: String) {
   val tankName = name
   val tankBaseDamage = 10
-  val accuracy = 100;
+  val accuracy = 100
   var healthpoints = 100
   var position: Cell = null
-  var facing = "UP"
+  var facing = ""
 
-  def getPositionAsIntY(): Integer = {
+  def getPositionAsIntY(): Int = {
     if (position != null) {
       this.position.y
     }
@@ -19,7 +19,7 @@ class TankModel(name: String) {
     }
   }
 
-  def getPositionAsIntX(): Integer = {
+  def getPositionAsIntX(): Int = {
     if (position != null) {
       this.position.x
     }

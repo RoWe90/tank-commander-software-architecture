@@ -1,4 +1,4 @@
-package de.htwg.se.tankcommander.model
+package de.htwg.se.tankcommander.obsolete
 
 trait PowerUP {
   val name: String

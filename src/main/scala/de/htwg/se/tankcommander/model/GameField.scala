@@ -6,7 +6,7 @@ case class GameField() {
   val gridsize_x = 11
   val gridsize_y = 11
   var matchfieldarray = Array.ofDim[Cell](gridsize_x, gridsize_y)
-  fillField()
+  fillField
   createMap
 
 
@@ -20,6 +20,7 @@ case class GameField() {
     }
     this
   }
+
 
   def createMap(): GameField = {
     //first row

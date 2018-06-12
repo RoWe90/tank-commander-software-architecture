@@ -4,7 +4,6 @@ class Cell(x1: Integer, y1: Integer) {
   val x = x1;
   val y = y1;
   var cellobstacle: Obstacle = null
-  var cellPowerUP: PowerUP = null;
   var containsThisTank: TankModel = null
 
 }
