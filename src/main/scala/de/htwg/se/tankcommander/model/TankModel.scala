@@ -9,7 +9,7 @@ class TankModel(name: String) {
   var healthpoints = 100
   var position: Cell = null
   var facing = "UP"
-  var tankInventory: Inventory = new Inventory
+  // var tankInventory: Inventory = new Inventory
 
   def getPositionAsIntY(): Integer = {
     if (position != null) {
