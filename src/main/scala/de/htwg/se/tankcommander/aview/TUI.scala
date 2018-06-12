@@ -14,21 +14,18 @@ class TUI(controller: Controller) extends Observer {
       case "Exit" =>
 
       case "up" =>
-
+        controller.moveTank(input)
 
       case "down" =>
-
+        controller.moveTank(input)
 
       case "left" =>
-
+        controller.moveTank(input)
 
       case "right" =>
-
-
-      case "use" =>
-
+        controller.moveTank(input)
       case "shoot" =>
-
+        controller.shoot()
       case _ => {
         print("There is no such action")
 

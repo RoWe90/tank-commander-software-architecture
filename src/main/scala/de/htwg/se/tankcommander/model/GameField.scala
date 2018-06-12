@@ -10,7 +10,7 @@ case class GameField() {
   createMap
 
 
-  def fillField(): GameField = {
+  def fillField(): Unit = {
     var z = 0
     for (_ <- 0 to gridsize_x - 1) {
       for (i <- 0 to gridsize_y - 1) {
@@ -18,11 +18,10 @@ case class GameField() {
       }
       z += 1
     }
-    this
   }
 
 
-  def createMap(): GameField = {
+  def createMap(): Unit = {
     //first row
     val listBush = Array((0, 0), (1, 0), (9, 0), (10, 0),
       //second row
@@ -47,8 +46,6 @@ case class GameField() {
 
     val listHill = Array((5, 4), (5, 5), (5, 6))
     listHill.foreach(j => matchfieldarray(j._1)(j._2).cellobstacle = new Hill)
-
-    this
   }
 
 
@@ -67,8 +64,6 @@ case class GameField() {
           output.append("o" + "  ")
         }
       }
-
-
     }
     output.toString()
   }
