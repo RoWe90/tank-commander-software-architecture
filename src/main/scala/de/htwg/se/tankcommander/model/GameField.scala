@@ -1,12 +1,19 @@
 package de.htwg.se.tankcommander.model
 
 import de.htwg.se.tankcommander.model.TankCommander.spielfeld
+import de.htwg.se.tankcommander.util.Observable
 
 case class GameField() {
   val gridsize_x = 11
   val gridsize_y = 11
   var matchfieldarray = Array.ofDim[Cell](gridsize_x, gridsize_y)
 
+  def turnTank(facing: String, tank: TankModel): Unit = {
+    facing match {
+      case "up" | "down" | "left" | "right" => tank.facing = facing
+      case _ => print("not a viable command")
+    }
+  }
 
   def fillField(): GameField = {
     var z = 0
@@ -108,6 +115,12 @@ case class GameField() {
       }
     }
     this
+  }
+
+  object ObserverPattern {
+    val observable = new Observable
+
+
   }
 
   override def toString: String = {
