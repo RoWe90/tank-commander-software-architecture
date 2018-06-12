@@ -4,29 +4,27 @@ import de.htwg.se.tankcommander.model._
 
 class TUI {
 
-  def processInputLine(input: String, spielfeld: GameField, tanks: (TankModel, TankModel)): GameField = {
+  def processInputLine(input: String, spielfeld: GameField, tanks: (TankModel, TankModel), activeTank: TankModel,
+                       activePlayer: Player): GameField = {
 
     input match {
       case "Start" => print("Das Spiel startet, macht euch bereit")
-
-        spielfeld.fillField()
         spielfeld.createMap(tanks)
         print(spielfeld.toString)
-        println("")
         spielfeld
       case "Exit" =>
         spielfeld
       case "up" =>
-        spielfeld.moveUP(tanks._1)
+        spielfeld.moveUP(activeTank)
         spielfeld
       case "down" =>
-        spielfeld.moveDown(tanks._1)
+        spielfeld.moveDown(activeTank)
         spielfeld
       case "left" =>
-        spielfeld.moveLeft(tanks._1)
+        spielfeld.moveLeft(activeTank)
         spielfeld
       case "right" =>
-        spielfeld.moveRight(tanks._1)
+        spielfeld.moveRight(activeTank)
         spielfeld
       case "use" =>
         spielfeld

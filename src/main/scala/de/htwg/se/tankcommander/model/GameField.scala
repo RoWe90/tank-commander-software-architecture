@@ -1,5 +1,4 @@
 package de.htwg.se.tankcommander.model
-
 import de.htwg.se.tankcommander.model.TankCommander.spielfeld
 import de.htwg.se.tankcommander.util.Observable
 
@@ -7,6 +6,7 @@ case class GameField() {
   val gridsize_x = 11
   val gridsize_y = 11
   var matchfieldarray = Array.ofDim[Cell](gridsize_x, gridsize_y)
+  fillField()
 
   def turnTank(facing: String, tank: TankModel): Unit = {
     facing match {

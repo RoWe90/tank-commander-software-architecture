@@ -1,6 +1,6 @@
 package de.htwg.se.tankcommander.model
 
-import de.htwg.se.tankcommander._
+
 import de.htwg.se.tankcommander.aview.TUI
 
 object TankCommander {
@@ -19,7 +19,8 @@ object TankCommander {
     do {
       input = scala.io.StdIn.readLine()
       if (input != "Exit") {
-        spielfeld = tui.processInputLine(input, spielfeld, (data._1, data._2))
+        spielfeld = tui.processInputLine(input, spielfeld, (data._1, data._2), gameState.activeTank,
+          gameState.activePlayer)
       }
     } while (input != "Exit")
 
