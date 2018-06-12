@@ -1,14 +1,15 @@
 package de.htwg.se.tankcommander.model
 
+import de.htwg.se.tankcommander.controller.Controller
 import de.htwg.se.tankcommander.util.Observer
 
-class GameState extends Observer() {
+class GameState(controller: Controller) extends Observer() {
   var activePlayer: Player = null
   var activeTank: TankModel = null
   var currentPlayerActions = 2;
   var gameStarted = false;
-  //var players:Player = Array
   var turns = 0
+  controller.add(this)
 
   def update(): Unit = {
     turns += 1
@@ -25,8 +26,7 @@ class GameState extends Observer() {
     var tank1 = new TankModel(scala.io.StdIn.readLine())
     println("Player 1 please name your Tank")
     val tank2 = new TankModel(scala.io.StdIn.readLine())
-    // players(0)=player1
-    // players(1)=player2
+
     gameStarted = true
 
     (tank1, tank2, player1, player2)

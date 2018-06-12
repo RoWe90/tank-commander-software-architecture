@@ -1,4 +1,4 @@
-package de.htwg.se.tankcommander.model
+package de.htwg.se.tankcommander.obsolete
 
 //Items are temporary usable buffs stored in the players inventory.
 trait Item {

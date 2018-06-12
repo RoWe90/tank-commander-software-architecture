@@ -1,17 +1,19 @@
 package de.htwg.se.tankcommander.model
 
+import de.htwg.se.tankcommander.controller.Controller
 import de.htwg.se.tankcommander.util.Observer
 
 //noinspection ScalaStyle
-class Actions {
+class Actions(controller: Controller) extends Observer {
 
 
   object Actions extends Observer {
-    var matchfield = new GameField
+    controller.add(this)
+
 
     //aktuelles Spielfeld ziehen
-    def update(): Unit = {
-      //matchfield = aktualisiertes matchfield
+    override def update(): Unit = {
+
     }
 
     def lineOfSightContainsTank(gunner: TankModel, spielfeld: GameField): (Boolean, Int, Int, Int) = {

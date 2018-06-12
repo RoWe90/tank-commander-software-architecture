@@ -1,5 +1,5 @@
 package de.htwg.se.tankcommander.model
-import de.htwg.se.tankcommander.model.TankCommander.spielfeld
+
 import de.htwg.se.tankcommander.util.Observable
 
 case class GameField() {
@@ -7,13 +7,8 @@ case class GameField() {
   val gridsize_y = 11
   var matchfieldarray = Array.ofDim[Cell](gridsize_x, gridsize_y)
   fillField()
+  createMap
 
-  def turnTank(facing: String, tank: TankModel): Unit = {
-    facing match {
-      case "up" | "down" | "left" | "right" => tank.facing = facing
-      case _ => print("not a viable command")
-    }
-  }
 
   def fillField(): GameField = {
     var z = 0
@@ -26,7 +21,7 @@ case class GameField() {
     this
   }
 
-  def createMap(data: (TankModel, TankModel)): GameField = {
+  def createMap(): GameField = {
     //first row
     val listBush = Array((0, 0), (1, 0), (9, 0), (10, 0),
       //second row
@@ -51,77 +46,10 @@ case class GameField() {
 
     val listHill = Array((5, 4), (5, 5), (5, 6))
     listHill.foreach(j => matchfieldarray(j._1)(j._2).cellobstacle = new Hill)
-    spielfeld.setPositionTank((0, 5), data._1)
-    spielfeld.setPositionTank((10, 5), data._2)
+
     this
   }
 
-  def setPositionTank(pos: (Int, Int), tank: TankModel): GameField = {
-    //tank.position && tank.position??
-    if (tank.position != null && tank.position != null) {
-      matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = null
-      tank.position = null
-      tank.position = matchfieldarray(pos._1)(pos._2)
-      matchfieldarray(pos._1)(pos._2).containsThisTank = tank
-    } else {
-      matchfieldarray(pos._1)(pos._2).containsThisTank = tank
-      tank.position = matchfieldarray(pos._1)(pos._2)
-    }
-    this
-  }
-
-  def moveUP(tank: TankModel): GameField = {
-    if (matchfieldarray(tank.position.x)(tank.position.y) != null) //tank exists
-    {
-      if (matchfieldarray(tank.position.x)(tank.position.y + 1).cellobstacle.passable) //cell above tank is passable
-      {
-        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = null //delete tank from GameField
-        tank.position = matchfieldarray(tank.position.x)(tank.position.y + 1)
-        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = tank
-
-      }
-    }
-    this
-  }
-
-  def moveDown(tank: TankModel): GameField = {
-    if (matchfieldarray(tank.position.x)(tank.position.y - 1) != null) {
-      if (matchfieldarray(tank.position.x)(tank.position.y - 1).cellobstacle.passable) {
-        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = null
-        tank.position = matchfieldarray(tank.position.x)(tank.position.y - 1)
-        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = tank
-      }
-    }
-    this
-  }
-
-  def moveRight(tank: TankModel): GameField = {
-    if (matchfieldarray(tank.position.x)(tank.position.y) != null) {
-      if (matchfieldarray(tank.position.x + 1)(tank.position.y).cellobstacle.passable) {
-        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = null
-        tank.position = matchfieldarray(tank.position.x + 1)(tank.position.y)
-        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = tank
-      }
-    }
-    this
-  }
-
-  def moveLeft(tank: TankModel): GameField = {
-    if (matchfieldarray(tank.position.x)(tank.position.y) != null) {
-      if (matchfieldarray(tank.position.x - 1)(tank.position.y).cellobstacle.passable) {
-        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = null
-        tank.position = matchfieldarray(tank.position.x - 1)(tank.position.y)
-        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = tank
-      }
-    }
-    this
-  }
-
-  object ObserverPattern {
-    val observable = new Observable
-
-
-  }
 
   override def toString: String = {
     var output = new StringBuilder
