@@ -21,9 +21,9 @@ case class GameField() {
 
   def createMap(data: (TankModel, TankModel)): GameField = {
     //first row
-    val listBush = Array((0, 0), (1, 0), (9, 0), (10, 0), (0, 1),
+    val listBush = Array((0, 0), (1, 0), (9, 0), (10, 0),
       //second row
-      (1, 1), (9, 1), (10, 1), (0, 9), (1, 9),
+      (0, 1), (1, 1), (9, 1), (10, 1), (0, 9), (1, 9),
       //third row
       (9, 9), (10, 9), (0, 10), (1, 10), (9, 10), (10, 10),
       //rest
@@ -50,6 +50,7 @@ case class GameField() {
   }
 
   def setPositionTank(pos: (Int, Int), tank: TankModel): GameField = {
+    //tank.position && tank.position??
     if (tank.position != null && tank.position != null) {
       matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = null
       tank.position = null
@@ -63,12 +64,14 @@ case class GameField() {
   }
 
   def moveUP(tank: TankModel): GameField = {
-    if (matchfieldarray(tank.position.x)(tank.position.y) != null) {
-      if (matchfieldarray(tank.position.x)(tank.position.y + 1).cellobstacle.passable) {
-        matchfieldarray(tank.position.x)(tank.position.x).containsThisTank = null
-        tank.position = null
-        matchfieldarray(tank.position.x)(tank.position.x + 1).containsThisTank = tank
-        tank.position = matchfieldarray(tank.position.x)(tank.position.x + 1)
+    if (matchfieldarray(tank.position.x)(tank.position.y) != null) //tank exists
+    {
+      if (matchfieldarray(tank.position.x)(tank.position.y + 1).cellobstacle.passable) //cell above tank is passable
+      {
+        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = null //delete tank from GameField
+        tank.position = matchfieldarray(tank.position.x)(tank.position.y + 1)
+        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = tank
+
       }
     }
     this
@@ -77,10 +80,9 @@ case class GameField() {
   def moveDown(tank: TankModel): GameField = {
     if (matchfieldarray(tank.position.x)(tank.position.y - 1) != null) {
       if (matchfieldarray(tank.position.x)(tank.position.y - 1).cellobstacle.passable) {
-        matchfieldarray(tank.position.x)(tank.position.x).containsThisTank = null
-        tank.position = null
-        matchfieldarray(tank.position.x)(tank.position.x - 1).containsThisTank = tank
-        tank.position = matchfieldarray(tank.position.x)(tank.position.x - 1)
+        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = null
+        tank.position = matchfieldarray(tank.position.x)(tank.position.y - 1)
+        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = tank
       }
     }
     this
@@ -89,10 +91,9 @@ case class GameField() {
   def moveRight(tank: TankModel): GameField = {
     if (matchfieldarray(tank.position.x)(tank.position.y) != null) {
       if (matchfieldarray(tank.position.x + 1)(tank.position.y).cellobstacle.passable) {
-        matchfieldarray(tank.position.x)(tank.position.x).containsThisTank = null
-        tank.position = null
-        matchfieldarray(tank.position.x + 1)(tank.position.x).containsThisTank = tank
-        tank.position = matchfieldarray(tank.position.x + 1)(tank.position.x)
+        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = null
+        tank.position = matchfieldarray(tank.position.x + 1)(tank.position.y)
+        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = tank
       }
     }
     this
@@ -101,10 +102,9 @@ case class GameField() {
   def moveLeft(tank: TankModel): GameField = {
     if (matchfieldarray(tank.position.x)(tank.position.y) != null) {
       if (matchfieldarray(tank.position.x - 1)(tank.position.y).cellobstacle.passable) {
-        matchfieldarray(tank.position.x)(tank.position.x).containsThisTank = null
-        tank.position = null
-        matchfieldarray(tank.position.x - 1)(tank.position.x).containsThisTank = tank
-        tank.position = matchfieldarray(tank.position.x - 1)(tank.position.x)
+        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = null
+        tank.position = matchfieldarray(tank.position.x - 1)(tank.position.y)
+        matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = tank
       }
     }
     this
