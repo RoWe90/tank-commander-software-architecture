@@ -1,14 +1,16 @@
 package de.htwg.se.tankcommander.model
 
-class GameState() {
-  var activePlayer: Player = null;
+import de.htwg.se.tankcommander.util.Observer
+
+class GameState extends Observer() {
+  var activePlayer: Player = null
+  var activeTank: TankModel = null
   var currentPlayerActions = 2;
   var gameStarted = false;
   //var players:Player = Array
   var turns = 0
-  GameField.apply()
 
-  def actionTaken(): Unit = {
+  def update(): Unit = {
     turns += 1
   }
 
@@ -37,11 +39,13 @@ class GameState() {
       players(1).activePlayer = true
       activePlayer = players(1)
       currentPlayerActions = 2
+      println("Change Players")
     } else {
       players(1).activePlayer = false
       players(0).activePlayer = true
       activePlayer = players(0)
       currentPlayerActions = 2
+      println("Change Players")
     }
   }
 
