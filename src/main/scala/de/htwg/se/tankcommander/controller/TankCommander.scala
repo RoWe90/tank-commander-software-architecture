@@ -15,8 +15,8 @@ object TankCommander {
     println("Hauptmenü")
     println("Start")
     println("Exit")
-    do {
 
+    do {
       input = scala.io.StdIn.readLine()
       if (input != "Exit") {
         spielfeld = tui.processInputLine(input, spielfeld, (data._1, data._2))

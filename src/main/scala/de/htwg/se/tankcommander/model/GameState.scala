@@ -8,9 +8,10 @@ class GameState() {
   var turns = 0
   GameField.apply()
 
-  def increaseTurns(): Unit = {
+  def actionTaken(): Unit = {
     turns += 1
   }
+
 
   def setUpGame(): (TankModel, TankModel, Player, Player) = {
     println("Welcome to Tank-Commander")
