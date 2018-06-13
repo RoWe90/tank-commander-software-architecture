@@ -1,88 +1,109 @@
 package de.htwg.se.tankcommander.model
 
-import de.htwg.se.tankcommander.controller.Controller
-import de.htwg.se.tankcommander.util.Observer
+import de.htwg.se.tankcommander.controller.GameStatus
+
+import scala.collection.mutable.ListBuffer
+
 
 //noinspection ScalaStyle
-class Actions(controller: Controller) extends Observer {
 
 
-  object Actions extends Observer {
-    controller.add(this)
+object Actions {
+  var Test = 0;
 
-
-    //aktuelles Spielfeld ziehen
-    override def update(): Unit = {
-
-    }
-
-    def lineOfSightContainsTank(gunner: TankModel, spielfeld: GameField): (Boolean, Int, Int, Int) = {
-      val sy: Int = spielfeld.gridsize_y
-      val sx: Int = spielfeld.gridsize_x
-      val ty: Int = gunner.getPositionAsIntY()
-      val tx: Int = gunner.getPositionAsIntX()
-
-      gunner.facing match {
-        case "up" =>
-          for (i <- ty to sy) if (spielfeld.matchfieldarray(tx)(i).containsThisTank != null) {
-            (true, tx, i, calcHitChance(gunner, spielfeld.matchfieldarray(tx)(i).containsThisTank))
+  //noinspection ScalaStyle
+  def lineOfSightContainsTank(gunner: TankModel, matchfield: GameField): (Boolean, Int, Int, Int) = {
+    val sy: Int = matchfield.gridsize_y
+    val sx: Int = matchfield.gridsize_x
+    val ty: Int = gunner.getPositionAsIntY()
+    val tx: Int = gunner.getPositionAsIntX()
+    var obstacleList = new ListBuffer[Obstacle]()
+    gunner.facing match {
+      case "up" =>
+        for (i <- ty to sy) {
+          if (matchfield.matchfieldarray(tx)(i).cellobstacle != null) {
+            obstacleList += matchfield.matchfieldarray(tx)(i).cellobstacle
           }
-        case "down" =>
-          for (i <- sy to ty by -1) if (spielfeld.matchfieldarray(tx)(i).containsThisTank != null) {
-            (true, tx, i, calcHitChance(gunner, spielfeld.matchfieldarray(tx)(i).containsThisTank))
+          //Tank in Passable Obstacle not considered
+          if (matchfield.matchfieldarray(tx)(i).containsThisTank != null) {
+            val test = obstacleList.toList
+            GameStatus.xyz(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, i - ty))
           }
-        case "left" =>
-          for (i <- sy to ty by -1) if (spielfeld.matchfieldarray(i)(ty).containsThisTank != null) {
-            (true, i, ty, calcHitChance(gunner, spielfeld.matchfieldarray(i)(ty).containsThisTank))
-          }
-        case "right" =>
-          for (i <- sy to ty) if (spielfeld.matchfieldarray(i)(ty).containsThisTank != null) {
-            (true, i, ty, calcHitChance(gunner, spielfeld.matchfieldarray(i)(ty).containsThisTank))
-          }
-
-      }
-      (false, 0, 0, 0)
-    }
-
-    def calcHitChance(gunner: TankModel, target: TankModel): Integer = {
-      var hitchance = 0;
-
-    }
-
-    def calcDmgDone(gunner: TankModel, target: TankModel): Integer = {
-      var dmg = gunner.tankBaseDamage
-      takeDmg(target, dmg)
-      dmg
-    }
-
-    def takeDmg(target: TankModel, dmg: Int): Unit = {
-      target.healthpoints = target.healthpoints - dmg
-    }
-
-    def move(): Unit = {
-      if (movePossible == true) {
-        false
-      }
-    }
-
-    def movePossible(): Boolean = {
-      false
-    }
-
-    /*
-      def useItem(tankModel: TankModel, input: String): Unit = {
-        tankModel.tankInventory.containsItem(input) match {
-          case true =>
-            input match {
-              case "Kaffee" =>
-              case "Reparaturkit" =>
-              case "Zielwasser" =>
-            }
-            print("Item nicht im Inventar")
         }
-      }
-    */
 
+      case "down" =>
+        for (i <- sy to ty by -1) {
+          if (matchfield.matchfieldarray(tx)(i).cellobstacle != null) {
+            obstacleList += matchfield.matchfieldarray(tx)(i).cellobstacle
+          }
+          if (matchfield.matchfieldarray(tx)(i).containsThisTank != null) {
+            GameStatus.xyz(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, ty - i))
+          }
+        }
+      case "left" =>
+        for (i <- sy to ty by -1) {
+          if (matchfield.matchfieldarray(i)(ty).cellobstacle != null) {
+            obstacleList += matchfield.matchfieldarray(i)(ty).cellobstacle
+          }
+          if (matchfield.matchfieldarray(i)(ty).containsThisTank != null) {
+            GameStatus.xyz(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, tx - i))
+          }
+        }
+      case "right" =>
+        for (i <- sy to ty) {
+          if (matchfield.matchfieldarray(i)(ty).cellobstacle != null) {
+            obstacleList += matchfield.matchfieldarray(i)(ty).cellobstacle
+          }
+          if (matchfield.matchfieldarray(i)(ty).containsThisTank != null) {
+            GameStatus.xyz(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, i - tx))
+          }
+        }
+
+    }
+
+    (false, 0, 0, 0)
   }
 
+  def calcHitChance(gunner: TankModel, target: TankModel, distance: Int, List: Obstacle): Int = {
+    var hitchance = 100 - (distance * 15)
+    if (Math.signum(hitchance) > 0) {
+      hitchance
+    } else {
+      0
+    }
+  }
+
+  def simShot(gunner: TankModel, target: TankModel): Unit = {
+    val r = new scala.util.Random
+    val r1 = r.nextInt(100)
+    if (r1 <= GameStatus.currentHitRate) {
+      var dmg = gunner.tankBaseDamage
+      takeDmg(target, dmg)
+      print("You did: " + dmg + " dmg")
+    } else {
+      print("sadly you missed")
+    }
+  }
+
+  def takeDmg(target: TankModel, dmg: Int): Unit = {
+    target.healthpoints -= dmg
+  }
+
+
+  /*
+    def useItem(tankModel: TankModel, input: String): Unit = {
+      tankModel.tankInventory.containsItem(input) match {
+        case true =>
+          input match {
+            case "Kaffee" =>
+            case "Reparaturkit" =>
+            case "Zielwasser" =>
+          }
+          print("Item nicht im Inventar")
+      }
+    }
+  */
+
 }
+
+
