@@ -6,7 +6,7 @@ import scala.collection.mutable.ListBuffer
 
 
 //noinspection ScalaStyle
-object Actions {
+object Combat {
 
   def lineOfSightContainsTank(gunner: TankModel, matchfield: GameField): (Boolean, Int, Int, Int) = {
     val sx: Int = matchfield.gridsize_x - 1
@@ -62,7 +62,9 @@ object Actions {
   }
 
   def calcHitChance(gunner: TankModel, target: TankModel, distance: Int, List: List[Obstacle]): Int = {
-    var hitchance = 100 - (distance * 15)
+    var obstacleMalus = 0
+    List.foreach(n => obstacleMalus += n.hitmalus)
+    var hitchance = GameStatus.activeTank.accuracy - (distance * 10) - obstacleMalus
     if (hitchance > 0) {
       hitchance
     } else {

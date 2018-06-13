@@ -19,12 +19,11 @@ object GameStatus extends Enumeration {
   var activeTank: TankModel = null
   var passiveTank: TankModel = null
   var movesLeft = true
-  var gameStarted = false;
   var currentPlayerActions = 2
   var canHit = false
-  if (currentPlayerActions == 0) movesLeft = false else movesLeft = true
   var currentHitChance = 0
-  var players: Array[Player] = new Array[Player](2)
+
+  if (currentPlayerActions == 0) movesLeft = false else movesLeft = true
   if (currentHitChance == 0) canHit = false else canHit = true
 
   def message(gameStatus: GameStatus) = {
@@ -37,18 +36,15 @@ object GameStatus extends Enumeration {
     } else {
       currentHitChance = 0
     }
-
   }
 
   def changeActivePlayer(): Unit = {
-    if (activePlayer == players(0)) {
-      activePlayer = players(1)
-      currentPlayerActions = 2
-      println("Change Players")
-    } else {
-      activePlayer = players(0)
-      currentPlayerActions = 2
-      println("Change Players")
-    }
+    val temp = activePlayer
+    val temp2 = activeTank
+    activePlayer = passivePlayer
+    passivePlayer = temp
+    activeTank = passiveTank
+    passiveTank = temp2
+    currentPlayerActions = 2
   }
 }

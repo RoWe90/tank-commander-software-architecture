@@ -1,10 +1,11 @@
 package de.htwg.se.tankcommander.controller
 
 
-import de.htwg.se.tankcommander.model.{Actions, GameField, Player, TankModel}
+import de.htwg.se.tankcommander.model.{Combat, GameField, Player, TankModel}
 import de.htwg.se.tankcommander.util.Observable
 
 class Controller(var matchfield: GameField) extends Observable {
+
 
   def createNewMap(): Unit = {
     matchfield = new GameField
@@ -18,13 +19,10 @@ class Controller(var matchfield: GameField) extends Observable {
     val player2 = Player(scala.io.StdIn.readLine())
     var tank1 = new TankModel()
     var tank2 = new TankModel()
-
     setPositionTank((0, 5), tank1)
     setPositionTank((10, 5), tank2)
-
-    GameStatus.gameStarted = true
-    GameStatus.players.update(0, player1)
-    GameStatus.players.update(1, player2)
+    GameStatus.activePlayer = player1
+    GameStatus.passivePlayer = player2
     GameStatus.activeTank = tank1
     GameStatus.passiveTank = tank2
     notifyObservers
@@ -53,14 +51,16 @@ class Controller(var matchfield: GameField) extends Observable {
   def turnTank(facing: String): Unit = {
     facing match {
       case "up" | "down" | "left" | "right" => GameStatus.activeTank.facing = facing
-        Actions.lineOfSightContainsTank(GameStatus.activeTank, matchfield)
+        print("tank turned " + facing)
+        Combat.lineOfSightContainsTank(GameStatus.activeTank, matchfield)
+        notifyObservers
       case _ => print("not a viable command")
     }
   }
 
   def shoot(): Unit = {
     if (GameStatus.canHit) {
-      Actions.simShot(GameStatus.activeTank, GameStatus.passiveTank)
+      Combat.simShot(GameStatus.activeTank, GameStatus.passiveTank)
       increaseTurnsGamestatemax
     } else {
       print("No Target in sight")
@@ -69,13 +69,21 @@ class Controller(var matchfield: GameField) extends Observable {
 
   def increaseTurnsGamestatemax(): Unit = {
     GameStatus.currentPlayerActions -= 1
-    checkPlayerchange
+
   }
 
   //noinspection ScalaStyle
-  def checkPlayerchange(): Unit = {
-    if (GameStatus.movesLeft == false) {
-      print("No moves left only change direction, End turn?")
+  def endTurnChangeActivePlayer(): Unit = {
+    print("Runde beendet Spielerwechsel")
+    GameStatus.changeActivePlayer()
+  }
+
+  def checkIfPlayerHasMovesLeft(): Boolean = {
+    if (GameStatus.movesLeft) {
+      true
+    } else {
+      print("no turns left")
+      false
     }
   }
 
@@ -107,7 +115,7 @@ class Controller(var matchfield: GameField) extends Observable {
       matchfield.matchfieldarray(activeTank.position.x)(activeTank.position.y).containsThisTank = null
       activeTank.position = matchfield.matchfieldarray(pos._1)(pos._2)
       matchfield.matchfieldarray(pos._1)(pos._2).containsThisTank = activeTank
-      Actions.lineOfSightContainsTank(GameStatus.activeTank, matchfield)
+      Combat.lineOfSightContainsTank(GameStatus.activeTank, matchfield)
       increaseTurnsGamestatemax
       notifyObservers
     }
@@ -131,6 +139,9 @@ class Controller(var matchfield: GameField) extends Observable {
     }
 
     if (matchfield.matchfieldarray(pos._1)(pos._2) != null) {
+      if (matchfield.matchfieldarray(pos._1)(pos._2).containsThisTank != null) {
+        return false
+      }
       if (matchfield.matchfieldarray(pos._1)(pos._2).cellobstacle == null) {
         return true
       }
