@@ -11,22 +11,24 @@ class Controller(var matchfield: GameField) extends Observable {
   }
 
   def setUpGame(): Unit = {
-    print("Welcome to Tank-Commander")
-    print("Player 1 please choose your Name")
+    print("Welcome to Tank-Commander" + "\n")
+    print("Player 1 please choose your Name" + "\n")
     val player1 = Player(scala.io.StdIn.readLine())
-    print("Player 2 please choose your Name")
+    print("Player 2 please choose your Name" + "\n")
     val player2 = Player(scala.io.StdIn.readLine())
-    print("Player 1 please name your Tank")
+    print("Player 1 please name your Tank" + "\n")
     var tank1 = new TankModel(scala.io.StdIn.readLine())
-    print("Player 1 please name your Tank")
+    print("Player 1 please name your Tank" + "\n")
     val tank2 = new TankModel(scala.io.StdIn.readLine())
 
     setPositionTank((3, 3), tank1)
-    setPositionTank((8, 8), tank1)
+    setPositionTank((8, 8), tank2)
 
     GameStatus.gameStarted = true
     GameStatus.players.update(0, player1)
     GameStatus.players.update(1, player2)
+    GameStatus.activeTank = tank1
+    GameStatus.passiveTank = tank2
     notifyObservers
   }
 

@@ -9,8 +9,9 @@ class TUI(controller: Controller) extends Observer {
   def processInputLine(input: String): Unit = {
 
     input match {
-      case "Start" => print("Das Spiel startet, macht euch bereit")
+      case "Start" => print("Das Spiel startet, macht euch bereit" + "\n")
         controller.createNewMap()
+        controller.setUpGame()
       case "Exit" =>
 
       case "up" =>

@@ -6,17 +6,13 @@ import scala.collection.mutable.ListBuffer
 
 
 //noinspection ScalaStyle
-
-
 object Actions {
-  var Test = 0;
 
-  //noinspection ScalaStyle
   def lineOfSightContainsTank(gunner: TankModel, matchfield: GameField): (Boolean, Int, Int, Int) = {
-    val sy: Int = matchfield.gridsize_y
     val sx: Int = matchfield.gridsize_x
-    val ty: Int = gunner.getPositionAsIntY()
+    val sy: Int = matchfield.gridsize_y
     val tx: Int = gunner.getPositionAsIntX()
+    val ty: Int = gunner.getPositionAsIntY()
     var obstacleList = new ListBuffer[Obstacle]()
     gunner.facing match {
       case "up" =>
@@ -26,8 +22,8 @@ object Actions {
           }
           //Tank in Passable Obstacle not considered
           if (matchfield.matchfieldarray(tx)(i).containsThisTank != null) {
-            val test = obstacleList.toList
-            GameStatus.xyz(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, i - ty))
+            val obstacleCalcList = obstacleList.toList
+            GameStatus.setCurrentHitrate(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, i - ty, obstacleCalcList))
           }
         }
 
@@ -37,7 +33,8 @@ object Actions {
             obstacleList += matchfield.matchfieldarray(tx)(i).cellobstacle
           }
           if (matchfield.matchfieldarray(tx)(i).containsThisTank != null) {
-            GameStatus.xyz(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, ty - i))
+            val obstacleCalcList = obstacleList.toList
+            GameStatus.setCurrentHitrate(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, ty - i, obstacleCalcList))
           }
         }
       case "left" =>
@@ -46,7 +43,8 @@ object Actions {
             obstacleList += matchfield.matchfieldarray(i)(ty).cellobstacle
           }
           if (matchfield.matchfieldarray(i)(ty).containsThisTank != null) {
-            GameStatus.xyz(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, tx - i))
+            val obstacleCalcList = obstacleList.toList
+            GameStatus.setCurrentHitrate(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, tx - i, obstacleCalcList))
           }
         }
       case "right" =>
@@ -55,18 +53,17 @@ object Actions {
             obstacleList += matchfield.matchfieldarray(i)(ty).cellobstacle
           }
           if (matchfield.matchfieldarray(i)(ty).containsThisTank != null) {
-            GameStatus.xyz(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, i - tx))
+            val obstacleCalcList = obstacleList.toList
+            GameStatus.setCurrentHitrate(true, calcHitChance(gunner, matchfield.matchfieldarray(tx)(i).containsThisTank, i - tx, obstacleCalcList))
           }
         }
-
     }
-
     (false, 0, 0, 0)
   }
 
-  def calcHitChance(gunner: TankModel, target: TankModel, distance: Int, List: Obstacle): Int = {
+  def calcHitChance(gunner: TankModel, target: TankModel, distance: Int, List: List[Obstacle]): Int = {
     var hitchance = 100 - (distance * 15)
-    if (Math.signum(hitchance) > 0) {
+    if (hitchance > 0) {
       hitchance
     } else {
       0
@@ -76,7 +73,7 @@ object Actions {
   def simShot(gunner: TankModel, target: TankModel): Unit = {
     val r = new scala.util.Random
     val r1 = r.nextInt(100)
-    if (r1 <= GameStatus.currentHitRate) {
+    if (GameStatus.currentHitChance >= r1) {
       var dmg = gunner.tankBaseDamage
       takeDmg(target, dmg)
       print("You did: " + dmg + " dmg")
@@ -88,22 +85,6 @@ object Actions {
   def takeDmg(target: TankModel, dmg: Int): Unit = {
     target.healthpoints -= dmg
   }
-
-
-  /*
-    def useItem(tankModel: TankModel, input: String): Unit = {
-      tankModel.tankInventory.containsItem(input) match {
-        case true =>
-          input match {
-            case "Kaffee" =>
-            case "Reparaturkit" =>
-            case "Zielwasser" =>
-          }
-          print("Item nicht im Inventar")
-      }
-    }
-  */
-
 }
 
 
