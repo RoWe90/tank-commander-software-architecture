@@ -6,11 +6,11 @@ case class GameField() {
   val gridsize_x = 11
   val gridsize_y = 11
   var matchfieldarray = Array.ofDim[Cell](gridsize_x, gridsize_y)
-  fillField
-  createMap
+  fillGameFieldWithCells
+  fillGameFieldCellsWithObstacles
 
 
-  def fillField(): Unit = {
+  def fillGameFieldWithCells(): Unit = {
     var z = 0
     for (_ <- 0 to gridsize_x - 1) {
       for (i <- 0 to gridsize_y - 1) {
@@ -21,7 +21,7 @@ case class GameField() {
   }
 
 
-  def createMap(): Unit = {
+  def fillGameFieldCellsWithObstacles(): Unit = {
     //first row
     val listBush = Array((0, 0), (1, 0), (9, 0), (10, 0),
       //second row
@@ -61,7 +61,12 @@ case class GameField() {
             output.append(matchfieldarray(i)(z).cellobstacle.shortName + "  ")
           }
         } else {
-          output.append("o" + "  ")
+          if (matchfieldarray(i)(z).containsThisTank != null) {
+            output.append("T" + "  ")
+          } else {
+            output.append("o" + "  ")
+          }
+
         }
       }
     }

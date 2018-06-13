@@ -16,15 +16,19 @@ class TUI(controller: Controller) extends Observer {
 
       case "up" =>
         controller.moveTank(input)
+        print(controller.getCurrentHitChanceOfGamestatus + "\n")
 
       case "down" =>
         controller.moveTank(input)
+        print(controller.getCurrentHitChanceOfGamestatus + "\n")
 
       case "left" =>
         controller.moveTank(input)
+        print(controller.getCurrentHitChanceOfGamestatus + "\n")
 
       case "right" =>
         controller.moveTank(input)
+        print(controller.getCurrentHitChanceOfGamestatus + "\n")
       case "shoot" =>
         controller.shoot()
       case _ => {

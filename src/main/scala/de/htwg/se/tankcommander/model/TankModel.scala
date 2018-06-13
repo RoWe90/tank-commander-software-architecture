@@ -2,13 +2,12 @@ package de.htwg.se.tankcommander.model
 
 
 //TODO Define a class containing all needed values and methods for a tank-object
-class TankModel(name: String) {
-  val tankName = name
+class TankModel() {
   val tankBaseDamage = 10
   val accuracy = 100
   var healthpoints = 100
   var position: Cell = null
-  var facing = ""
+  var facing = "up"
 
   def getPositionAsIntY(): Int = {
     if (position != null) {

@@ -16,13 +16,11 @@ class Controller(var matchfield: GameField) extends Observable {
     val player1 = Player(scala.io.StdIn.readLine())
     print("Player 2 please choose your Name" + "\n")
     val player2 = Player(scala.io.StdIn.readLine())
-    print("Player 1 please name your Tank" + "\n")
-    var tank1 = new TankModel(scala.io.StdIn.readLine())
-    print("Player 1 please name your Tank" + "\n")
-    val tank2 = new TankModel(scala.io.StdIn.readLine())
+    var tank1 = new TankModel()
+    var tank2 = new TankModel()
 
-    setPositionTank((3, 3), tank1)
-    setPositionTank((8, 8), tank2)
+    setPositionTank((0, 5), tank1)
+    setPositionTank((10, 5), tank2)
 
     GameStatus.gameStarted = true
     GameStatus.players.update(0, player1)
@@ -74,8 +72,9 @@ class Controller(var matchfield: GameField) extends Observable {
     checkPlayerchange
   }
 
+  //noinspection ScalaStyle
   def checkPlayerchange(): Unit = {
-    if (!GameStatus.movesLeft) {
+    if (GameStatus.movesLeft == false) {
       print("No moves left only change direction, End turn?")
     }
   }
@@ -85,10 +84,10 @@ class Controller(var matchfield: GameField) extends Observable {
     var temp = (activeTank.getPositionAsIntX(), activeTank.getPositionAsIntY())
     input match {
       case "up" =>
-        temp = (temp._1, temp._2 + 1)
+        temp = (temp._1, temp._2 - 1)
         aMoveOfTank(temp, activeTank, movePossible(temp))
       case "down" =>
-        temp = (temp._1, temp._2 - 1)
+        temp = (temp._1, temp._2 + 1)
         aMoveOfTank(temp, activeTank, movePossible(temp))
       case "left" =>
         temp = (temp._1 - 1, temp._2)
@@ -97,6 +96,10 @@ class Controller(var matchfield: GameField) extends Observable {
         temp = (temp._1 + 1, temp._2)
         aMoveOfTank(temp, activeTank, movePossible(temp))
     }
+  }
+
+  def getCurrentHitChanceOfGamestatus: Int = {
+    GameStatus.currentHitChance
   }
 
   def aMoveOfTank(pos: (Int, Int), activeTank: TankModel, x: Boolean): Unit = {
@@ -113,7 +116,30 @@ class Controller(var matchfield: GameField) extends Observable {
     }
   }
 
-  def movePossible(pos: (Int, Int)): Boolean = if (matchfield.matchfieldarray(pos._1)(pos._2).cellobstacle.passable) true else false
+  def movePossible(pos: (Int, Int)): Boolean = {
+    if (pos._1 > matchfield.gridsize_x - 1) {
+      return false
+    }
+    if (pos._2 > matchfield.gridsize_y - 1) {
+      return false
+    }
+    if (pos._1 < 0) {
+      return false
+    }
+    if (pos._2 < 0) {
+      return false
+    }
+
+    if (matchfield.matchfieldarray(pos._1)(pos._2) != null) {
+      if (matchfield.matchfieldarray(pos._1)(pos._2).cellobstacle == null) {
+        return true
+      }
+      if (matchfield.matchfieldarray(pos._1)(pos._2).cellobstacle.passable) {
+        return true
+      }
+    }
+    false
+  }
 
   def matchfieldToString: String = matchfield.toString
 }

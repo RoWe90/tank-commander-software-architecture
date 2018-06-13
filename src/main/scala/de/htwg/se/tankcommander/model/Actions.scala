@@ -9,14 +9,14 @@ import scala.collection.mutable.ListBuffer
 object Actions {
 
   def lineOfSightContainsTank(gunner: TankModel, matchfield: GameField): (Boolean, Int, Int, Int) = {
-    val sx: Int = matchfield.gridsize_x
-    val sy: Int = matchfield.gridsize_y
+    val sx: Int = matchfield.gridsize_x - 1
+    val sy: Int = matchfield.gridsize_y - 1
     val tx: Int = gunner.getPositionAsIntX()
     val ty: Int = gunner.getPositionAsIntY()
     var obstacleList = new ListBuffer[Obstacle]()
     gunner.facing match {
       case "up" =>
-        for (i <- ty to sy) {
+        for (i <- (ty - 1) to 0 by -1) {
           if (matchfield.matchfieldarray(tx)(i).cellobstacle != null) {
             obstacleList += matchfield.matchfieldarray(tx)(i).cellobstacle
           }
@@ -28,7 +28,7 @@ object Actions {
         }
 
       case "down" =>
-        for (i <- sy to ty by -1) {
+        for (i <- (ty + 1) to sy) {
           if (matchfield.matchfieldarray(tx)(i).cellobstacle != null) {
             obstacleList += matchfield.matchfieldarray(tx)(i).cellobstacle
           }
@@ -38,7 +38,7 @@ object Actions {
           }
         }
       case "left" =>
-        for (i <- sy to ty by -1) {
+        for (i <- (tx - 1) to 0 by -1) {
           if (matchfield.matchfieldarray(i)(ty).cellobstacle != null) {
             obstacleList += matchfield.matchfieldarray(i)(ty).cellobstacle
           }
@@ -48,7 +48,7 @@ object Actions {
           }
         }
       case "right" =>
-        for (i <- sy to ty) {
+        for (i <- (ty + 1) to sx) {
           if (matchfield.matchfieldarray(i)(ty).cellobstacle != null) {
             obstacleList += matchfield.matchfieldarray(i)(ty).cellobstacle
           }
