@@ -20,7 +20,7 @@ class Bush extends Obstacle {
 class Hill extends Obstacle {
   val name: String = "Hügel"
   val desc: String = "Ermöglichen direkten Beschuss mapweit"
-  val passable: Boolean = false
+  val passable: Boolean = true
   val shortName: String = "H"
   override val hitmalus: Int = 100
 }

@@ -1,5 +1,6 @@
 package de.htwg.se.tankcommander.model
 
+import de.htwg.se.tankcommander.controller.GameStatus
 import de.htwg.se.tankcommander.util.Observable
 
 case class GameField() {
@@ -70,6 +71,7 @@ case class GameField() {
         }
       }
     }
+    output.append(GameStatus.currentHitChance + "\n")
     output.toString()
   }
 
