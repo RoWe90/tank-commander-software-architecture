@@ -10,17 +10,10 @@ object GameStatus {
   var passiveTank: Option[TankModel] = None
   var movesLeft = true
   var currentPlayerActions = 2
-
   var currentHitChance = 0
 
 
-  def setCurrentHitrate(bool: Boolean, integer: Int): Unit = {
-    if (bool) {
-      currentHitChance = integer
-    } else {
-      currentHitChance = 0
-    }
-  }
+
 
   def changeActivePlayer(): Unit = {
     val temp = activePlayer

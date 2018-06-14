@@ -6,4 +6,3 @@ class Cell(x1: Integer, y1: Integer) {
   var cobstacle: Option[Obstacle] = None
   var containsThisTank: Option[TankModel] = None
 }
-

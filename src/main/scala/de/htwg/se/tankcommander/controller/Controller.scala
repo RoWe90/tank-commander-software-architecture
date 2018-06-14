@@ -1,6 +1,6 @@
 package de.htwg.se.tankcommander.controller
 
-import de.htwg.se.tankcommander.model.{Combat, GameField, Player, TankModel}
+import de.htwg.se.tankcommander.model.{GameField, Player, TankModel}
 import de.htwg.se.tankcommander.util.Observable
 
 class Controller(var matchfield: GameField) extends Observable {
@@ -9,15 +9,15 @@ class Controller(var matchfield: GameField) extends Observable {
   }
 
   def setUpGame(): Unit = {
-    print("Welcome to Tank-Commander" + "\n")
+    print("Welcome to Tank-Commander\n")
     print("Player 1 please choose your Name" + "\n")
     val player1 = Player(scala.io.StdIn.readLine())
     print("Player 2 please choose your Name" + "\n")
     val player2 = Player(scala.io.StdIn.readLine())
     var tank1 = new TankModel()
     var tank2 = new TankModel()
-    setPositionTank((0, 5), tank1)
-    setPositionTank((10, 5), tank2)
+    fillGameFieldWithTank((0, 5), tank1)
+    fillGameFieldWithTank((10, 5), tank2)
     GameStatus.activePlayer = Option(player1)
     GameStatus.passivePlayer = Option(player2)
     GameStatus.activeTank = Option(tank1)
@@ -26,7 +26,7 @@ class Controller(var matchfield: GameField) extends Observable {
   }
 
   //noinspection ScalaStyle
-  def setPositionTank(pos: (Int, Int), tank: TankModel): Unit = {
+  def fillGameFieldWithTank(pos: (Int, Int), tank: TankModel): Unit = {
     tank.posC = Option(matchfield.marray(pos._1)(pos._2))
     matchfield.marray(pos._1)(pos._2).containsThisTank = Option(tank)
   }
@@ -46,14 +46,14 @@ class Controller(var matchfield: GameField) extends Observable {
     }
   }
 
-  //def shoot(): Unit = {
-  //  if (GameStatus.canHit) {
-  //    Combat.simShot(GameStatus.activeTank.get, GameStatus.passiveTank.get)
-  //    increaseTurnsGamestatemax()
-  //  } else {
-  //    print("No Target in sight")
-  //  }
-  //}
+  def shoot(): Unit = {
+    if (GameStatus.currentHitChance > 0) {
+      Combat.simShot(GameStatus.activeTank.get, GameStatus.passiveTank.get)
+      increaseTurnsGamestatemax()
+    } else {
+      print("No Target in sight")
+    }
+  }
 
   def increaseTurnsGamestatemax(): Unit = {
     GameStatus.currentPlayerActions -= 1

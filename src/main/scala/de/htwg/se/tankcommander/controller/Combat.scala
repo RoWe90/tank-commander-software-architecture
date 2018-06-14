@@ -1,6 +1,7 @@
-package de.htwg.se.tankcommander.model
+package de.htwg.se.tankcommander.controller
 
-import de.htwg.se.tankcommander.controller.GameStatus
+import de.htwg.se.tankcommander.model.{GameField, Obstacle, TankModel}
+
 import scala.collection.mutable.ListBuffer
 
 //noinspection ScalaStyle
@@ -18,7 +19,7 @@ object Combat {
           //Tank in Passable Obstacle not considered
           if (matchfield.marray(tXY._1)(i).containsThisTank.isDefined) {
             val obstacleCalcList = obstacleList.toList
-            GameStatus.setCurrentHitrate(bool = true, calcHitChance(gunner,
+            GameStatus.currentHitChance(calcHitChance(gunner,
               matchfield.marray(tXY._1)(i).containsThisTank.get, i - tXY._2, obstacleCalcList))
           }
         }
@@ -31,7 +32,7 @@ object Combat {
           }
           if (matchfield.marray(i)(tXY._2).containsThisTank.isDefined) {
             val obstacleCalcList = obstacleList.toList
-            GameStatus.setCurrentHitrate(bool = true, calcHitChance(gunner,
+            GameStatus.currentHitChance(calcHitChance(gunner,
               matchfield.marray(i)(tXY._2).containsThisTank.get, tXY._1 - i, obstacleCalcList))
           }
         }
@@ -44,7 +45,7 @@ object Combat {
           }
           if (matchfield.marray(tXY._1)(i).containsThisTank.isDefined) {
             val obstacleCalcList = obstacleList.toList
-            GameStatus.setCurrentHitrate(bool = true, calcHitChance(gunner,
+            GameStatus.currentHitChance(calcHitChance(gunner,
               matchfield.marray(tXY._1)(i).containsThisTank.get, tXY._2 - i, obstacleCalcList))
           }
         }
@@ -57,7 +58,7 @@ object Combat {
           }
           if (matchfield.marray(i)(tXY._2).containsThisTank.isDefined) {
             val obstacleCalcList = obstacleList.toList
-            GameStatus.setCurrentHitrate(bool = true, calcHitChance(gunner,
+            GameStatus.currentHitChance(calcHitChance(gunner,
               matchfield.marray(i)(tXY._2).containsThisTank.get, i - tXY._1, obstacleCalcList))
           }
         }
