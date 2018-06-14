@@ -8,7 +8,7 @@ class TUI(controller: Controller) extends Observer {
   controller.add(this)
 
   def processInputLine(input: String): Unit = {
-    input.toLowerCase() match {
+    input.toLowerCase match {
       case "start" => print("Das Spiel startet, macht euch bereit" + "\n")
         controller.createNewMap()
         controller.setUpGame()
@@ -17,7 +17,7 @@ class TUI(controller: Controller) extends Observer {
       case "down" if controller.checkIfPlayerHasMovesLeft() => controller.moveTank(input)
       case "left" if controller.checkIfPlayerHasMovesLeft() => controller.moveTank(input)
       case "right" if controller.checkIfPlayerHasMovesLeft() => controller.moveTank(input)
-      case "shoot" if controller.checkIfPlayerHasMovesLeft() => controller.shoot()
+     // case "shoot" if controller.checkIfPlayerHasMovesLeft() => controller.shoot()
       case "end turn" => controller.endTurnChangeActivePlayer()
       case _ if input.contains("turn") =>
         if (input.contains("up")) controller.turnTank("up")

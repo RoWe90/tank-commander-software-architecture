@@ -27,16 +27,8 @@ class Controller(var matchfield: GameField) extends Observable {
 
   //noinspection ScalaStyle
   def setPositionTank(pos: (Int, Int), tank: TankModel): Unit = {
-    //tank.position && tank.position??
-    if (tank.posC != null && tank.posC != null) {
-      matchfield.marray(tank.posC.get.x)(tank.posC.get.y).containsThisTank = None
-      tank.posC = None
-      tank.posC = Option(matchfield.marray(pos._1)(pos._2))
-      matchfield.marray(pos._1)(pos._2).containsThisTank = Option(tank)
-    } else {
-      matchfield.marray(pos._1)(pos._2).containsThisTank = Option(tank)
-      tank.posC = Option(matchfield.marray(pos._1)(pos._2))
-    }
+    tank.posC = Option(matchfield.marray(pos._1)(pos._2))
+    matchfield.marray(pos._1)(pos._2).containsThisTank = Option(tank)
   }
 
   def endTurn(): Unit = {
@@ -54,23 +46,27 @@ class Controller(var matchfield: GameField) extends Observable {
     }
   }
 
-  def shoot(): Unit = {
-    if (GameStatus.canHit) {
-      Combat.simShot(GameStatus.activeTank.get, GameStatus.passiveTank.get)
-      increaseTurnsGamestatemax()
-    } else {
-      print("No Target in sight")
-    }
-  }
+  //def shoot(): Unit = {
+  //  if (GameStatus.canHit) {
+  //    Combat.simShot(GameStatus.activeTank.get, GameStatus.passiveTank.get)
+  //    increaseTurnsGamestatemax()
+  //  } else {
+  //    print("No Target in sight")
+  //  }
+  //}
 
   def increaseTurnsGamestatemax(): Unit = {
     GameStatus.currentPlayerActions -= 1
+    if (GameStatus.currentPlayerActions == 0) {
+      GameStatus.movesLeft = false
+    }
   }
 
   //noinspection ScalaStyle
   def endTurnChangeActivePlayer(): Unit = {
     print("Runde beendet Spielerwechsel")
     GameStatus.changeActivePlayer()
+    notifyObservers()
   }
 
   def checkIfPlayerHasMovesLeft(): Boolean = {
@@ -83,21 +79,21 @@ class Controller(var matchfield: GameField) extends Observable {
   }
 
   def moveTank(input: String): Unit = {
-    var activeTank = GameStatus.activeTank
-    var temp: (Int, Int) = (activeTank.get.posC.get.x, activeTank.get.posC.get.x)
+    var activeTank = GameStatus.activeTank.get
+    var temp: (Int, Int) = (activeTank.posC.get.x, activeTank.posC.get.y)
     input match {
       case "up" =>
         temp = (temp._1, temp._2 - 1)
-        aMoveOfTank(temp, activeTank.get, movePossible(temp))
+        aMoveOfTank(temp, activeTank, movePossible(temp))
       case "down" =>
         temp = (temp._1, temp._2 + 1)
-        aMoveOfTank(temp, activeTank.get, movePossible(temp))
+        aMoveOfTank(temp, activeTank, movePossible(temp))
       case "left" =>
         temp = (temp._1 - 1, temp._2)
-        aMoveOfTank(temp, activeTank.get, movePossible(temp))
+        aMoveOfTank(temp, activeTank, movePossible(temp))
       case "right" =>
         temp = (temp._1 + 1, temp._2)
-        aMoveOfTank(temp, activeTank.get, movePossible(temp))
+        aMoveOfTank(temp, activeTank, movePossible(temp))
     }
   }
 

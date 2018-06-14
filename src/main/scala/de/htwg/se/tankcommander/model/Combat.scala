@@ -8,9 +8,9 @@ object Combat {
   def lineOfSightContainsTank(gunner: TankModel, matchfield: GameField): (Boolean, Int, Int, Int) = {
     val mXY: (Int, Int) = (matchfield.gridsX, matchfield.gridsy)
     val tXY: (Int, Int) = (gunner.posC.get.x, gunner.posC.get.y)
-    var obstacleList = new ListBuffer[Obstacle]()
     gunner.facing match {
       case "up" =>
+        var obstacleList = new ListBuffer[Obstacle]()
         for (i <- (tXY._2 - 1) to 0 by -1) {
           if (matchfield.marray(tXY._1)(i).cobstacle.isDefined) {
             obstacleList += matchfield.marray(tXY._1)(i).cobstacle.get
@@ -24,6 +24,7 @@ object Combat {
         }
 
       case "left" =>
+        var obstacleList = new ListBuffer[Obstacle]()
         for (i <- (tXY._1 - 1) to 0 by -1) {
           if (matchfield.marray(i)(tXY._2).cobstacle.isDefined) {
             obstacleList += matchfield.marray(i)(tXY._2).cobstacle.get
@@ -31,11 +32,12 @@ object Combat {
           if (matchfield.marray(i)(tXY._2).containsThisTank.isDefined) {
             val obstacleCalcList = obstacleList.toList
             GameStatus.setCurrentHitrate(bool = true, calcHitChance(gunner,
-              matchfield.marray(tXY._1)(i).containsThisTank.get, tXY._1 - i, obstacleCalcList))
+              matchfield.marray(i)(tXY._2).containsThisTank.get, tXY._1 - i, obstacleCalcList))
           }
         }
 
       case "down" =>
+        var obstacleList = new ListBuffer[Obstacle]()
         for (i <- (tXY._2 + 1) until mXY._2) {
           if (matchfield.marray(tXY._1)(i).cobstacle.isDefined) {
             obstacleList += matchfield.marray(tXY._1)(i).cobstacle.get
@@ -48,6 +50,7 @@ object Combat {
         }
 
       case "right" =>
+        var obstacleList = new ListBuffer[Obstacle]()
         for (i <- (tXY._2 + 1) until mXY._1) {
           if (matchfield.marray(i)(tXY._2).cobstacle.isDefined) {
             obstacleList += matchfield.marray(i)(tXY._2).cobstacle.get
@@ -55,7 +58,7 @@ object Combat {
           if (matchfield.marray(i)(tXY._2).containsThisTank.isDefined) {
             val obstacleCalcList = obstacleList.toList
             GameStatus.setCurrentHitrate(bool = true, calcHitChance(gunner,
-              matchfield.marray(tXY._1)(i).containsThisTank.get, i - tXY._1, obstacleCalcList))
+              matchfield.marray(i)(tXY._2).containsThisTank.get, i - tXY._1, obstacleCalcList))
           }
         }
     }
