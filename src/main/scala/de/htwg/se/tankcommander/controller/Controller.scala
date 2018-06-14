@@ -1,12 +1,9 @@
 package de.htwg.se.tankcommander.controller
 
-
 import de.htwg.se.tankcommander.model.{Combat, GameField, Player, TankModel}
 import de.htwg.se.tankcommander.util.Observable
 
 class Controller(var matchfield: GameField) extends Observable {
-
-
   def createNewMap(): Unit = {
     matchfield = new GameField
   }
@@ -21,47 +18,46 @@ class Controller(var matchfield: GameField) extends Observable {
     var tank2 = new TankModel()
     setPositionTank((0, 5), tank1)
     setPositionTank((10, 5), tank2)
-    GameStatus.activePlayer = player1
-    GameStatus.passivePlayer = player2
-    GameStatus.activeTank = tank1
-    GameStatus.passiveTank = tank2
-    notifyObservers
+    GameStatus.activePlayer = Option(player1)
+    GameStatus.passivePlayer = Option(player2)
+    GameStatus.activeTank = Option(tank1)
+    GameStatus.passiveTank = Option(tank2)
+    notifyObservers()
   }
 
   //noinspection ScalaStyle
   def setPositionTank(pos: (Int, Int), tank: TankModel): Unit = {
     //tank.position && tank.position??
-    if (tank.position != null && tank.position != null) {
-      matchfield.matchfieldarray(tank.position.x)(tank.position.y).containsThisTank = null
-      tank.position = null
-      tank.position = matchfield.matchfieldarray(pos._1)(pos._2)
-      matchfield.matchfieldarray(pos._1)(pos._2).containsThisTank = tank
+    if (tank.posC != null && tank.posC != null) {
+      matchfield.marray(tank.posC.get.x)(tank.posC.get.y).containsThisTank = None
+      tank.posC = None
+      tank.posC = Option(matchfield.marray(pos._1)(pos._2))
+      matchfield.marray(pos._1)(pos._2).containsThisTank = Option(tank)
     } else {
-      matchfield.matchfieldarray(pos._1)(pos._2).containsThisTank = tank
-      tank.position = matchfield.matchfieldarray(pos._1)(pos._2)
+      matchfield.marray(pos._1)(pos._2).containsThisTank = Option(tank)
+      tank.posC = Option(matchfield.marray(pos._1)(pos._2))
     }
-
   }
 
   def endTurn(): Unit = {
     GameStatus.changeActivePlayer()
-    notifyObservers
+    notifyObservers()
   }
 
   def turnTank(facing: String): Unit = {
     facing match {
-      case "up" | "down" | "left" | "right" => GameStatus.activeTank.facing = facing
+      case "up" | "down" | "left" | "right" => GameStatus.activeTank.get.facing = facing
         print("tank turned " + facing)
-        Combat.lineOfSightContainsTank(GameStatus.activeTank, matchfield)
-        notifyObservers
+        Combat.lineOfSightContainsTank(GameStatus.activeTank.get, matchfield)
+        notifyObservers()
       case _ => print("not a viable command")
     }
   }
 
   def shoot(): Unit = {
     if (GameStatus.canHit) {
-      Combat.simShot(GameStatus.activeTank, GameStatus.passiveTank)
-      increaseTurnsGamestatemax
+      Combat.simShot(GameStatus.activeTank.get, GameStatus.passiveTank.get)
+      increaseTurnsGamestatemax()
     } else {
       print("No Target in sight")
     }
@@ -69,7 +65,6 @@ class Controller(var matchfield: GameField) extends Observable {
 
   def increaseTurnsGamestatemax(): Unit = {
     GameStatus.currentPlayerActions -= 1
-
   }
 
   //noinspection ScalaStyle
@@ -89,20 +84,20 @@ class Controller(var matchfield: GameField) extends Observable {
 
   def moveTank(input: String): Unit = {
     var activeTank = GameStatus.activeTank
-    var temp = (activeTank.getPositionAsIntX(), activeTank.getPositionAsIntY())
+    var temp: (Int, Int) = (activeTank.get.posC.get.x, activeTank.get.posC.get.x)
     input match {
       case "up" =>
         temp = (temp._1, temp._2 - 1)
-        aMoveOfTank(temp, activeTank, movePossible(temp))
+        aMoveOfTank(temp, activeTank.get, movePossible(temp))
       case "down" =>
         temp = (temp._1, temp._2 + 1)
-        aMoveOfTank(temp, activeTank, movePossible(temp))
+        aMoveOfTank(temp, activeTank.get, movePossible(temp))
       case "left" =>
         temp = (temp._1 - 1, temp._2)
-        aMoveOfTank(temp, activeTank, movePossible(temp))
+        aMoveOfTank(temp, activeTank.get, movePossible(temp))
       case "right" =>
         temp = (temp._1 + 1, temp._2)
-        aMoveOfTank(temp, activeTank, movePossible(temp))
+        aMoveOfTank(temp, activeTank.get, movePossible(temp))
     }
   }
 
@@ -112,12 +107,12 @@ class Controller(var matchfield: GameField) extends Observable {
 
   def aMoveOfTank(pos: (Int, Int), activeTank: TankModel, x: Boolean): Unit = {
     if (x) {
-      matchfield.matchfieldarray(activeTank.position.x)(activeTank.position.y).containsThisTank = null
-      activeTank.position = matchfield.matchfieldarray(pos._1)(pos._2)
-      matchfield.matchfieldarray(pos._1)(pos._2).containsThisTank = activeTank
-      Combat.lineOfSightContainsTank(GameStatus.activeTank, matchfield)
-      increaseTurnsGamestatemax
-      notifyObservers
+      matchfield.marray(activeTank.posC.get.x)(activeTank.posC.get.y).containsThisTank = None
+      activeTank.posC = Option(matchfield.marray(pos._1)(pos._2))
+      matchfield.marray(pos._1)(pos._2).containsThisTank = Option(activeTank)
+      Combat.lineOfSightContainsTank(GameStatus.activeTank.get, matchfield)
+      increaseTurnsGamestatemax()
+      notifyObservers()
     }
     else {
       print("Move not possible")
@@ -125,10 +120,10 @@ class Controller(var matchfield: GameField) extends Observable {
   }
 
   def movePossible(pos: (Int, Int)): Boolean = {
-    if (pos._1 > matchfield.gridsize_x - 1) {
+    if (pos._1 > matchfield.gridsX - 1) {
       return false
     }
-    if (pos._2 > matchfield.gridsize_y - 1) {
+    if (pos._2 > matchfield.gridsy - 1) {
       return false
     }
     if (pos._1 < 0) {
@@ -137,15 +132,14 @@ class Controller(var matchfield: GameField) extends Observable {
     if (pos._2 < 0) {
       return false
     }
-
-    if (matchfield.matchfieldarray(pos._1)(pos._2) != null) {
-      if (matchfield.matchfieldarray(pos._1)(pos._2).containsThisTank != null) {
+    if (matchfield.marray(pos._1)(pos._2) != null) {
+      if (matchfield.marray(pos._1)(pos._2).containsThisTank.isDefined) {
         return false
       }
-      if (matchfield.matchfieldarray(pos._1)(pos._2).cellobstacle == null) {
+      if (matchfield.marray(pos._1)(pos._2).cobstacle.isEmpty) {
         return true
       }
-      if (matchfield.matchfieldarray(pos._1)(pos._2).cellobstacle.passable) {
+      if (matchfield.marray(pos._1)(pos._2).cobstacle.get.passable) {
         return true
       }
     }

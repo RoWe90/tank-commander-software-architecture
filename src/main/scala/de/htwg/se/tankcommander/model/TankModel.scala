@@ -6,26 +6,8 @@ class TankModel() {
   val tankBaseDamage = 10
   val accuracy = 100
   var healthpoints = 100
-  var position: Cell = null
+  var posC:Option[Cell] = None
   var facing = "up"
-
-  def getPositionAsIntY(): Int = {
-    if (position != null) {
-      this.position.y
-    }
-    else {
-      1000
-    }
-  }
-
-  def getPositionAsIntX(): Int = {
-    if (position != null) {
-      this.position.x
-    }
-    else {
-      1000
-    }
-  }
 
 }
 

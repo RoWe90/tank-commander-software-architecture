@@ -1,9 +1,9 @@
 package de.htwg.se.tankcommander.model
 
 class Cell(x1: Integer, y1: Integer) {
-  val x = x1;
-  val y = y1;
-  var cellobstacle: Obstacle = null
-  var containsThisTank: TankModel = null
-
+  val x:Int = x1
+  val y:Int = y1
+  var cobstacle: Option[Obstacle] = None
+  var containsThisTank: Option[TankModel] = None
 }
+
