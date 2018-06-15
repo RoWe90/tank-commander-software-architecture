@@ -1,9 +1,11 @@
 package de.htwg.se.tankcommander.controller
 
 import de.htwg.se.tankcommander.model.{GameField, Player, TankModel}
-import de.htwg.se.tankcommander.util.Observable
+import de.htwg.se.tankcommander.util.{Observable, UndoManager}
 
 class Controller(var matchfield: GameField) extends Observable {
+  private val undoManager = new UndoManager
+
   def createNewMap(): Unit = {
     matchfield = new GameField
   }
@@ -14,8 +16,8 @@ class Controller(var matchfield: GameField) extends Observable {
     val player1 = Player(scala.io.StdIn.readLine())
     print("Player 2 please choose your Name" + "\n")
     val player2 = Player(scala.io.StdIn.readLine())
-    val tank1 = new TankModel()
-    val tank2 = new TankModel()
+    var tank1 = new TankModel()
+    var tank2 = new TankModel()
     fillGameFieldWithTank((0, 5), tank1)
     fillGameFieldWithTank((10, 5), tank2)
     GameStatus.activePlayer = Option(player1)
@@ -38,7 +40,7 @@ class Controller(var matchfield: GameField) extends Observable {
   def shoot(): Unit = {
     if (GameStatus.currentHitChance > 0) {
       if (Combat.simShot()) {
-        endGame()
+        endGame
       }
       increaseTurnsGamestatemax()
     } else {
@@ -46,7 +48,7 @@ class Controller(var matchfield: GameField) extends Observable {
     }
   }
 
-  def endGame(): Unit = {
+  def endGame: Unit = {
     print(GameStatus.activePlayer.get + " Won\n")
   }
 
@@ -86,7 +88,7 @@ class Controller(var matchfield: GameField) extends Observable {
   }
 
   def moveTank(input: String): Unit = {
-    val activeTank = GameStatus.activeTank.get
+    var activeTank = GameStatus.activeTank.get
     var temp: (Int, Int) = (activeTank.posC.get.x, activeTank.posC.get.y)
     input match {
       case "up" =>
@@ -123,34 +125,56 @@ class Controller(var matchfield: GameField) extends Observable {
   }
 
   def movePossible(pos: (Int, Int)): Boolean = {
-    var possible: Boolean = false
     if (pos._1 > matchfield.gridsX - 1) {
-      possible = false
+      return false
     }
     if (pos._2 > matchfield.gridsy - 1) {
-      possible = false
+      return false
     }
     if (pos._1 < 0) {
-      possible = false
+      return false
     }
     if (pos._2 < 0) {
-      possible = false
+      return false
     }
     if (matchfield.marray(pos._1)(pos._2) != null) {
       if (matchfield.marray(pos._1)(pos._2).containsThisTank.isDefined) {
-        possible = false
+        return false
       }
       if (matchfield.marray(pos._1)(pos._2).cobstacle.isEmpty) {
-        possible = true
+        return true
       }
       if (matchfield.marray(pos._1)(pos._2).cobstacle.get.passable) {
-        possible = true
+        return true
       }
     }
-    possible
+    false
   }
 
   def matchfieldToString: String = matchfield.toString
+
+  def solve: Unit = {
+    undoManager.doStep(new MoveCommand(this))
+    notifyObservers
+  }
+
+  def undo: Unit = {
+    undoManager.undoStep
+    notifyObservers
+  }
+
+  def redo: Unit = {
+    undoManager.redoStep
+    notifyObservers
+  }
+
+
+
+
+
+
+
+
 }
 
 
