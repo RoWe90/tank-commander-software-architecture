@@ -1,7 +1,6 @@
 package de.htwg.se.tankcommander.model
 
-case class Player(namePar: String) {
-  val name = namePar;
+case class Player(name: String) {
   override def toString: String = name
 
 }
