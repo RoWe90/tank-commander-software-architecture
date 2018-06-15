@@ -62,13 +62,13 @@ object Combat {
           }
         }
     }
-    (false, 0, 0, 0)
+
   }
 
   def calcHitChance(gunner: TankModel, target: TankModel, distance: Int, List: List[Obstacle]): Int = {
     var obstacleMalus = 0
     List.foreach(n => obstacleMalus += n.hitmalus)
-    var hitchance = GameStatus.activeTank.get.accuracy - (distance * 10) - obstacleMalus
+    val hitchance = GameStatus.activeTank.get.accuracy - (distance * 10) - obstacleMalus
     if (hitchance > 0) {
       hitchance
     } else {
@@ -80,7 +80,7 @@ object Combat {
     val r = new scala.util.Random
     val r1 = r.nextInt(100)
     if (GameStatus.currentHitChance >= r1) {
-      var dmg = GameStatus.activeTank.get.tankBaseDamage+40
+      val dmg = GameStatus.activeTank.get.tankBaseDamage + 40
       dealDmgTo( dmg)
       print("You did: " + dmg + " dmg\n")
       if (GameStatus.passiveTank.get.healthpoints <= 0) {

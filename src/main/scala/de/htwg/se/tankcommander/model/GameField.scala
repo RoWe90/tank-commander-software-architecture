@@ -59,7 +59,7 @@ case class GameField() {
         }
       }
     }
-    output.append(GameStatus.currentHitChance + "\n")
+    output.append("Hitchance: " + GameStatus.currentHitChance + "\n")
     output.toString()
   }
 }

@@ -12,8 +12,6 @@ object GameStatus {
   var currentPlayerActions = 2
   var currentHitChance = 0
 
-
-
   def changeActivePlayer(): Unit = {
     currentHitChance = 0
     val temp = activePlayer
