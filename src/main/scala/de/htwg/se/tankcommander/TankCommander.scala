@@ -10,9 +10,7 @@ object TankCommander {
 
   def main(args: Array[String]): Unit = {
     var input: String = ""
-    println("Hauptmenü")
-    println("Start")
-    println("Exit")
+    print("Hauptmenü\nStart\nExit\n")
     do {
       input = scala.io.StdIn.readLine()
       if (input != "Exit") {

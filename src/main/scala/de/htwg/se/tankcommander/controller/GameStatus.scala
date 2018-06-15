@@ -14,8 +14,8 @@ object GameStatus {
 
 
 
-
   def changeActivePlayer(): Unit = {
+    currentHitChance = 0
     val temp = activePlayer
     val temp2 = activeTank
     activePlayer = passivePlayer

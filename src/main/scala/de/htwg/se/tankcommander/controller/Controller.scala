@@ -25,6 +25,31 @@ class Controller(var matchfield: GameField) extends Observable {
     notifyObservers()
   }
 
+  def turnTank(facing: String): Unit = {
+    facing match {
+      case "up" | "down" | "left" | "right" => GameStatus.activeTank.get.facing = facing
+        print("tank turned " + facing)
+        Combat.lineOfSightContainsTank(matchfield)
+        notifyObservers()
+      case _ => print("not a viable command\n")
+    }
+  }
+
+  def shoot(): Unit = {
+    if (GameStatus.currentHitChance > 0) {
+      if (Combat.simShot()) {
+        endGame
+      }
+      increaseTurnsGamestatemax()
+    } else {
+      print("No Target in sight\n")
+    }
+  }
+
+  def endGame: Unit = {
+    print(GameStatus.activePlayer.get + " Won\n")
+  }
+
   //noinspection ScalaStyle
   def fillGameFieldWithTank(pos: (Int, Int), tank: TankModel): Unit = {
     tank.posC = Option(matchfield.marray(pos._1)(pos._2))
@@ -33,26 +58,8 @@ class Controller(var matchfield: GameField) extends Observable {
 
   def endTurn(): Unit = {
     GameStatus.changeActivePlayer()
+    Combat.lineOfSightContainsTank(matchfield)
     notifyObservers()
-  }
-
-  def turnTank(facing: String): Unit = {
-    facing match {
-      case "up" | "down" | "left" | "right" => GameStatus.activeTank.get.facing = facing
-        print("tank turned " + facing)
-        Combat.lineOfSightContainsTank(GameStatus.activeTank.get, matchfield)
-        notifyObservers()
-      case _ => print("not a viable command")
-    }
-  }
-
-  def shoot(): Unit = {
-    if (GameStatus.currentHitChance > 0) {
-      Combat.simShot(GameStatus.activeTank.get, GameStatus.passiveTank.get)
-      increaseTurnsGamestatemax()
-    } else {
-      print("No Target in sight")
-    }
   }
 
   def increaseTurnsGamestatemax(): Unit = {
@@ -106,12 +113,12 @@ class Controller(var matchfield: GameField) extends Observable {
       matchfield.marray(activeTank.posC.get.x)(activeTank.posC.get.y).containsThisTank = None
       activeTank.posC = Option(matchfield.marray(pos._1)(pos._2))
       matchfield.marray(pos._1)(pos._2).containsThisTank = Option(activeTank)
-      Combat.lineOfSightContainsTank(GameStatus.activeTank.get, matchfield)
+      Combat.lineOfSightContainsTank(matchfield)
       increaseTurnsGamestatemax()
       notifyObservers()
     }
     else {
-      print("Move not possible")
+      print("Move not possible\n")
     }
   }
 

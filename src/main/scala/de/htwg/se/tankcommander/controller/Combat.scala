@@ -1,15 +1,14 @@
 package de.htwg.se.tankcommander.controller
 
 import de.htwg.se.tankcommander.model.{GameField, Obstacle, TankModel}
-
 import scala.collection.mutable.ListBuffer
 
 //noinspection ScalaStyle
 object Combat {
-  def lineOfSightContainsTank(gunner: TankModel, matchfield: GameField): (Boolean, Int, Int, Int) = {
+  def lineOfSightContainsTank(matchfield: GameField): Unit = {
     val mXY: (Int, Int) = (matchfield.gridsX, matchfield.gridsy)
-    val tXY: (Int, Int) = (gunner.posC.get.x, gunner.posC.get.y)
-    gunner.facing match {
+    val tXY: (Int, Int) = (GameStatus.activeTank.get.posC.get.x, GameStatus.activeTank.get.posC.get.y)
+    GameStatus.activeTank.get.facing match {
       case "up" =>
         var obstacleList = new ListBuffer[Obstacle]()
         for (i <- (tXY._2 - 1) to 0 by -1) {
@@ -19,8 +18,8 @@ object Combat {
           //Tank in Passable Obstacle not considered
           if (matchfield.marray(tXY._1)(i).containsThisTank.isDefined) {
             val obstacleCalcList = obstacleList.toList
-            GameStatus.currentHitChance(calcHitChance(gunner,
-              matchfield.marray(tXY._1)(i).containsThisTank.get, i - tXY._2, obstacleCalcList))
+            GameStatus.currentHitChance = calcHitChance(GameStatus.activeTank.get,
+              matchfield.marray(tXY._1)(i).containsThisTank.get, i - tXY._2, obstacleCalcList)
           }
         }
 
@@ -32,8 +31,8 @@ object Combat {
           }
           if (matchfield.marray(i)(tXY._2).containsThisTank.isDefined) {
             val obstacleCalcList = obstacleList.toList
-            GameStatus.currentHitChance(calcHitChance(gunner,
-              matchfield.marray(i)(tXY._2).containsThisTank.get, tXY._1 - i, obstacleCalcList))
+            GameStatus.currentHitChance = calcHitChance(GameStatus.activeTank.get,
+              matchfield.marray(i)(tXY._2).containsThisTank.get, tXY._1 - i, obstacleCalcList)
           }
         }
 
@@ -45,8 +44,8 @@ object Combat {
           }
           if (matchfield.marray(tXY._1)(i).containsThisTank.isDefined) {
             val obstacleCalcList = obstacleList.toList
-            GameStatus.currentHitChance(calcHitChance(gunner,
-              matchfield.marray(tXY._1)(i).containsThisTank.get, tXY._2 - i, obstacleCalcList))
+            GameStatus.currentHitChance = calcHitChance(GameStatus.activeTank.get,
+              matchfield.marray(tXY._1)(i).containsThisTank.get, tXY._2 - i, obstacleCalcList)
           }
         }
 
@@ -58,8 +57,8 @@ object Combat {
           }
           if (matchfield.marray(i)(tXY._2).containsThisTank.isDefined) {
             val obstacleCalcList = obstacleList.toList
-            GameStatus.currentHitChance(calcHitChance(gunner,
-              matchfield.marray(i)(tXY._2).containsThisTank.get, i - tXY._1, obstacleCalcList))
+            GameStatus.currentHitChance = calcHitChance(GameStatus.activeTank.get,
+              matchfield.marray(i)(tXY._2).containsThisTank.get, i - tXY._1, obstacleCalcList)
           }
         }
     }
@@ -77,20 +76,25 @@ object Combat {
     }
   }
 
-  def simShot(gunner: TankModel, target: TankModel): Unit = {
+  def simShot(): Boolean = {
     val r = new scala.util.Random
     val r1 = r.nextInt(100)
     if (GameStatus.currentHitChance >= r1) {
-      var dmg = gunner.tankBaseDamage
-      takeDmg(target, dmg)
-      print("You did: " + dmg + " dmg")
+      var dmg = GameStatus.activeTank.get.tankBaseDamage+40
+      dealDmgTo( dmg)
+      print("You did: " + dmg + " dmg\n")
+      if (GameStatus.passiveTank.get.healthpoints <= 0) {
+        return true
+      }
+      false
     } else {
-      print("sadly you missed")
+      print("sadly you missed\n")
+      false
     }
   }
 
-  def takeDmg(target: TankModel, dmg: Int): Unit = {
-    target.healthpoints -= dmg
+  def dealDmgTo(dmg: Int): Unit = {
+    GameStatus.passiveTank.get.healthpoints -= dmg
   }
 }
 
