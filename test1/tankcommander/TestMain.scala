@@ -1,0 +1,5 @@
+package tankcommander
+
+class TestMain {
+
+}
