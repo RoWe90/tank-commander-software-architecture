@@ -14,8 +14,8 @@ class Controller(var matchfield: GameField) extends Observable {
     val player1 = Player(scala.io.StdIn.readLine())
     print("Player 2 please choose your Name" + "\n")
     val player2 = Player(scala.io.StdIn.readLine())
-    var tank1 = new TankModel()
-    var tank2 = new TankModel()
+    val tank1 = new TankModel()
+    val tank2 = new TankModel()
     fillGameFieldWithTank((0, 5), tank1)
     fillGameFieldWithTank((10, 5), tank2)
     GameStatus.activePlayer = Option(player1)
@@ -38,7 +38,7 @@ class Controller(var matchfield: GameField) extends Observable {
   def shoot(): Unit = {
     if (GameStatus.currentHitChance > 0) {
       if (Combat.simShot()) {
-        endGame
+        endGame()
       }
       increaseTurnsGamestatemax()
     } else {
@@ -46,7 +46,7 @@ class Controller(var matchfield: GameField) extends Observable {
     }
   }
 
-  def endGame: Unit = {
+  def endGame(): Unit = {
     print(GameStatus.activePlayer.get + " Won\n")
   }
 
@@ -86,7 +86,7 @@ class Controller(var matchfield: GameField) extends Observable {
   }
 
   def moveTank(input: String): Unit = {
-    var activeTank = GameStatus.activeTank.get
+    val activeTank = GameStatus.activeTank.get
     var temp: (Int, Int) = (activeTank.posC.get.x, activeTank.posC.get.y)
     input match {
       case "up" =>
@@ -123,30 +123,31 @@ class Controller(var matchfield: GameField) extends Observable {
   }
 
   def movePossible(pos: (Int, Int)): Boolean = {
+    var possible: Boolean = false
     if (pos._1 > matchfield.gridsX - 1) {
-      return false
+      possible = false
     }
     if (pos._2 > matchfield.gridsy - 1) {
-      return false
+      possible = false
     }
     if (pos._1 < 0) {
-      return false
+      possible = false
     }
     if (pos._2 < 0) {
-      return false
+      possible = false
     }
     if (matchfield.marray(pos._1)(pos._2) != null) {
       if (matchfield.marray(pos._1)(pos._2).containsThisTank.isDefined) {
-        return false
+        possible = false
       }
       if (matchfield.marray(pos._1)(pos._2).cobstacle.isEmpty) {
-        return true
+        possible = true
       }
       if (matchfield.marray(pos._1)(pos._2).cobstacle.get.passable) {
-        return true
+        possible = true
       }
     }
-    false
+    possible
   }
 
   def matchfieldToString: String = matchfield.toString
