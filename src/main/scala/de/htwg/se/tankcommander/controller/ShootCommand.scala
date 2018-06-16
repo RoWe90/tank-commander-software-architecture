@@ -1,22 +1,19 @@
 package de.htwg.se.tankcommander.controller
 
 import de.htwg.se.tankcommander.util.Command
-import de.htwg.se.tankcommander.model.GameField
+import de.htwg.se.tankcommander.model.{GameField, Shooter}
 
 class ShootCommand(controller: Controller) extends Command {
-  var memento: GameField = controller.matchfield
   var backupGameStatus: GameStatusBackUp = controller.createGameStatusBackup
 
   override def doStep: Unit = {
-    memento = controller.matchfield
-    backupGameStatus = controller.createGameStatusBackup
 
+    backupGameStatus = controller.createGameStatusBackup
+    var shooter = new Shooter
+    shooter.shoot()
   }
 
   override def undoStep: Unit = {
-    val new_memento = controller.matchfield
-    controller.matchfield = memento
-    memento = new_memento
 
     val new_memento2 = controller.createGameStatusBackup
     GameStatus.restoreGameStatus(new_memento2)
@@ -24,9 +21,6 @@ class ShootCommand(controller: Controller) extends Command {
   }
 
   override def redoStep: Unit = {
-    val new_memento = controller.matchfield
-    controller.matchfield = memento
-    memento = new_memento
 
     val new_memento2 = controller.createGameStatusBackup
     GameStatus.restoreGameStatus(new_memento2)

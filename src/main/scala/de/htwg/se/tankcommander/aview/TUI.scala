@@ -6,33 +6,35 @@ import de.htwg.se.tankcommander.util.Observer
 //noinspection ScalaStyle
 class TUI(controller: Controller) extends Observer {
   controller.add(this)
+  var commandlist = List("start", "up", "down", "right", "left", "exit", "shoot", "end turn", "undo", "redo")
 
   def processInputLine(input: String): Unit = {
     input.toLowerCase match {
       case "start" => print("Das Spiel startet, macht euch bereit" + "\n")
-        controller.createNewGameField()
         controller.setUpGame()
       case "exit" =>
-
-      case "up" if controller.checkIfPlayerHasMovesLeft() => controller.moveTank(input)
-      case "down" if controller.checkIfPlayerHasMovesLeft() => controller.moveTank(input)
-      case "left" if controller.checkIfPlayerHasMovesLeft() => controller.moveTank(input)
-      case "right" if controller.checkIfPlayerHasMovesLeft() => controller.moveTank(input)
-      case "shoot" if controller.checkIfPlayerHasMovesLeft() => controller.shootC()
       case "end turn" => controller.endTurnChangeActivePlayer()
       case "undo" => controller.undo()
       case "redo" => controller.redo()
       case _ =>
-        print("Not a viable Command")
+    }
+    if (controller.checkIfPlayerHasMovesLeft()) {
+      input.toLowerCase match {
+        case "up" => controller.move(input)
+        case "down" => controller.move(input)
+        case "left" => controller.move(input)
+        case "right" => controller.move(input)
+        case "shoot" => controller.shootC()
+        case _ =>
+      }
     }
   }
 
   override def update: Unit = {
     print(controller.matchfieldToString)
-    print("aktiver Player: " + GameStatus.activePlayer.get + " TankHitpoints: " +
-      GameStatus.activeTank.get.healthpoints + "\n" + " MovesLeft: " + GameStatus.currentPlayerActions + " TankFacing: "
-      + GameStatus.activeTank.get.facing + "\n")
-    print("passiver Player: " + GameStatus.passivePlayer.get + " TankHitpoints: " +
+    print("aktiver Spieler: " + GameStatus.activePlayer.get + " Hitpoints: " +
+      GameStatus.activeTank.get.healthpoints + "\n" + "MovesLeft: " + GameStatus.currentPlayerActions + "\n")
+    print("passiver Spieler: " + GameStatus.passivePlayer.get + " Hitpoints: " +
       GameStatus.passiveTank.get.healthpoints + "\n")
   }
 }

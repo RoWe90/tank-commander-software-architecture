@@ -22,6 +22,7 @@ class MoveCommand(controller: Controller,s:String) extends Command {
     val new_memento2 = controller.createGameStatusBackup
     GameStatus.restoreGameStatus(new_memento2)
     backupGameStatus = controller.createGameStatusBackup
+
   }
 
   override def redoStep: Unit = {
@@ -32,6 +33,7 @@ class MoveCommand(controller: Controller,s:String) extends Command {
     val new_memento2 = controller.createGameStatusBackup
     GameStatus.restoreGameStatus(new_memento2)
     backupGameStatus = controller.createGameStatusBackup
+
   }
 }
 

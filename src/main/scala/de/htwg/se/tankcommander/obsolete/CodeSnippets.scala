@@ -55,5 +55,19 @@ class CodeSnippets {
         }
     }
 
+  def getCurrentHitChanceOfGameStatus: Int = {
+    GameStatus.currentHitChance
+  }
+
+    def turnTank(facing: String): Unit = {
+    facing match {
+      case "up" | "down" | "left" | "right" => GameStatus.activeTank.get.facing = facing
+        print("tank turned " + facing)
+        lineOfSightContainsTank()
+        notifyObservers()
+      case _ => print("not a viable command\n")
+    }
+  }
+
   }*/
 }
