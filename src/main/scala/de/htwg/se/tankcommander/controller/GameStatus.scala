@@ -3,6 +3,7 @@ package de.htwg.se.tankcommander.controller
 import de.htwg.se.tankcommander.model.{Player, TankModel}
 
 //noinspection ScalaStyle
+
 object GameStatus {
   var activePlayer: Option[Player] = None
   var passivePlayer: Option[Player] = None
@@ -13,7 +14,6 @@ object GameStatus {
   var currentHitChance = 0
 
   def changeActivePlayer(): Unit = {
-    currentHitChance = 0
     val temp = activePlayer
     val temp2 = activeTank
     activePlayer = passivePlayer
@@ -23,4 +23,15 @@ object GameStatus {
     currentPlayerActions = 2
     movesLeft = true
   }
+
+  def restoreGameStatus(gameStatusBackUp: GameStatusBackUp): Unit = {
+    activePlayer = gameStatusBackUp.activePlayer
+    passivePlayer = gameStatusBackUp.passivePlayer
+    activeTank = gameStatusBackUp.activeTank
+    passiveTank = gameStatusBackUp.passiveTank
+    movesLeft = gameStatusBackUp.movesLeft
+    currentPlayerActions = gameStatusBackUp.currentPlayerActions
+    currentHitChance = gameStatusBackUp.currentHitChance
+  }
+
 }

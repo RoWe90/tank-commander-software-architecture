@@ -21,7 +21,7 @@ class Hill extends Obstacle {
   override val desc: String = "Ermöglichen direkten Beschuss mapweit"
   override val passable: Boolean = true
   override val shortName: String = "H"
-  override val hitmalus: Int = 100
+  override val hitmalus: Int = 20
 }
 
 class Rock extends Obstacle {

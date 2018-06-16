@@ -1,24 +1,37 @@
 package de.htwg.se.tankcommander.controller
 
 import de.htwg.se.tankcommander.util.Command
-import de.htwg.se.tankcommander.model.{GameField}
+import de.htwg.se.tankcommander.model.{GameField, Mover}
 
-class MoveCommand(controller: Controller) extends Command {
-  var backupMatchfield: GameField = controller.matchfield
+//Success or not yet to be implemented
+class MoveCommand(controller: Controller,s:String) extends Command {
+  var memento: GameField = controller.matchfield
+  var backupGameStatus: GameStatusBackUp = controller.createGameStatusBackup
 
   override def doStep: Unit = {
+    memento = controller.matchfield
+    backupGameStatus = controller.createGameStatusBackup
+    controller.matchfield  = new Mover(controller.matchfield).moveTank(s)
   }
 
   override def undoStep: Unit = {
     val new_memento = controller.matchfield
-    controller.matchfield = backupMatchfield
-    backupMatchfield = new_memento
+    controller.matchfield = memento
+    memento = new_memento
+
+    val new_memento2 = controller.createGameStatusBackup
+    GameStatus.restoreGameStatus(new_memento2)
+    backupGameStatus = controller.createGameStatusBackup
   }
 
   override def redoStep: Unit = {
     val new_memento = controller.matchfield
-    controller.matchfield = backupMatchfield
-    backupMatchfield = new_memento
+    controller.matchfield = memento
+    memento = new_memento
+
+    val new_memento2 = controller.createGameStatusBackup
+    GameStatus.restoreGameStatus(new_memento2)
+    backupGameStatus = controller.createGameStatusBackup
   }
 }
 

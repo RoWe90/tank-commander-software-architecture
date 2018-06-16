@@ -10,23 +10,20 @@ class TUI(controller: Controller) extends Observer {
   def processInputLine(input: String): Unit = {
     input.toLowerCase match {
       case "start" => print("Das Spiel startet, macht euch bereit" + "\n")
-        controller.createNewGamefield()
+        controller.createNewGameField()
         controller.setUpGame()
       case "exit" =>
+
       case "up" if controller.checkIfPlayerHasMovesLeft() => controller.moveTank(input)
       case "down" if controller.checkIfPlayerHasMovesLeft() => controller.moveTank(input)
       case "left" if controller.checkIfPlayerHasMovesLeft() => controller.moveTank(input)
       case "right" if controller.checkIfPlayerHasMovesLeft() => controller.moveTank(input)
-      case "shoot" if controller.checkIfPlayerHasMovesLeft() => controller.shoot()
+      case "shoot" if controller.checkIfPlayerHasMovesLeft() => controller.shootC()
       case "end turn" => controller.endTurnChangeActivePlayer()
-      case _ if input.contains("turn") =>
-        if (input.contains("up")) controller.turnTank("up")
-        else if (input.contains("down")) controller.turnTank("down")
-        else if (input.contains("right")) controller.turnTank("right")
-        else if (input.contains("left")) controller.turnTank("left")
-        else print("cant turn tank this way\n")
+      case "undo" => controller.undo()
+      case "redo" => controller.redo()
       case _ =>
-        print("")
+        print("Not a viable Command")
     }
   }
 
