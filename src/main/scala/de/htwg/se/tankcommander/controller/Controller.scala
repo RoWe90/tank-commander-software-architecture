@@ -48,16 +48,15 @@ class Controller(var matchfield: GameField) extends Observable {
     facing match {
       case "up" | "down" | "left" | "right" => GameStatus.activeTank.get.facing = facing
         print("tank turned " + facing)
-        lineOfSightContainsTank(matchfield)
+        lineOfSightContainsTank()
         notifyObservers()
       case _ => print("not a viable command\n")
     }
   }
 
-
   def endTurn(): Unit = {
     GameStatus.changeActivePlayer()
-    lineOfSightContainsTank(matchfield)
+    lineOfSightContainsTank()
     notifyObservers()
   }
 
@@ -67,7 +66,6 @@ class Controller(var matchfield: GameField) extends Observable {
       GameStatus.movesLeft = false
     }
   }
-
 
   def endTurnChangeActivePlayer(): Unit = {
     print("Runde beendet Spielerwechsel")
@@ -84,11 +82,9 @@ class Controller(var matchfield: GameField) extends Observable {
     }
   }
 
-
   def getCurrentHitChanceOfGameStatus: Int = {
     GameStatus.currentHitChance
   }
-
 
   def moveTank(input: String): Unit = {
     val activeTank = GameStatus.activeTank.get
@@ -141,7 +137,7 @@ class Controller(var matchfield: GameField) extends Observable {
       matchfield.marray(activeTank.posC.get.x)(activeTank.posC.get.y).containsThisTank = None
       activeTank.posC = Option(matchfield.marray(pos._1)(pos._2))
       matchfield.marray(pos._1)(pos._2).containsThisTank = Option(activeTank)
-      lineOfSightContainsTank(matchfield)
+      lineOfSightContainsTank()
       increaseTurnsGamestatemax()
       notifyObservers()
     }
@@ -150,87 +146,70 @@ class Controller(var matchfield: GameField) extends Observable {
     }
   }
 
-  def lineOfSightContainsTank2(): Unit = {
-    val aXY = (GameStatus.activeTank.get.posC.get.x, GameStatus.activeTank.get.posC.get.y)
-    val pXY = (GameStatus.passiveTank.get.posC.get.x, GameStatus.passiveTank.get.posC.get.y)
-    val cXY: (Int, Int) = (aXY._1 - pXY._1, aXY._2 - pXY._2)
+  def lineOfSightContainsTank(): Unit = {
+    val atXY = (GameStatus.activeTank.get.posC.get.x, GameStatus.activeTank.get.posC.get.y)
+    val ptXY = (GameStatus.passiveTank.get.posC.get.x, GameStatus.passiveTank.get.posC.get.y)
+    val cXY: (Int, Int) = (atXY._1 - ptXY._1, atXY._2 - ptXY._2)
     var obstacleList = new ListBuffer[Obstacle]()
     cXY match {
+      //Über oder unter
       case (0, _) =>
         cXY match {
-          //Hoch
-          case _ if cXY._2.isPosInfinity =>
-
-          //Runter
-          case _ if cXY._2.isNegInfinity =>
-
+          //Hoch zählt runter
+          case _ if cXY._2 > 0 =>
+            GameStatus.activeTank.get.facing = "up"
+            for (i <- (atXY._2 - 1) to ptXY._2 by -1) {
+              if (matchfield.marray(atXY._1)(i).cobstacle.isDefined) {
+                obstacleList += matchfield.marray(atXY._1)(i).cobstacle.get
+              }
+              if (matchfield.marray(atXY._1)(i).containsThisTank.isDefined) {
+                val obstacleCalcList = obstacleList.toList
+                GameStatus.currentHitChance = calcHitChance(atXY._2 - ptXY._2, obstacleCalcList)
+              }
+            }
+          //Runter zählt hoch
+          case _ if cXY._2 < 0 =>
+            GameStatus.activeTank.get.facing = "down"
+            for (i <- (atXY._2 + 1) until ptXY._2) {
+              if (matchfield.marray(atXY._1)(i).cobstacle.isDefined) {
+                obstacleList += matchfield.marray(atXY._1)(i).cobstacle.get
+              }
+              if (matchfield.marray(atXY._1)(i).containsThisTank.isDefined) {
+                val obstacleCalcList = obstacleList.toList
+                GameStatus.currentHitChance = calcHitChance(ptXY._2 - atXY._2, obstacleCalcList)
+              }
+            }
         }
+      //Rechts oder links
       case (_, 0) =>
         cXY match {
-          //Links
-          case _ if cXY._1.isPosInfinity =>
-
-          //Rechts
-          case _ if cXY._1.isNegInfinity =>
-
+          //Links zählt runter
+          case _ if cXY._1 > 0 =>
+            GameStatus.activeTank.get.facing = "right"
+            for (i <- (atXY._1 - 1) to ptXY._1 by -1) {
+              if (matchfield.marray(i)(atXY._2).cobstacle.isDefined) {
+                obstacleList += matchfield.marray(i)(atXY._2).cobstacle.get
+              }
+              if (matchfield.marray(i)(atXY._2).containsThisTank.isDefined) {
+                val obstacleCalcList = obstacleList.toList
+                GameStatus.currentHitChance = calcHitChance(atXY._1 - ptXY._1, obstacleCalcList)
+              }
+            }
+          //Rechts zählt hoch
+          case _ if cXY._1 < 0 =>
+            GameStatus.activeTank.get.facing = "left"
+            for (i <- (atXY._1 + 1) until ptXY._1) {
+              if (matchfield.marray(i)(atXY._2).cobstacle.isDefined) {
+                obstacleList += matchfield.marray(i)(atXY._2).cobstacle.get
+              }
+              if (matchfield.marray(i)(atXY._2).containsThisTank.isDefined) {
+                val obstacleCalcList = obstacleList.toList
+                GameStatus.currentHitChance = calcHitChance(ptXY._1 - atXY._1, obstacleCalcList)
+              }
+            }
         }
+      case _ => GameStatus.currentHitChance = 0
     }
-  }
-
-
-  def lineOfSightContainsTank(matchfield: GameField): Unit = {
-    val mXY: (Int, Int) = (matchfield.gridsX, matchfield.gridsy)
-    val tXY: (Int, Int) = (GameStatus.activeTank.get.posC.get.x, GameStatus.activeTank.get.posC.get.y)
-    GameStatus.activeTank.get.facing match {
-      case "up" =>
-        var obstacleList = new ListBuffer[Obstacle]()
-        for (i <- (tXY._2 - 1) to 0 by -1) {
-          if (matchfield.marray(tXY._1)(i).cobstacle.isDefined) {
-            obstacleList += matchfield.marray(tXY._1)(i).cobstacle.get
-          }
-          if (matchfield.marray(tXY._1)(i).containsThisTank.isDefined) {
-            val obstacleCalcList = obstacleList.toList
-            GameStatus.currentHitChance = calcHitChance(i - tXY._2, obstacleCalcList)
-          }
-        }
-
-      case "left" =>
-        var obstacleList = new ListBuffer[Obstacle]()
-        for (i <- (tXY._1 - 1) to 0 by -1) {
-          if (matchfield.marray(i)(tXY._2).cobstacle.isDefined) {
-            obstacleList += matchfield.marray(i)(tXY._2).cobstacle.get
-          }
-          if (matchfield.marray(i)(tXY._2).containsThisTank.isDefined) {
-            val obstacleCalcList = obstacleList.toList
-            GameStatus.currentHitChance = calcHitChance(tXY._1 - i, obstacleCalcList)
-          }
-        }
-
-      case "down" =>
-        var obstacleList = new ListBuffer[Obstacle]()
-        for (i <- (tXY._2 + 1) until mXY._2) {
-          if (matchfield.marray(tXY._1)(i).cobstacle.isDefined) {
-            obstacleList += matchfield.marray(tXY._1)(i).cobstacle.get
-          }
-          if (matchfield.marray(tXY._1)(i).containsThisTank.isDefined) {
-            val obstacleCalcList = obstacleList.toList
-            GameStatus.currentHitChance = calcHitChance(tXY._2 - i, obstacleCalcList)
-          }
-        }
-
-      case "right" =>
-        var obstacleList = new ListBuffer[Obstacle]()
-        for (i <- (tXY._2 + 1) until mXY._1) {
-          if (matchfield.marray(i)(tXY._2).cobstacle.isDefined) {
-            obstacleList += matchfield.marray(i)(tXY._2).cobstacle.get
-          }
-          if (matchfield.marray(i)(tXY._2).containsThisTank.isDefined) {
-            val obstacleCalcList = obstacleList.toList
-            GameStatus.currentHitChance = calcHitChance(i - tXY._1, obstacleCalcList)
-          }
-        }
-    }
-
   }
 
   /*
@@ -282,7 +261,11 @@ class Controller(var matchfield: GameField) extends Observable {
 
   def matchfieldToString: String = matchfield.toString
 
-  def solve(): Unit = {
+  /*
+ * Undo manager
+ */
+
+  def move(): Unit = {
     undoManager.doStep(new MoveCommand(this))
     notifyObservers()
   }
@@ -296,7 +279,6 @@ class Controller(var matchfield: GameField) extends Observable {
     undoManager.redoStep
     notifyObservers()
   }
-
 
 }
 
