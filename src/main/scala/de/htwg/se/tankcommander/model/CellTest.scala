@@ -1,11 +1,14 @@
 package de.htwg.se.tankcommander.model
 
-import org.scalatest._
+import org.scalatest.{FlatSpec, Matchers}
 
 class CellTest extends FlatSpec with Matchers {
-  "Cell" should "have an x and y coordinate" in {
+  "Cell" should "initialise correctly" in {
     val cell = new Cell(Position(1, 0))
+    assert(cell.y === 0)
     assert(cell.x === 1)
+    assert(cell.cobstacle === None)
+    assert(cell.containsThisTank === None)
 
   }
 }
