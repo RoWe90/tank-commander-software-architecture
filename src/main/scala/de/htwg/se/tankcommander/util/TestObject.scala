@@ -5,7 +5,7 @@ class TestObject extends Observer {
 }
 
 object ObserverPattern {
-  val observable = new Observable //> observable  : de.htwg.util.Observable = de.htwg.util.Observable@23394894
+  val observable = new Observable //> observable  : de.htwg.de.htwg.se.tankcommander.util.Observable = de.htwg.de.htwg.se.tankcommander.util.Observable@23394894
   val observer1 = new TestObject //> observer1  : TestObject = TestObject@630045eb
   val observer2 = new TestObject //> observer2  : TestObject = TestObject@26ee7a14
   observable.add(observer1)
