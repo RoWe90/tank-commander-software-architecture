@@ -12,7 +12,7 @@ case class GameField() {
   def fillGameFieldWithCells(): Unit = {
     for (y <- 0 until gridsX) {
       for (x <- 0 until gridsy) {
-        marray(x)(y) = new Cell(x, y)
+        marray(x)(y) = new Cell(Position(x, y))
       }
     }
   }
