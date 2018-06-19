@@ -9,8 +9,8 @@ class TankModelTest extends FlatSpec with Matchers {
     val testTank = new TankModel
 
     assert(
-      testTank.tankBaseDamage === 10 & testTank.accuracy === 100 & testTank.healthpoints === 100
-        & testTank.posC === None & testTank.facing === "up"
+      testTank.tankBaseDamage === 10 & testTank.accuracy === 100 & testTank.hp === 100
+        & testTank.posC === (0,0) & testTank.facing === "up"
     )
   }
   /* it should "have damage dealt correctly" in {
