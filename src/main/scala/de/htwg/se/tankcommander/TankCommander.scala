@@ -13,7 +13,7 @@ object TankCommander {
     print("Hauptmenü\nStart\nExit\n")
 
     do {
-      input = scala.io.StdIn.readLine()
+      input = Console.readLine
       if (input != "Exit") {
         tui.processInputLine(input)
       }

@@ -1,4 +1,4 @@
-package de.htwg.se.tankcommander.aview.gui
+/*package de.htwg.se.tankcommander.aview.gui
 
 import de.htwg.se.tankcommander.controller.controllerComponent.{CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged}
 import scala.swing._
@@ -116,3 +116,4 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     repaint
   }
 }
+*/

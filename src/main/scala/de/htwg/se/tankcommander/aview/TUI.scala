@@ -1,6 +1,5 @@
 package de.htwg.se.tankcommander.aview
 
-import de.htwg.se.tankcommander.controller.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.util.Observer

@@ -1,7 +1,6 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
-import de.htwg.se.tankcommander.model.Mover
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, Mover}
 import de.htwg.se.tankcommander.util.Command
 
