@@ -1,5 +1,6 @@
-package de.htwg.se.tankcommander.model
+package model
 
+import de.htwg.se.tankcommander.model.{Cell, Position}
 import org.scalatest.{FlatSpec, Matchers}
 
 class CellTest extends FlatSpec with Matchers {
