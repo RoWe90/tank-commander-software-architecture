@@ -2,7 +2,7 @@ package de.htwg.se.tankcommander.model
 
 import de.htwg.se.tankcommander.controller.GameStatus
 
-case class GameField() {
+class GameField() {
   val gridsX = 11
   val gridsy = 11
   var marray: Array[Array[Cell]] = Array.ofDim[Cell](gridsX, gridsy)
@@ -61,5 +61,11 @@ case class GameField() {
     }
     output.append("HS: " + GameStatus.currentHitChance + "\n")
     output.toString()
+  }
+
+  def backupGameField: GameField = {
+    val temp = new GameField
+    temp.marray = marray.clone()
+    temp
   }
 }

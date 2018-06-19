@@ -48,8 +48,8 @@ class Controller(var matchfield: GameField) extends Observable {
    * Methods to shoot stuff
    */
 
-  def createGameStatusBackup: GameStatusBackUp = {
-    val backup = new GameStatusBackUp
+  def createGameStatusBackup: GameStatus = {
+    val backup = new GameStatus
     backup
   }
   def checkIfPlayerHasMovesLeft(): Boolean = {

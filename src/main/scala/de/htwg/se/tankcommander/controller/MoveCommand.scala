@@ -4,14 +4,14 @@ import de.htwg.se.tankcommander.util.Command
 import de.htwg.se.tankcommander.model.{GameField, Mover}
 
 //Success or not yet to be implemented
-class MoveCommand(controller: Controller,s:String) extends Command {
-  var memento: GameField = controller.matchfield
-  var backupGameStatus: GameStatusBackUp = controller.createGameStatusBackup
+class MoveCommand(controller: Controller, s: String) extends Command {
+  var memento: GameField = new GameField
+  var backupGameStatus: GameStatus = new GameStatus
 
   override def doStep: Unit = {
-    memento = controller.matchfield
+    memento = controller.matchfield.backupGameField
     backupGameStatus = controller.createGameStatusBackup
-    controller.matchfield  = new Mover(controller.matchfield).moveTank(s)
+    controller.matchfield = new Mover(controller.matchfield).moveTank(s)
   }
 
   override def undoStep: Unit = {
