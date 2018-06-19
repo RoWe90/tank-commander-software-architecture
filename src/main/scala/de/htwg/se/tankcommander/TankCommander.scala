@@ -1,8 +1,8 @@
 package de.htwg.se.tankcommander
 
 import de.htwg.se.tankcommander.aview.TUI
-import de.htwg.se.tankcommander.controller.Controller
-import de.htwg.se.tankcommander.model.GameField
+import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.GameField
 
 object TankCommander {
   val controller = new Controller(new GameField)
@@ -11,6 +11,7 @@ object TankCommander {
   def main(args: Array[String]): Unit = {
     var input: String = ""
     print("Hauptmenü\nStart\nExit\n")
+
     do {
       input = scala.io.StdIn.readLine()
       if (input != "Exit") {

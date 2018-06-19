@@ -1,6 +1,4 @@
-package de.htwg.se.tankcommander.model
-
-import de.htwg.se.tankcommander.obsolete.Position
+package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
 class Cell(pos: (Int,Int)) {
   val x: Int = pos._1

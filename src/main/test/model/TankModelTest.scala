@@ -1,6 +1,6 @@
 package model
 
-import de.htwg.se.tankcommander.model.TankModel
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.TankModel
 import org.scalatest.{FlatSpec, Matchers}
 
 class TankModelTest extends FlatSpec with Matchers {

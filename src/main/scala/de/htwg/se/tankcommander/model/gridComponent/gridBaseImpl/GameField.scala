@@ -1,7 +1,6 @@
-package de.htwg.se.tankcommander.model
+package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
-import de.htwg.se.tankcommander.controller.GameStatus
-import de.htwg.se.tankcommander.obsolete.Position
+import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 
 class GameField() {
   val gridsX = 11

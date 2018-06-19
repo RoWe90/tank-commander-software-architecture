@@ -1,12 +1,13 @@
 package de.htwg.se.tankcommander.aview
 
-import de.htwg.se.tankcommander.controller.{Controller, GameStatus}
+import de.htwg.se.tankcommander.controller.GameStatus
+import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
+import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.util.Observer
 
 //noinspection ScalaStyle
 class TUI(controller: Controller) extends Observer {
   controller.add(this)
-  var commandlist = List("start", "up", "down", "right", "left", "exit", "shoot", "end turn", "undo", "redo")
 
   def processInputLine(input: String): Unit = {
     input.toLowerCase match {
@@ -24,7 +25,7 @@ class TUI(controller: Controller) extends Observer {
         case "down" => controller.move(input)
         case "left" => controller.move(input)
         case "right" => controller.move(input)
-        case "shoot" => controller.shootC()
+        case "shoot" => controller.shoot()
         case _ =>
       }
     }

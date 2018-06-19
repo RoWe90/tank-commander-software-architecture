@@ -1,6 +1,6 @@
-package de.htwg.se.tankcommander.model
+package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
-import de.htwg.se.tankcommander.controller.GameStatus
+import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 
 import scala.collection.mutable.ListBuffer
 

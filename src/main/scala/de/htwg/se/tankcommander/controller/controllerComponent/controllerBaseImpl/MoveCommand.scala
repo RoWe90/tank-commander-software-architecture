@@ -1,7 +1,9 @@
-package de.htwg.se.tankcommander.controller
+package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
+import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
+import de.htwg.se.tankcommander.model.Mover
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, Mover}
 import de.htwg.se.tankcommander.util.Command
-import de.htwg.se.tankcommander.model.{GameField, Mover}
 
 //Success or not yet to be implemented
 class MoveCommand(controller: Controller, s: String) extends Command {

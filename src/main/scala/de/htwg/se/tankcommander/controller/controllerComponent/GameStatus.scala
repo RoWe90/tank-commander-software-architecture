@@ -1,6 +1,7 @@
-package de.htwg.se.tankcommander.controller
+package de.htwg.se.tankcommander.controller.controllerComponent
 
-import de.htwg.se.tankcommander.model.{Player, TankModel}
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.TankModel
+import de.htwg.se.tankcommander.model.playerComponent.Player
 
 //noinspection ScalaStyle
 class GameStatus {

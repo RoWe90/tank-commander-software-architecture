@@ -1,6 +1,8 @@
-package de.htwg.se.tankcommander.controller
+package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.tankcommander.model.{GameField, Player, TankModel}
+import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, TankModel}
+import de.htwg.se.tankcommander.model.playerComponent.Player
 import de.htwg.se.tankcommander.util.{Observable, UndoManager}
 
 //noinspection ScalaStyle
@@ -18,7 +20,7 @@ class Controller(var matchfield: GameField) extends Observable {
     val player2 = Player(scala.io.StdIn.readLine())
     val tank1 = new TankModel()
     val tank2 = new TankModel()
-    fillGameFieldWithTank((0, 0), tank1, (10, 5), tank2)
+    fillGameFieldWithTank((0, 5), tank1, (10, 5), tank2)
     GameStatus.activePlayer = Option(player1)
     GameStatus.passivePlayer = Option(player2)
     GameStatus.activeTank = Option(tank1)
@@ -71,7 +73,7 @@ class Controller(var matchfield: GameField) extends Observable {
     notifyObservers()
   }
 
-  def shootC(): Unit = {
+  def shoot(): Unit = {
     undoManager.doStep(new ShootCommand(this))
     notifyObservers()
   }
