@@ -34,13 +34,13 @@ object GameStatus {
   }
 
   def restoreGameStatus(gameStatusBackUp: GameStatus): Unit = {
-    activePlayer = gameStatusBackUp.activePlayer
-    passivePlayer = gameStatusBackUp.passivePlayer
-    activeTank = gameStatusBackUp.activeTank
-    passiveTank = gameStatusBackUp.passiveTank
-    movesLeft = gameStatusBackUp.movesLeft
-    currentPlayerActions = gameStatusBackUp.currentPlayerActions
-    currentHitChance = gameStatusBackUp.currentHitChance
+    this.activePlayer = Option(gameStatusBackUp.activePlayer.get)
+    this.passivePlayer = Option(gameStatusBackUp.passivePlayer.get)
+    this.activeTank = Option(gameStatusBackUp.activeTank.get)
+    this.passiveTank = Option(gameStatusBackUp.passiveTank.get)
+    this.movesLeft = gameStatusBackUp.movesLeft
+    this.currentPlayerActions = gameStatusBackUp.currentPlayerActions
+    this.currentHitChance = gameStatusBackUp.currentHitChance
   }
 
   def increaseTurns(): Unit = {

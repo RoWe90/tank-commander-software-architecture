@@ -8,8 +8,8 @@ import scala.collection.mutable.ListBuffer
 class Mover(matchfield: GameField) {
 
   def lineOfSightContainsTank(): Unit = {
-    val atXY = (GameStatus.activeTank.get.posC.get.x, GameStatus.activeTank.get.posC.get.y)
-    val ptXY = (GameStatus.passiveTank.get.posC.get.x, GameStatus.passiveTank.get.posC.get.y)
+    val atXY = (GameStatus.activeTank.get.posC._1, GameStatus.activeTank.get.posC._2)
+    val ptXY = (GameStatus.passiveTank.get.posC._1, GameStatus.passiveTank.get.posC._2)
     val cXY: (Int, Int) = (atXY._1 - ptXY._1, atXY._2 - ptXY._2)
     var obstacleList = new ListBuffer[Obstacle]()
     cXY match {
@@ -90,7 +90,7 @@ class Mover(matchfield: GameField) {
 
   def moveTank(input: String): GameField = {
     val activeTank = GameStatus.activeTank.get
-    var positionOfActiveTank: (Int, Int) = (activeTank.posC.get.x, activeTank.posC.get.y)
+    var positionOfActiveTank: (Int, Int) = (activeTank.posC._1, activeTank.posC._2)
     var gameField: GameField = matchfield
     input match {
       case "up" =>
@@ -143,8 +143,8 @@ class Mover(matchfield: GameField) {
 
   def aMoveOfTank(pos: (Int, Int), activeTank: TankModel, x: Boolean): GameField = {
     if (x) {
-      matchfield.marray(activeTank.posC.get.x)(activeTank.posC.get.y).containsThisTank = None
-      activeTank.posC = Option(matchfield.marray(pos._1)(pos._2))
+      matchfield.marray(activeTank.posC._1)(activeTank.posC._2).containsThisTank = None
+      activeTank.posC = pos
       matchfield.marray(pos._1)(pos._2).containsThisTank = Option(activeTank)
       lineOfSightContainsTank()
       GameStatus.increaseTurns()

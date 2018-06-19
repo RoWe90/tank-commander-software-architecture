@@ -4,15 +4,13 @@ class TankModel() {
   val tankBaseDamage: Int = 10
   val accuracy: Int = 100
   var hp: Int = 100
-  var posC: Option[Cell] = None
+  var posC: (Int, Int) = (0, 0)
   var facing: String = "up"
 
   def deepClone(): TankModel = {
     val tankClone = new TankModel
     tankClone.hp = this.hp
-    if (this.posC.isDefined) {
-      tankClone.posC = Option(this.posC.get.deepClone())
-    }
+    tankClone.posC = this.posC
     tankClone.facing = this.facing
     tankClone
   }

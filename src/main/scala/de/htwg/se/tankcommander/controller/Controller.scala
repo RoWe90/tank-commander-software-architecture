@@ -18,7 +18,7 @@ class Controller(var matchfield: GameField) extends Observable {
     val player2 = Player(scala.io.StdIn.readLine())
     val tank1 = new TankModel()
     val tank2 = new TankModel()
-    fillGameFieldWithTank((0, 5), tank1, (10, 5), tank2)
+    fillGameFieldWithTank((0, 0), tank1, (10, 5), tank2)
     GameStatus.activePlayer = Option(player1)
     GameStatus.passivePlayer = Option(player2)
     GameStatus.activeTank = Option(tank1)
@@ -27,8 +27,8 @@ class Controller(var matchfield: GameField) extends Observable {
   }
 
   def fillGameFieldWithTank(pos: (Int, Int), tank: TankModel, pos2: (Int, Int), tank2: TankModel): Unit = {
-    tank.posC = Option(matchfield.marray(pos._1)(pos._2))
-    tank2.posC = Option(matchfield.marray(pos2._1)(pos2._2))
+    tank.posC = pos
+    tank2.posC = pos2
     matchfield.marray(pos._1)(pos._2).containsThisTank = Option(tank)
     matchfield.marray(pos2._1)(pos2._2).containsThisTank = Option(tank)
   }

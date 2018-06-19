@@ -1,6 +1,7 @@
 package model
 
 import de.htwg.se.tankcommander.model._
+import de.htwg.se.tankcommander.obsolete.Position
 import org.scalatest.{FlatSpec, Matchers}
 
 class GameFieldTest extends FlatSpec with Matchers {

@@ -5,8 +5,10 @@ import de.htwg.se.tankcommander.model.{GameField, Mover}
 
 //Success or not yet to be implemented
 class MoveCommand(controller: Controller, s: String) extends Command {
-  var memento: GameField = controller.matchfield.deepCopy
-  var backupGameStatus: GameStatus = controller.createGameStatusBackup
+  //noinspection ScalaStyle
+  var memento: GameField = null
+  //noinspection ScalaStyle
+  var backupGameStatus: GameStatus = null
 
   override def doStep: Unit = {
     memento = controller.matchfield.deepCopy
@@ -15,14 +17,13 @@ class MoveCommand(controller: Controller, s: String) extends Command {
   }
 
   override def undoStep: Unit = {
-    val new_memento = controller.matchfield
+    val new_memento = controller.matchfield.deepCopy
     controller.matchfield = memento
     memento = new_memento
 
     val new_memento2 = controller.createGameStatusBackup
-    GameStatus.restoreGameStatus(new_memento2)
-    backupGameStatus = controller.createGameStatusBackup
-
+    GameStatus.restoreGameStatus(backupGameStatus)
+    backupGameStatus = new_memento2
   }
 
   override def redoStep: Unit = {
@@ -31,8 +32,8 @@ class MoveCommand(controller: Controller, s: String) extends Command {
     memento = new_memento
 
     val new_memento2 = controller.createGameStatusBackup
-    GameStatus.restoreGameStatus(new_memento2)
-    backupGameStatus = controller.createGameStatusBackup
+    GameStatus.restoreGameStatus(backupGameStatus)
+    backupGameStatus = new_memento2
 
   }
 }

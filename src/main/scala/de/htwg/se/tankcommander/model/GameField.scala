@@ -1,6 +1,7 @@
 package de.htwg.se.tankcommander.model
 
 import de.htwg.se.tankcommander.controller.GameStatus
+import de.htwg.se.tankcommander.obsolete.Position
 
 class GameField() {
   val gridsX = 11
@@ -10,9 +11,9 @@ class GameField() {
   fillGameFieldCellsWithObstacles()
 
   def fillGameFieldWithCells(): Unit = {
-    for (y <- 0 until gridsX) {
-      for (x <- 0 until gridsy) {
-        marray(x)(y) = new Cell(Position(x, y))
+    for (x <- 0 until gridsX) {
+      for (y <- 0 until gridsy) {
+        marray(x)(y) = new Cell(x, y)
       }
     }
   }
@@ -65,8 +66,8 @@ class GameField() {
 
   def deepCopy: GameField = {
     val gameFieldClone: GameField = new GameField
-    for (y <- 0 until gridsX) {
-      for (x <- 0 until gridsy) {
+    for (x <- 0 until gridsX) {
+      for (y <- 0 until gridsy) {
         gameFieldClone.marray(x)(y) = this.marray(x)(y).deepClone()
       }
     }
