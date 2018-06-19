@@ -1,5 +1,6 @@
 package de.htwg.se.tankcommander.util
 
+import de.htwg.se.tankcommander.util.Command
 //noinspection ScalaStyle
 class UndoManager {
   private var undoStack: List[Command] = Nil

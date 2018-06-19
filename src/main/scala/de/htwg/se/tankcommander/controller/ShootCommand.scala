@@ -4,7 +4,7 @@ import de.htwg.se.tankcommander.util.Command
 import de.htwg.se.tankcommander.model.{GameField, Shooter}
 
 class ShootCommand(controller: Controller) extends Command {
-  var backupGameStatus: GameStatusBackUp = controller.createGameStatusBackup
+  var backupGameStatus: GameStatus = controller.createGameStatusBackup
 
   override def doStep: Unit = {
 

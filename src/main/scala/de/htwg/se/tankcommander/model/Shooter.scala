@@ -11,7 +11,7 @@ class Shooter {
       val dmg = GameStatus.activeTank.get.tankBaseDamage + 40
       dealDmgTo(dmg)
       print("You did: " + dmg + " dmg\n")
-      if (GameStatus.passiveTank.get.healthpoints <= 0) {
+      if (GameStatus.passiveTank.get.hp <= 0) {
         return true
       }
       false
@@ -21,8 +21,8 @@ class Shooter {
     }
   }
   def dealDmgTo(dmg: Int): Unit = {
-    GameStatus.passiveTank.get.healthpoints -= dmg
-    if(GameStatus.passiveTank.get.healthpoints<=0){
+    GameStatus.passiveTank.get.hp -= dmg
+    if(GameStatus.passiveTank.get.hp<=0){
       GameStatus.endGame()
     }
   }
