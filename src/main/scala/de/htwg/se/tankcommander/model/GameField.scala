@@ -63,9 +63,13 @@ class GameField() {
     output.toString()
   }
 
-  def backupGameField: GameField = {
-    val temp = new GameField
-    temp.marray = marray.clone()
-    temp
+  def deepCopy: GameField = {
+    val gameFieldClone: GameField = new GameField
+    for (y <- 0 until gridsX) {
+      for (x <- 0 until gridsy) {
+        gameFieldClone.marray(x)(y) = this.marray(x)(y).deepClone()
+      }
+    }
+    gameFieldClone
   }
 }

@@ -5,7 +5,7 @@ package de.htwg.se.tankcommander.model
 //noinspection ScalaStyle
 case class Position(x: Integer, y: Integer) {
 
-  override def clone(): Position = {
+  def DeepClone(): Position = {
   val posClone = new Position(this.x,this.y)
     posClone
   }

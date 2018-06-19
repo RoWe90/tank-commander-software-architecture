@@ -1,17 +1,19 @@
 package de.htwg.se.tankcommander.model
 
-//noinspection ScalaStyle
 class Cell(pos: Position) {
   val x: Int = pos.x
   val y: Int = pos.y
   var cobstacle: Option[Obstacle] = None
   var containsThisTank: Option[TankModel] = None
 
-
-  override def clone(): Cell = {
-    var cellClone = new Cell(new Position(this.x,this.y))
-    cellClone.cobstacle = this.cobstacle.clone()
-    cellClone.containsThisTank = this.containsThisTank.clone()
+  def deepClone(): Cell = {
+    val cellClone = new Cell(Position(this.x, this.y))
+    if (this.cobstacle.isDefined) {
+      cellClone.cobstacle = Option(this.cobstacle.get.deepClone())
+    }
+    if (cellClone.containsThisTank.isDefined) {
+      cellClone.containsThisTank = Option(this.containsThisTank.get.deepClone())
+    }
     cellClone
   }
 }

@@ -4,10 +4,10 @@ import de.htwg.se.tankcommander.model.{Player, TankModel}
 
 //noinspection ScalaStyle
 class GameStatus {
-  var activePlayer: Option[Player] = Option(new Player(GameStatus.activePlayer.get.name))
-  var passivePlayer: Option[Player] = Option(new Player(GameStatus.passivePlayer.get.name))
-  var activeTank: Option[TankModel] = Option(new GameStatus.activeTank)
-  var passiveTank: Option[TankModel] = GameStatus.passiveTank
+  var activePlayer: Option[Player] = Option(GameStatus.activePlayer.get.deepClone())
+  var passivePlayer: Option[Player] = Option(GameStatus.passivePlayer.get.deepClone())
+  var activeTank: Option[TankModel] = Option(GameStatus.activeTank.get.deepClone())
+  var passiveTank: Option[TankModel] = Option(GameStatus.passiveTank.get.deepClone())
   var movesLeft: Boolean = GameStatus.movesLeft
   var currentPlayerActions: Int = GameStatus.currentPlayerActions
   var currentHitChance: Int = GameStatus.currentHitChance
