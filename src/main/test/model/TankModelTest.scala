@@ -13,7 +13,7 @@ class TankModelTest extends FlatSpec with Matchers {
         & testTank.posC === None & testTank.facing === "up"
     )
   }
-  /* it should "have damage dealt correcty" in {
+  /* it should "have damage dealt correctly" in {
      val passiveTank = new TankModel
      val activeTank = new TankModel
      passiveTank.facing = "down"
