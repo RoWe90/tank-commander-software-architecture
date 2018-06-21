@@ -88,6 +88,9 @@ class Controller(var matchfield: GameField) extends Observable with Publisher {
     notifyObservers()
   }
 
+  def saveTheGame: Unit = {
+    SaveGame.test = matchfield
+  }
 }
 
 
