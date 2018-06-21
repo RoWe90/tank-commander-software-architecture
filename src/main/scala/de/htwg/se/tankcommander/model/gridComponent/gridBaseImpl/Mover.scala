@@ -4,7 +4,6 @@ import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 
 import scala.collection.mutable.ListBuffer
 
-//noinspection ScalaStyle
 class Mover(matchfield: GameField) {
 
   def lineOfSightContainsTank(): Unit = {
@@ -118,7 +117,7 @@ class Mover(matchfield: GameField) {
     if (pos._1 > matchfield.gridsX - 1) {
       return false
     }
-    if (pos._2 > matchfield.gridsy - 1) {
+    if (pos._2 > matchfield.gridsY - 1) {
       return false
     }
     if (pos._1 < 0) {

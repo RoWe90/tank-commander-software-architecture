@@ -16,7 +16,7 @@ class Shooter {
       }
       false
     } else {
-      print("sadly you missed\n")
+      print("Sadly you missed...\n")
       false
     }
   }
