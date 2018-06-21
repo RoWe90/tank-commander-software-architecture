@@ -1,5 +1,7 @@
 package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
+import scala.xml.Elem
+
 class TankModel() {
   val tankBaseDamage: Int = 10
   val accuracy: Int = 100

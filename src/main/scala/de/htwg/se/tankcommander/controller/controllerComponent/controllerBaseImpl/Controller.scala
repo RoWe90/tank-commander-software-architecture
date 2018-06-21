@@ -54,6 +54,7 @@ class Controller(var matchfield: GameField) extends Observable with Publisher {
     val backup = new GameStatus
     backup
   }
+
   def checkIfPlayerHasMovesLeft(): Boolean = {
     if (GameStatus.movesLeft) {
       true
@@ -62,6 +63,7 @@ class Controller(var matchfield: GameField) extends Observable with Publisher {
       false
     }
   }
+
   def matchfieldToString: String = matchfield.toString
 
   /*
@@ -86,10 +88,6 @@ class Controller(var matchfield: GameField) extends Observable with Publisher {
   def redo(): Unit = {
     undoManager.redoStep
     notifyObservers()
-  }
-
-  def saveTheGame: Unit = {
-    SaveGame.test = matchfield
   }
 }
 
