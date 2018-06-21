@@ -4,7 +4,7 @@ import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.TankModel
 import de.htwg.se.tankcommander.model.playerComponent.Player
 
 //noinspection ScalaStyle
-class GameStatus {
+case class GameStatus() {
   var activePlayer: Option[Player] = Option(GameStatus.activePlayer.get.deepClone())
   var passivePlayer: Option[Player] = Option(GameStatus.passivePlayer.get.deepClone())
   var activeTank: Option[TankModel] = Option(GameStatus.activeTank.get.deepClone())

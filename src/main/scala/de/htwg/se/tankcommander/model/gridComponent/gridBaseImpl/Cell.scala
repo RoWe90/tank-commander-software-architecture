@@ -1,6 +1,8 @@
 package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
-class Cell(pos: (Int,Int)) {
+import scala.xml._
+
+class Cell(pos: (Int, Int)) {
   val x: Int = pos._1
   val y: Int = pos._2
   var cobstacle: Option[Obstacle] = None

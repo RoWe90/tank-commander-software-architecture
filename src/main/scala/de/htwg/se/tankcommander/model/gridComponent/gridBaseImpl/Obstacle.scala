@@ -1,11 +1,12 @@
 package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
-trait Obstacle {
+abstract class Obstacle {
   val name: String
   val desc: String
   val shortName: String
   val passable: Boolean
   val hitmalus: Int
+
   def deepClone(): Obstacle
 }
 

@@ -1,45 +1,27 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
 import java.io.{BufferedWriter, FileWriter, PrintWriter}
-import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.GameField
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{Cell, GameField}
 import net.liftweb.json.Serialization.write
 import play.api.libs.json._
+
 import scala.collection.mutable._
 import scala.io.Source
 import scala.reflect.io.File
 import java.io._
+import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
+import net.liftweb.json.DefaultFormats
+import scala.tools.nsc.doc.html.page.JSONObject
 
-object SaveGame {
-  val json: JsValue = JsObject(Seq(
-    "name" -> JsString("Watership Down"),
-    "location" -> JsObject(Seq("lat" -> JsNumber(51.235685), "long" -> JsNumber(-1.309197))),
-    "residents" -> JsArray(IndexedSeq(
-      JsObject(Seq(
-        "name" -> JsString("Fiver"),
-        "age" -> JsNumber(4),
-        "role" -> JsNull
-      )),
-      JsObject(Seq(
-        "name" -> JsString("Bigwig"),
-        "age" -> JsNumber(6),
-        "role" -> JsString("Owsla")
-      ))
-    ))
-  ))
-  var test: GameField = null
-
+class SaveGame(controller: Controller) {
   def saveGame: Unit = {
-    val file = new File("C:\\Users\\Sebastian\\Desktop\\ThisIsATest.txt")
-    val bw = new BufferedWriter(new FileWriter(file))
-    pw.write("Hello, world")
-    val jsonString = write(p)
+    implicit val formats = DefaultFormats
+    val list = controller.matchfield.marray.toList
+    val jsonString = write(list)
     println(jsonString)
-    bw.write(text)
-    bw.close()
-  }
-
-  Some(new PrintWriter("foo.txt")).foreach { p =>
-    p.write(JSONObject(map.toMap).toString()); p.close
+    val list2 = GameStatus
+    val jsonString2 = write(list2)
+    println(jsonString2)
   }
 
   def loadGame: Unit = {
@@ -49,3 +31,6 @@ object SaveGame {
     }
   }
 }
+
+import java.io._
+
