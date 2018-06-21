@@ -23,5 +23,3 @@ libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.6"
 
 libraryDependencies += "net.liftweb" %% "lift-json" % "3.0.1"
 
-libraryDependencies += "com.lambdaworks" %% "jacks" % "2.0.5"
-

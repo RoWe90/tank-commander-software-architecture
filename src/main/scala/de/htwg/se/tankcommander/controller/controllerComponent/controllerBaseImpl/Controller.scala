@@ -89,6 +89,17 @@ class Controller(var matchfield: GameField) extends Observable with Publisher {
     undoManager.redoStep
     notifyObservers()
   }
+
+  def save(): Unit = {
+    val savegame = new SaveGame(this)
+    savegame.saveGame
+  }
+
+  def load(): Unit = {
+    val savegame = new SaveGame(this)
+    savegame.loadGame
+    notifyObservers()
+  }
 }
 
 
