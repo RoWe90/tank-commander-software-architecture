@@ -4,7 +4,6 @@ import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.util.Observer
 
-//noinspection ScalaStyle
 class TUI(controller: Controller) extends Observer {
   controller.add(this)
 

@@ -1,14 +1,11 @@
 package model
 
-import de.htwg.se.tankcommander.model._
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl._
-import de.htwg.se.tankcommander.obsolete.Position
-import org.scalatest.{FlatSpec, Matchers}
 
 class GameFieldTest extends FlatSpec with Matchers {
   "A GameField Object" should "have an Array with a size of 11x11" in {
     val gameField = new GameField
-    assert(gameField.gridsX === 11 & gameField.gridsy === 11)
+    assert(gameField.gridsX === 11 & gameField.gridsY === 11)
 
 
   }
@@ -18,13 +15,13 @@ class GameFieldTest extends FlatSpec with Matchers {
 
 
     for (y <- 0 until gameField.gridsX) {
-      for (x <- 0 until gameField.gridsy) {
+      for (x <- 0 until gameField.gridsY) {
         assert(gameField.marray(x)(y).isInstanceOf[Cell])
       }
     }
 
     for (y <- 0 until gameField.gridsX) {
-      for (x <- 0 until gameField.gridsy) {
+      for (x <- 0 until gameField.gridsY) {
         assert(gameField.marray(x)(y).isInstanceOf[Cell])
       }
     }
@@ -33,7 +30,7 @@ class GameFieldTest extends FlatSpec with Matchers {
     val gameField = new GameField
 
     for (y <- 0 until gameField.gridsX) {
-      for (x <- 0 until gameField.gridsy) {
+      for (x <- 0 until gameField.gridsY) {
         assert(gameField.marray(x)(y).cobstacle.isInstanceOf[Option[Bush]] === true |
           gameField.marray(x)(y).cobstacle.isInstanceOf[Option[Hill]] === true |
           gameField.marray(x)(y).cobstacle.isInstanceOf[Option[Rock]] === true |
@@ -45,7 +42,7 @@ class GameFieldTest extends FlatSpec with Matchers {
   "A GameField Object" should "print out the Gamefield with toString" in {
     val gameField = new GameField
     for (y <- 0 until gameField.gridsX) {
-      for (x <- 0 until gameField.gridsy) {
+      for (x <- 0 until gameField.gridsY) {
         gameField.marray(x)(y).cobstacle = Option(new Bush)
       }
     }
