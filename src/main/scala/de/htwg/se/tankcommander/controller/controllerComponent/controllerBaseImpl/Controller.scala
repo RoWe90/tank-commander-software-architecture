@@ -1,6 +1,7 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
+import de.htwg.se.tankcommander.controller.controllerComponent.fileIoJsonImpl.FileIO
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, TankModel}
 import de.htwg.se.tankcommander.model.playerComponent.Player
 import de.htwg.se.tankcommander.util.{Observable, UndoManager}
@@ -91,13 +92,14 @@ class Controller(var matchfield: GameField) extends Observable with Publisher {
   }
 
   def save(): Unit = {
-    val savegame = new SaveGame(this)
-    savegame.saveGame
+    val savegame = new FileIO(this)
+    savegame.save
   }
 
   def load(): Unit = {
-    val savegame = new SaveGame(this)
-    savegame.loadGame
+    matchfield = new GameField;
+    val savegame = new FileIO(this)
+    savegame.load
     notifyObservers()
   }
 }

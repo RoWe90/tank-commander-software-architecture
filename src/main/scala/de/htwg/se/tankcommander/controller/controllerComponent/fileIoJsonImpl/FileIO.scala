@@ -30,14 +30,17 @@ class FileIO(controller: Controller) {
         "pTankHP" -> JsNumber(GameStatus.passiveTank.get.hp),
         "aTankFacing" -> JsString(GameStatus.activeTank.get.facing),
         "pTankFacing" -> JsString(GameStatus.passiveTank.get.facing),
-        "currentHS" -> JsNumber(GameStatus.currentHitChance)
+        "currentHS" -> JsNumber(GameStatus.currentHitChance),
+        "movesLeft" -> JsBoolean(GameStatus.movesLeft)
+
       )
 
     )
   }
 
   def load: Unit = {
-    val source: String = Source.fromFile("grid.json").getLines.mkString
+    controller
+    val source: String = Source.fromFile("savegame.json").getLines.mkString
     val json: JsValue = Json.parse(source)
     val player1 = new Player((json \ "game" \ "aPlayer").get.toString())
     GameStatus.activePlayer = Option(player1)
@@ -49,11 +52,12 @@ class FileIO(controller: Controller) {
       ((json \ "game" \ "posATankX").get.toString().toInt, (json \ "game" \ "posATankY").get.toString().toInt),
       (json \ "game" \ "aTankFacing").get.toString())
     val tank2: TankModel = new TankModel((json \ "game" \ "pTankHP").get.toString().toInt,
-      ((json \ "game" \ "posBTankX").get.toString().toInt, (json \ "game" \ "posBTankY").get.toString().toInt),
+      ((json \ "game" \ "posPTankX").get.toString().toInt, (json \ "game" \ "posPTankY").get.toString().toInt),
       (json \ "game" \ "pTankFacing").get.toString().toString)
     GameStatus.activeTank = Option(tank1)
     GameStatus.passiveTank = Option(tank2)
     GameStatus.currentHitChance = (json \ "game" \ "currentHS").get.toString().toInt
+    GameStatus.movesLeft = (json \ "game" \ "movesLeft").get.toString().toBoolean
     controller.matchfield.marray(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._2)
       .containsThisTank = Option(tank1)
     controller.matchfield.marray(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._2)
