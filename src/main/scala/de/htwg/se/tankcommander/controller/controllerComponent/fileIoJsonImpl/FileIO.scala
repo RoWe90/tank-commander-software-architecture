@@ -20,7 +20,7 @@ class FileIO(controller: Controller) {
       "game" -> Json.obj(
         "aPlayer" -> JsString(GameStatus.activePlayer.get.name),
         "pPlayer" -> JsString(GameStatus.activePlayer.get.name),
-        "movesLeft" -> JsNumber(GameStatus.currentPlayerActions),
+        "movesCount" -> JsNumber(GameStatus.currentPlayerActions),
         "hitchance" -> JsNumber(GameStatus.currentHitChance),
         "posATankX" -> JsNumber(GameStatus.activeTank.get.posC._1),
         "posATankY" -> JsNumber(GameStatus.activeTank.get.posC._2),
@@ -46,7 +46,7 @@ class FileIO(controller: Controller) {
     GameStatus.activePlayer = Option(player1)
     val player2 = new Player((json \ "game" \ "pPlayer").get.toString())
     GameStatus.activePlayer = Option(player2)
-    GameStatus.currentPlayerActions = (json \ "game" \ "movesLeft").get.toString().toInt
+    GameStatus.currentPlayerActions = (json \ "game" \ "movesCount").get.toString().toInt
     GameStatus.currentHitChance = (json \ "game" \ "hitchance").get.toString().toInt
     val tank1: TankModel = new TankModel((json \ "game" \ "aTankHP").get.toString().toInt,
       ((json \ "game" \ "posATankX").get.toString().toInt, (json \ "game" \ "posATankY").get.toString().toInt),
