@@ -4,9 +4,9 @@ import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, TankModel}
 import de.htwg.se.tankcommander.model.playerComponent.Player
 import de.htwg.se.tankcommander.util.{Observable, UndoManager}
+import scala.swing.Publisher
 
-//noinspection ScalaStyle
-class Controller(var matchfield: GameField) extends Observable {
+class Controller(var matchfield: GameField) extends Observable with Publisher {
   private val undoManager = new UndoManager
 
   /*
@@ -88,6 +88,9 @@ class Controller(var matchfield: GameField) extends Observable {
     notifyObservers()
   }
 
+  def saveTheGame: Unit = {
+    SaveGame.test = matchfield
+  }
 }
 
 
