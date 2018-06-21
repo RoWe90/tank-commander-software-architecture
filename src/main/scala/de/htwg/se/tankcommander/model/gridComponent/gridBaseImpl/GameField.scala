@@ -4,14 +4,14 @@ import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 
 class GameField() {
   val gridsX = 11
-  val gridsy = 11
-  var marray: Array[Array[Cell]] = Array.ofDim[Cell](gridsX, gridsy)
+  val gridsY = 11
+  var marray: Array[Array[Cell]] = Array.ofDim[Cell](gridsX, gridsY)
   fillGameFieldWithCells()
   fillGameFieldCellsWithObstacles()
 
   def fillGameFieldWithCells(): Unit = {
     for (x <- 0 until gridsX) {
-      for (y <- 0 until gridsy) {
+      for (y <- 0 until gridsY) {
         marray(x)(y) = new Cell(x, y)
       }
     }
@@ -41,7 +41,7 @@ class GameField() {
 
   override def toString: String = {
     var output = new StringBuilder
-    for (z <- 0 until gridsy) {
+    for (z <- 0 until gridsY) {
       output.append("\n")
       for (i <- 0 until gridsX) {
         if (marray(i)(z).cobstacle.isDefined) {
@@ -66,7 +66,7 @@ class GameField() {
   def deepCopy: GameField = {
     val gameFieldClone: GameField = new GameField
     for (x <- 0 until gridsX) {
-      for (y <- 0 until gridsy) {
+      for (y <- 0 until gridsY) {
         gameFieldClone.marray(x)(y) = this.marray(x)(y).deepClone()
       }
     }
