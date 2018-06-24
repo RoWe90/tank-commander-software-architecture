@@ -17,6 +17,8 @@ class TUI(controller: Controller) extends Observer {
       case "redo" => controller.redo()
       case "save" => controller.save()
       case "load" => controller.load()
+      case _ => if (!controller.checkIfPlayerHasMovesLeft())
+        println("no turns left")
       case _ =>
     }
     if (controller.checkIfPlayerHasMovesLeft()) {

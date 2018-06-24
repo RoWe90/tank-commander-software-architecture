@@ -1,11 +1,9 @@
 package de.htwg.se.tankcommander.aview
 
 import java.awt.Dimension
-
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.util.Observer
-
 import scala.swing.Swing.LineBorder
 import scala.swing._
 
@@ -27,24 +25,19 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
       controller.endTurnChangeActivePlayer()
     }
   }
-
   controller.add(this)
   controller.setUpGame()
   title = "Tank Commander"
   menuBar = new MenuBar {
     contents += new Menu("File") {
       contents += new MenuItem("New Game") {
-
       }
       contents += new MenuItem("Restart") {
-
       }
       contents += new Separator()
       contents += new MenuItem("Load") {
-
       }
       contents += new MenuItem("Save") {
-
       }
       contents += new Separator()
       contents += new MenuItem(Action("Exit") {
@@ -55,7 +48,6 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
   visible = true
   centerOnScreen()
   val dimension = new Dimension(1000, 1000)
-
   contents = new BorderPanel {
     add(paintWindow(controller), BorderPanel.Position.Center)
     add(controls, BorderPanel.Position.East)
@@ -93,10 +85,11 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
     gameField
   }
 
-  override def update: Unit =
+  override def update: Unit = {
     redraw
+  }
 
-  def redraw = {
+  def redraw(): Unit = {
     for {
       row <- 0 until controller.matchfield.gridsX
       column <- 0 until controller.matchfield.gridsY

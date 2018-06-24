@@ -1,15 +1,16 @@
 package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
+import de.htwg.se.tankcommander.model.gridComponent.GameFieldInterface
 
-class GameField() {
-  val gridsX = 11
-  val gridsY = 11
-  var marray: Array[Array[Cell]] = Array.ofDim[Cell](gridsX, gridsY)
+class GameField() extends GameFieldInterface {
+  override val gridsX = 11
+  override val gridsY = 11
+  override var marray: Array[Array[Cell]] = Array.ofDim[Cell](gridsX, gridsY)
   fillGameFieldWithCells()
   fillGameFieldCellsWithObstacles()
 
-  def fillGameFieldWithCells(): Unit = {
+  override def fillGameFieldWithCells(): Unit = {
     for (x <- 0 until gridsX) {
       for (y <- 0 until gridsY) {
         marray(x)(y) = new Cell(x, y)
@@ -17,7 +18,7 @@ class GameField() {
     }
   }
 
-  def fillGameFieldCellsWithObstacles(): Unit = {
+  override def fillGameFieldCellsWithObstacles(): Unit = {
     //first row
     val listBush = Array((0, 0), (1, 0), (9, 0), (10, 0),
       //second row
@@ -63,7 +64,7 @@ class GameField() {
     output.toString()
   }
 
-  def deepCopy: GameField = {
+  override def deepCopy: GameField = {
     val gameFieldClone: GameField = new GameField
     for (x <- 0 until gridsX) {
       for (y <- 0 until gridsY) {
