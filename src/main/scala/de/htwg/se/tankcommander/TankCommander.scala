@@ -1,10 +1,12 @@
 package de.htwg.se.tankcommander
 
+import com.google.inject.Guice
 import de.htwg.se.tankcommander.aview.{MainMenu, TUI}
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.GameField
 
 object TankCommander {
+  val injector = Guice.createInjector(new TankCommanderModule)
   val controller = new Controller(new GameField)
   val tui = new TUI(controller)
   val gui = new MainMenu(controller)

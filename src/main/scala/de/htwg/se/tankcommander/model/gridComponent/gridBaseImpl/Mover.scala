@@ -1,10 +1,11 @@
 package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
+import de.htwg.se.tankcommander.model.gridComponent.GameFieldInterface
 
 import scala.collection.mutable.ListBuffer
 
-class Mover(matchfield: GameField) {
+class Mover(matchfield: GameFieldInterface) {
 
   def lineOfSightContainsTank(): Unit = {
     val atXY = (GameStatus.activeTank.get.posC._1, GameStatus.activeTank.get.posC._2)
@@ -87,10 +88,10 @@ class Mover(matchfield: GameField) {
     }
   }
 
-  def moveTank(input: String): GameField = {
+  def moveTank(input: String): GameFieldInterface = {
     val activeTank = GameStatus.activeTank.get
     var positionOfActiveTank: (Int, Int) = (activeTank.posC._1, activeTank.posC._2)
-    var gameField: GameField = matchfield
+    var gameField: GameFieldInterface = matchfield
     input match {
       case "up" =>
         GameStatus.activeTank.get.facing = input
@@ -140,7 +141,7 @@ class Mover(matchfield: GameField) {
     false
   }
 
-  def aMoveOfTank(pos: (Int, Int), activeTank: TankModel, x: Boolean): GameField = {
+  def aMoveOfTank(pos: (Int, Int), activeTank: TankModel, x: Boolean): GameFieldInterface = {
     if (x) {
       matchfield.marray(activeTank.posC._1)(activeTank.posC._2).containsThisTank = None
       activeTank.posC = pos
