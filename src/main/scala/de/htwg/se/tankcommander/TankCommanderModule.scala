@@ -6,6 +6,6 @@ import net.codingwell.scalaguice.ScalaModule
 
 class TankCommanderModule extends AbstractModule with ScalaModule {
   override def configure(): Unit = {
-    bind[FileIOInterface].to[fileIoJsonImpl.FileIO]
+    bind[FileIOInterface].to[fileIOXmlImpl.FileIO]
   }
 }

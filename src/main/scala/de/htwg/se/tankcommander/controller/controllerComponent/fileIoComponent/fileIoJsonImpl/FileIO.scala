@@ -1,18 +1,19 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.fileIoJsonImpl
 
+import com.google.inject.Guice
+import de.htwg.se.tankcommander.TankCommanderModule
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.FileIOInterface
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.TankModel
 import de.htwg.se.tankcommander.model.playerComponent.Player
 import play.api.libs.json._
-
 import scala.io.Source
 
-class FileIO(controller: Controller) extends FileIOInterface {
+class FileIO extends FileIOInterface {
   override def save: Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("src/main/ressources/savegame.json"))
+    val pw = new PrintWriter(new File("savegame.json"))
     pw.write(Json.prettyPrint(GameStateToJson))
     pw.close
   }
@@ -40,9 +41,9 @@ class FileIO(controller: Controller) extends FileIOInterface {
     )
   }
 
-  override def load: Unit = {
-    controller
-    val source: String = Source.fromFile("src/main/ressources/savegame.json").getLines.mkString
+  override def load(controller: Controller): Unit = {
+    val injector = Guice.createInjector(new TankCommanderModule)
+    val source: String = Source.fromFile("savegame.json").getLines.mkString
     val json: JsValue = Json.parse(source)
     val player1 = new Player((json \ "game" \ "aPlayer").get.toString())
     GameStatus.activePlayer = Option(player1)

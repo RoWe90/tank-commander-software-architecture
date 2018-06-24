@@ -5,14 +5,12 @@ import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.FileIOInterface
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.TankModel
 import de.htwg.se.tankcommander.model.playerComponent.Player
-import play.api.libs.json.JsObject
+import scala.xml.{NodeSeq, PrettyPrinter}
 
-import scala.xml.{Elem, NodeSeq, PrettyPrinter}
-
-class FileIO(controller: Controller) extends FileIOInterface {
+class FileIO() extends FileIOInterface {
   override def save: Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("src/main/ressources/savegame.xml"))
+    val pw = new PrintWriter(new File("savegame.xml"))
     val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(GameStateToXML)
     pw.write(xml)
@@ -20,57 +18,82 @@ class FileIO(controller: Controller) extends FileIOInterface {
   }
 
   //noinspection ScalaStyle
-  def GameStateToXML(): Elem = {
+  def GameStateToXML() = {
     <game>
-      aPlayer =
-      {GameStatus.activePlayer.get.toString}
-      pPlayer =
-      {GameStatus.passivePlayer.get.toString}
-      movesCount =
-      {GameStatus.currentPlayerActions}
-      ,
-      hitchance =
-      {GameStatus.currentHitChance}
-      ,
-      posATankX =
-      {GameStatus.activeTank.get.posC._1}
-      ,
-      posATankY =
-      {GameStatus.activeTank.get.posC._2}
-      ,
-      posPTankX =
-      {GameStatus.passiveTank.get.posC._1}
-      ,
-      posPTankY =
-      {GameStatus.passiveTank.get.posC._2}
-      ,
-      aTankHP =
-      {GameStatus.activeTank.get.hp}
-      ,
-      pTankHP =
-      {GameStatus.passiveTank.get.hp}
-      ,
-      aTankFacing =
-      {GameStatus.activeTank.get.facing}
-      ,
-      pTankFacing =
-      {GameStatus.passiveTank.get.facing}
-      ,
-      currentHS =
-      {GameStatus.currentHitChance}
-      ,
-      movesLeft =
-      {GameStatus.movesLeft}
+      <aPlayer>
+        {GameStatus.activePlayer.get.toString}
+      </aPlayer>
+
+      <pPlayer>
+        {GameStatus.passivePlayer.get.toString}
+      </pPlayer>
+
+      <movesCount>
+        {GameStatus.currentPlayerActions.toString}
+      </movesCount>
+
+      <hitchance>
+        {GameStatus.currentHitChance}
+      </hitchance>
+
+      <posATankX>
+        {GameStatus.activeTank.get.posC._1}
+      </posATankX>
+
+      <posATankY>
+        {GameStatus.activeTank.get.posC._2}
+      </posATankY>
+
+
+      <posPTankX>
+        {GameStatus.passiveTank.get.posC._1}
+      </posPTankX>
+
+
+      <posPTankY>
+        {GameStatus.passiveTank.get.posC._2}
+      </posPTankY>
+
+
+      <aTankHP>
+        {GameStatus.activeTank.get.hp}
+      </aTankHP>
+
+
+      <pTankHP>
+        {GameStatus.passiveTank.get.hp}
+      </pTankHP>
+
+
+      <aTankFacing>
+        {GameStatus.activeTank.get.facing}
+      </aTankFacing>
+
+
+      <pTankFacing>
+        {GameStatus.passiveTank.get.facing}
+      </pTankFacing>
+
+
+      <currentHS>
+        {GameStatus.currentHitChance}
+      </currentHS>
+
+
+      <movesLeft>
+        {GameStatus.movesLeft}
+      </movesLeft>
+
     </game>
   }
 
-  override def load: Unit = {
-    val file = scala.xml.XML.loadFile("src/main/ressources/savegame.xml")
-    val player1 = new Player((file \\ "game" \ "@aPlayer").text)
+  override def load(controller: Controller): Unit = {
+    val file = scala.xml.XML.loadFile("savegame.xml")
+    val player1 = new Player((file \\ "game" \ "aPlayer").text)
     GameStatus.activePlayer = Option(player1)
-    val player2 = new Player((file \\ "game" \ "@pPlayer").text)
+    val player2 = new Player((file \\ "game" \ "pPlayer").text)
     GameStatus.activePlayer = Option(player2)
-    GameStatus.currentPlayerActions = (file \\ "game" \ "movesCount").text.toInt
+    GameStatus.currentPlayerActions = ((file \\ "game" \ "movesCount").text.toInt)
     GameStatus.currentHitChance = (file \\ "game" \ "hitchance").text.toInt
     val tank1: TankModel = new TankModel((file \\ "game" \ "aTankHP").text.toInt,
       ((file \\ "game" \ "posATankX").text.toInt, (file \\ "game" \ "posATankY").text.toInt),

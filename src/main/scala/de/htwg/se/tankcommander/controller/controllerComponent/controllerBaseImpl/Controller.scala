@@ -1,14 +1,13 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
-import com.google.inject.Guice
+import com.google.inject.{Guice}
+import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.tankcommander.TankCommanderModule
 import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.FileIOInterface
-import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.fileIoJsonImpl.FileIO
 import de.htwg.se.tankcommander.controller.controllerComponent.{ControllerInterface, GameStatus}
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, TankModel}
 import de.htwg.se.tankcommander.model.playerComponent.Player
 import de.htwg.se.tankcommander.util.{Observable, UndoManager}
-
 import scala.swing.Publisher
 
 class Controller(var matchfield: GameField) extends Observable with Publisher with ControllerInterface {
@@ -87,14 +86,12 @@ class Controller(var matchfield: GameField) extends Observable with Publisher wi
   }
 
   override def save(): Unit = {
-    val savegame = new FileIO(this)
-    savegame.save
+    fileIO.save()
   }
 
   override def load(): Unit = {
     matchfield = new GameField;
-    val savegame = new FileIO(this)
-    savegame.load
+    fileIO.load(this)
     notifyObservers()
   }
 }
