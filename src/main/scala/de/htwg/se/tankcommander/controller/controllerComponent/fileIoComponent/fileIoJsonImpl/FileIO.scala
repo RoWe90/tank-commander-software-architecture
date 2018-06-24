@@ -1,10 +1,12 @@
-package de.htwg.se.tankcommander.controller.controllerComponent.fileIoJsonImpl
+package de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.fileIoJsonImpl
 
-import de.htwg.se.tankcommander.controller.controllerComponent.{FileIOInterface, GameStatus}
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
+import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.FileIOInterface
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.TankModel
 import de.htwg.se.tankcommander.model.playerComponent.Player
 import play.api.libs.json._
+
 import scala.io.Source
 
 class FileIO(controller: Controller) extends FileIOInterface {
@@ -15,7 +17,7 @@ class FileIO(controller: Controller) extends FileIOInterface {
     pw.close
   }
 
-  override def GameStateToJson: JsObject = {
+  def GameStateToJson: JsObject = {
     Json.obj(
       "game" -> Json.obj(
         "aPlayer" -> JsString(GameStatus.activePlayer.get.name),

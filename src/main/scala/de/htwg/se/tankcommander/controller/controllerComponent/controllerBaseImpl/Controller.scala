@@ -1,7 +1,10 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
+import com.google.inject.Guice
+import de.htwg.se.tankcommander.TankCommanderModule
+import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.FileIOInterface
+import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.fileIoJsonImpl.FileIO
 import de.htwg.se.tankcommander.controller.controllerComponent.{ControllerInterface, GameStatus}
-import de.htwg.se.tankcommander.controller.controllerComponent.fileIoJsonImpl.FileIO
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, TankModel}
 import de.htwg.se.tankcommander.model.playerComponent.Player
 import de.htwg.se.tankcommander.util.{Observable, UndoManager}
@@ -10,6 +13,8 @@ import scala.swing.Publisher
 
 class Controller(var matchfield: GameField) extends Observable with Publisher with ControllerInterface {
   private val undoManager = new UndoManager
+  val injector = Guice.createInjector(new TankCommanderModule)
+  val fileIO = injector.instance[FileIOInterface]
 
   override def setUpGame(): Unit = {
     matchfield = new GameField
