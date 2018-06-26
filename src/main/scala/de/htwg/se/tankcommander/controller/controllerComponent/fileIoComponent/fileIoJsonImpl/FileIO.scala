@@ -13,7 +13,9 @@ import scala.io.Source
 class FileIO extends FileIOInterface {
   override def save: Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("savegame.json"))
+    val file = new File("src/main/ressources/savegame.json")
+    file.createNewFile()
+    val pw = new PrintWriter(file)
     pw.write(Json.prettyPrint(GameStateToJson))
     pw.close
   }
@@ -35,20 +37,15 @@ class FileIO extends FileIOInterface {
         "pTankFacing" -> JsString(GameStatus.passiveTank.get.facing),
         "currentHS" -> JsNumber(GameStatus.currentHitChance),
         "movesLeft" -> JsBoolean(GameStatus.movesLeft)
-
       )
-
     )
   }
 
   override def load(controller: Controller): Unit = {
-    val injector = Guice.createInjector(new TankCommanderModule)
-    val source: String = Source.fromFile("savegame.json").getLines.mkString
+    val source: String = Source.fromFile("src/main/ressources/savegame.json").getLines.mkString
     val json: JsValue = Json.parse(source)
-    val player1 = new Player((json \ "game" \ "aPlayer").get.toString())
-    GameStatus.activePlayer = Option(player1)
-    val player2 = new Player((json \ "game" \ "pPlayer").get.toString())
-    GameStatus.activePlayer = Option(player2)
+    GameStatus.activePlayer = Option(new Player((json \ "game" \ "aPlayer").get.toString()))
+    GameStatus.activePlayer = Option(new Player((json \ "game" \ "pPlayer").get.toString()))
     GameStatus.currentPlayerActions = (json \ "game" \ "movesCount").get.toString().toInt
     GameStatus.currentHitChance = (json \ "game" \ "hitchance").get.toString().toInt
     val tank1: TankModel = new TankModel((json \ "game" \ "aTankHP").get.toString().toInt,
