@@ -20,7 +20,35 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
   paintGameField(controller)
   controller.setUpGame()
 
-  val controls = new GridPanel(5, 1) {
+  title = "Tank Commander"
+  menuBar = new MenuBar {
+    contents += new Menu("File") {
+      contents += new MenuItem("New Game") {
+      }
+      contents += new MenuItem("Restart") {
+      }
+      contents += new Separator()
+      contents += new MenuItem(Action("Load") {
+        controller.load()
+      })
+      contents += new MenuItem(Action("Save") {
+        controller.save()
+      })
+      contents += new Separator()
+      contents += new MenuItem(Action("Undo") {
+        controller.undo()
+      })
+      contents += new MenuItem(Action("Redo") {
+        controller.redo()
+      })
+      contents += new Separator()
+      contents += new MenuItem(Action("Exit") {
+        sys.exit(0)
+      })
+    }
+  }
+
+  val controls = new GridPanel(8, 1) {
     val up = new Button("Up") {
       this.preferredSize = (new Dimension(100, 120))
       this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/up.png")
@@ -118,33 +146,6 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
 
   }
 
-  title = "Tank Commander"
-  menuBar = new MenuBar {
-    contents += new Menu("File") {
-      contents += new MenuItem("New Game") {
-      }
-      contents += new MenuItem("Restart") {
-      }
-      contents += new Separator()
-      contents += new MenuItem(Action("Load") {
-        controller.load()
-      })
-      contents += new MenuItem(Action("Save") {
-        controller.save()
-      })
-      contents += new Separator()
-      contents += new MenuItem(Action("Undo") {
-        controller.undo()
-      })
-      contents += new MenuItem(Action("Redo") {
-        controller.redo()
-      })
-      contents += new Separator()
-      contents += new MenuItem(Action("Exit") {
-        sys.exit(0)
-      })
-    }
-  }
   visible = true
   centerOnScreen()
 
