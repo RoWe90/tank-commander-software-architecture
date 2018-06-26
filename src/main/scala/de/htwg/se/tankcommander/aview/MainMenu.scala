@@ -32,13 +32,15 @@ class MainMenu(controller: Controller) extends Frame {
 
   contents = new GridPanel(2, 1) {
     contents += new Label("Hauptmenü") {
-      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\logo_cut.png")
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\GoogleDrive\\Studium\\SoftwareEngineering" +
+        "\\TankCommander\\src\\main\\scala\\de\\htwg\\se\\tankcommander\\icons\\logo_cut.png")
         .getImage().getScaledInstance(600, 300, java.awt.Image.SCALE_SMOOTH)))
     }
     contents += new GridPanel(2, 1) {
       val start = new Button() {
         this.preferredSize = new Dimension(600, 300)
-        this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\start_final.png")
+        this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\GoogleDrive\\Studium\\" +
+          "SoftwareEngineering\\TankCommander\\src\\main\\scala\\de\\htwg\\se\\tankcommander\\icons\\start_final.png")
           .getImage().getScaledInstance(600, 300, java.awt.Image.SCALE_SMOOTH)))
       }
       contents += Button("Start") {
@@ -48,7 +50,8 @@ class MainMenu(controller: Controller) extends Frame {
       }
       val exit = new Button() {
         this.preferredSize = new Dimension(600, 300)
-        this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\exit_final.png")
+        this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\GoogleDrive\\Studium\\" +
+          "SoftwareEngineering\\TankCommander\\src\\main\\scala\\de\\htwg\\se\\tankcommander\\icons\\exit_final.png")
           .getImage().getScaledInstance(600, 300, java.awt.Image.SCALE_SMOOTH)))
 
       }

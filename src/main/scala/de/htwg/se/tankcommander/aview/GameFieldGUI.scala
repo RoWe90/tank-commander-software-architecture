@@ -23,49 +23,56 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
   val controls = new GridPanel(5, 1) {
     val up = new Button("Up") {
       this.preferredSize = (new Dimension(100, 120))
-      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\up.png")
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\GoogleDrive\\Studium" +
+        "\\SoftwareEngineering\\TankCommander\\src\\main\\scala\\de\\htwg\\se\\tankcommander\\icons\\up.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += up
     val down = new Button("Down") {
       this.preferredSize = (new Dimension(50, 50))
-      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\down.png")
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\GoogleDrive" +
+        "\\Studium\\SoftwareEngineering\\TankCommander\\src\\main\\scala\\de\\htwg\\se\\tankcommander\\icons\\down.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += down
     val left = new Button("Left") {
       this.preferredSize = (new Dimension(50, 50))
-      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\left.png")
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\GoogleDrive\\Studium" +
+        "\\SoftwareEngineering\\TankCommander\\src\\main\\scala\\de\\htwg\\se\\tankcommander\\icons\\left.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += left
     val right = new Button("Right") {
       this.preferredSize = (new Dimension(50, 50))
-      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\right.png")
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\GoogleDrive" +
+        "\\Studium\\SoftwareEngineering\\TankCommander\\src\\main\\scala\\de\\htwg\\se\\tankcommander\\icons\\right.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += right
     val shoot = new Button("Shoot!") {
       this.preferredSize = (new Dimension(50, 50))
-      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\explosion.png")
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\GoogleDrive\\" +
+        "Studium\\SoftwareEngineering\\TankCommander\\src\\main\\scala\\de\\htwg\\se\\tankcommander\\icons\\explosion.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += shoot
     val end_turn = new Button("End Turn") {
       this.preferredSize = (new Dimension(50, 50))
-      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\sandclock_take.png")
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\GoogleDrive\\" +
+        "Studium\\SoftwareEngineering\\TankCommander\\src\\main\\scala\\de\\htwg\\se\\tankcommander\\icons\\sandclock_take.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += end_turn
     val give_up = new Button("Give up") {
       this.preferredSize = (new Dimension(50, 50))
-      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\white_flag.png")
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\GoogleDrive\\Studium\\" +
+        "SoftwareEngineering\\TankCommander\\src\\main\\scala\\de\\htwg\\se\\tankcommander\\icons\\white_flag.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
