@@ -1,6 +1,5 @@
 package model
 
-import de.htwg.se.tankcommander.model._
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl._
 import org.scalatest.{FlatSpec, Matchers}
 

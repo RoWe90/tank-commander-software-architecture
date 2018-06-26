@@ -1,32 +1,87 @@
 package de.htwg.se.tankcommander.aview
 
 import java.awt.Dimension
+
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.util.Observer
+
 import scala.swing.Swing.LineBorder
 import scala.swing._
+import scala.swing.event.ButtonClicked
 
 class GameFieldGUI(controller: Controller) extends Frame with Observer {
-  val controls = new GridPanel(5, 1) {
-    contents += new Button("Up") {
-      controller.move("up")
-    }
-    contents += new Button("Down") {
-      controller.move("down")
-    }
-    contents += new Button("Left") {
-      controller.move("left")
-    }
-    contents += new Button("Right") {
-      controller.move("right")
-    }
-    contents += new Button("End Turn") {
-      controller.endTurnChangeActivePlayer()
-    }
-  }
   controller.add(this)
+  var cells = Array.ofDim[CellPanel](controller.matchfield.gridsX, controller.matchfield.gridsY)
+  val statusLine = new TextArea()
+  val messages = new TextArea("Welcome to the Game. \n" +
+    "Use the Buttons on the right to control your tank.")
+  paintGameField(controller)
   controller.setUpGame()
+
+  val controls = new GridPanel(5, 1) {
+    val up = new Button("Up")
+    contents += up
+    val down = new Button("Down")
+    contents += down
+    val left = new Button("Left")
+    contents += left
+    val right = new Button("Right")
+    contents += right
+    val shoot = new Button("Shoot!")
+    contents += shoot
+    val end_turn = new Button("End Turn")
+    contents += end_turn
+    val give_up = new Button("Give up")
+    contents += give_up
+    up.reactions += {
+      case ButtonClicked(up) => if (controller.checkIfPlayerHasMovesLeft())
+        controller.move("up")
+      else {
+        messages.append("\nNo more Moves left, end your turn!")
+      }
+    }
+    down.reactions += {
+      case ButtonClicked(up) => if (controller.checkIfPlayerHasMovesLeft())
+        controller.move("down")
+      else {
+        messages.append("\nNo more Moves left, end your turn!")
+      }
+    }
+    left.reactions += {
+      case ButtonClicked(up) =>
+        if (controller.checkIfPlayerHasMovesLeft())
+          controller.move("left")
+        else {
+          messages.append("\nNo more Moves left, end your turn!")
+        }
+    }
+    right.reactions += {
+      case ButtonClicked(up) =>
+        if (controller.checkIfPlayerHasMovesLeft())
+          controller.move("right")
+        else {
+          messages.append("\nNo more Moves left, end your turn!")
+        }
+    }
+    shoot.reactions += {
+      case ButtonClicked(shoot) => if (controller.checkIfPlayerHasMovesLeft())
+        controller.shoot()
+      else {
+        messages.append("\nNo more Moves left, end your turn!")
+      }
+    }
+    end_turn.reactions += {
+      case ButtonClicked(end_turn) => controller.endTurnChangeActivePlayer()
+        messages.append("\nPlease change seats.")
+    }
+    give_up.reactions += {
+      case ButtonClicked(give_up) => GameStatus.endGame()
+        messages.append("\n" + GameStatus.activePlayer.toString + " gave up, \n" + GameStatus.passivePlayer.toString + " has won!")
+    }
+
+  }
+
   title = "Tank Commander"
   menuBar = new MenuBar {
     contents += new Menu("File") {
@@ -35,10 +90,19 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
       contents += new MenuItem("Restart") {
       }
       contents += new Separator()
-      contents += new MenuItem("Load") {
-      }
-      contents += new MenuItem("Save") {
-      }
+      contents += new MenuItem(Action("Load") {
+        controller.load()
+      })
+      contents += new MenuItem(Action("Save") {
+        controller.save()
+      })
+      contents += new Separator()
+      contents += new MenuItem(Action("Undo") {
+        controller.undo()
+      })
+      contents += new MenuItem(Action("Redo") {
+        controller.redo()
+      })
       contents += new Separator()
       contents += new MenuItem(Action("Exit") {
         sys.exit(0)
@@ -47,22 +111,22 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
   }
   visible = true
   centerOnScreen()
+
   val dimension = new Dimension(1000, 1000)
   contents = new BorderPanel {
     add(paintWindow(controller), BorderPanel.Position.Center)
     add(controls, BorderPanel.Position.East)
+    add(messages, BorderPanel.Position.West)
   }
-  var cells = Array.ofDim[CellPanel](controller.matchfield.gridsX, controller.matchfield.gridsY)
+
 
   def paintWindow(controller: Controller): BorderPanel = {
     import BorderPanel.Position._
     val mainFrame = new BorderPanel {
-      layout += paintGameField(controller) -> Center
-      layout += new TextArea("aktiver Spieler: " + GameStatus.activePlayer.get + " Hitpoints: " +
-        GameStatus.activeTank.get.hp + "\n" + "MovesLeft: " + GameStatus.currentPlayerActions + "\n" +
-        "passiver Spieler: " + GameStatus.passivePlayer.get + " Hitpoints: " +
-        GameStatus.passiveTank.get.hp + "\n"
-      ) -> South
+      val gameArea = paintGameField(controller)
+      layout += gameArea -> Center
+      layout += statusLine -> South
+
     }
     mainFrame
   }
@@ -79,21 +143,29 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
           val cellPanel = new CellPanel(row, column, controller)
           cells(row)(column) = cellPanel
           contents += cellPanel.cell
-          listenTo(cellPanel)
+          //listenTo(cellPanel)
         }
     }
     gameField
   }
 
   override def update: Unit = {
-    redraw
+    redraw()
   }
 
   def redraw(): Unit = {
     for {
-      row <- 0 until controller.matchfield.gridsX
       column <- 0 until controller.matchfield.gridsY
-    } cells(row)(column).redraw
+    }
+      for {
+        row <- 0 until controller.matchfield.gridsX
+      } {
+        cells(row)(column)
+      }
+    statusLine.text = "aktiver Spieler: " + GameStatus.activePlayer.get + " Hitpoints: " +
+      GameStatus.activeTank.get.hp + "\n" + "MovesLeft: " + GameStatus.currentPlayerActions + "\n" +
+      "passiver Spieler: " + GameStatus.passivePlayer.get + " Hitpoints: " +
+      GameStatus.passiveTank.get.hp + "\n"
     repaint
   }
 }

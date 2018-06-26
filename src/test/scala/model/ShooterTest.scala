@@ -1,7 +1,9 @@
 package model
 
-import de.htwg.se.tankcommander.controller.{Controller, GameStatus}
-import de.htwg.se.tankcommander.model.{GameField, Player, TankModel}
+import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
+import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, TankModel}
+import de.htwg.se.tankcommander.model.playerComponent.Player
 import de.htwg.se.tankcommander.util.UndoManager
 import org.scalatest.{FlatSpec, Matchers}
 

@@ -1,5 +1,9 @@
 package controller
 
+import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.GameField
+import org.scalatest.{FlatSpec, Matchers}
+
 
 class ControllerTest extends FlatSpec with Matchers {
 

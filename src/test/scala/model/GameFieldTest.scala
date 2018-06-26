@@ -1,7 +1,7 @@
 package model
 
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl._
-
+import org.scalatest.{FlatSpec, Matchers}
 class GameFieldTest extends FlatSpec with Matchers {
   "A GameField Object" should "have an Array with a size of 11x11" in {
     val gameField = new GameField
@@ -49,9 +49,9 @@ class GameFieldTest extends FlatSpec with Matchers {
     val tank1 = new TankModel
     val tank2 = new TankModel
     gameField.marray(0)(0).containsThisTank = Option(tank1)
-    gameField.marray(10)(10) = new Cell(Position(10, 10))
+    gameField.marray(10)(10) = new Cell(10, 10)
     gameField.marray(10)(10).containsThisTank = Option(tank2)
-    gameField.marray(9)(10) = new Cell(Position(9, 10))
+    gameField.marray(9)(10) = new Cell(9, 10)
 
 
     assert(gameField.toString === "\n" +
