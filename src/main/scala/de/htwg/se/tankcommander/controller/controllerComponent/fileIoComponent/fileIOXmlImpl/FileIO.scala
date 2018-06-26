@@ -13,7 +13,9 @@ import scala.xml.XML
 class FileIO() extends FileIOInterface {
   def saveString: Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("savegame.xml"))
+    val file = new File("src/main/ressources/savegame.json")
+    file.createNewFile()
+    val pw = new PrintWriter(file)
     val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(gameStateToXML())
     pw.write(xml)
@@ -21,7 +23,7 @@ class FileIO() extends FileIOInterface {
   }
 
   def saveXML(gamefield: GameFieldInterface): Unit = {
-    XML.save("savegame.xml", gameStateToXML())
+    XML.save("src/main/ressources/savegame.xml", gameStateToXML())
   }
 
   override def save(): Unit = saveString
@@ -75,7 +77,7 @@ class FileIO() extends FileIOInterface {
   }
 
   override def load(controller: Controller): Unit = {
-    val file = XML.loadFile("savegame.xml")
+    val file = XML.loadFile("src/main/ressources/savegame.xml")
     GameStatus.activePlayer = Option(new Player((file \\ "game" \\ "aPlayer").text))
     GameStatus.passivePlayer = Option(new Player((file \\ "game" \\ "pPlayer").text))
     GameStatus.currentPlayerActions = (file \\ "game" \\ "movesCount").text.replaceAll(" ", "").toInt

@@ -13,7 +13,9 @@ import scala.io.Source
 class FileIO extends FileIOInterface {
   override def save: Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("savegame.json"))
+    val file = new File("src/main/ressources/savegame.json")
+    file.createNewFile()
+    val pw = new PrintWriter(file)
     pw.write(Json.prettyPrint(GameStateToJson))
     pw.close
   }
@@ -40,7 +42,7 @@ class FileIO extends FileIOInterface {
   }
 
   override def load(controller: Controller): Unit = {
-    val source: String = Source.fromFile("savegame.json").getLines.mkString
+    val source: String = Source.fromFile("src/main/ressources/savegame.json").getLines.mkString
     val json: JsValue = Json.parse(source)
     GameStatus.activePlayer = Option(new Player((json \ "game" \ "aPlayer").get.toString()))
     GameStatus.activePlayer = Option(new Player((json \ "game" \ "pPlayer").get.toString()))
