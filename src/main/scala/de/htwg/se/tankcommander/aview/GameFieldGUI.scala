@@ -11,14 +11,14 @@ import scala.swing.Swing.LineBorder
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
-class GameFieldGUI(controller: Controller) extends Frame with Observer {
+class GameFieldGUI(controller: Controller, name1: String, name2: String) extends Frame with Observer {
   controller.add(this)
   var cells = Array.ofDim[CellPanel](controller.matchfield.gridsX, controller.matchfield.gridsY)
   val statusLine = new TextArea()
   val messages = new TextArea("Welcome to the Game. \n" +
     "Use the Buttons on the right to control your tank.")
   paintGameField(controller)
-  controller.setUpGame()
+  controller.setUpGame(name1, name2)
 
   title = "Tank Commander"
   menuBar = new MenuBar {
@@ -49,49 +49,49 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
   }
 
   val controls = new GridPanel(8, 1) {
-    val up = new Button("Up") {
+    val up = new Button() {
       this.preferredSize = (new Dimension(100, 120))
       this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/up.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += up
-    val down = new Button("Down") {
+    val down = new Button() {
       this.preferredSize = (new Dimension(50, 50))
       this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/down.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += down
-    val left = new Button("Left") {
+    val left = new Button() {
       this.preferredSize = (new Dimension(50, 50))
       this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/left.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += left
-    val right = new Button("Right") {
+    val right = new Button() {
       this.preferredSize = (new Dimension(50, 50))
       this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/right.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += right
-    val shoot = new Button("Shoot!") {
+    val shoot = new Button() {
       this.preferredSize = (new Dimension(50, 50))
       this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/explosion.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += shoot
-    val end_turn = new Button("End Turn") {
+    val end_turn = new Button() {
       this.preferredSize = (new Dimension(50, 50))
       this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/sandclock_take.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
       this.borderPainted = (true)
     }
     contents += end_turn
-    val give_up = new Button("Give up") {
+    val give_up = new Button() {
       this.preferredSize = (new Dimension(50, 50))
       this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/white_flag.png")
         .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
@@ -180,7 +180,6 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
           val cellPanel = new CellPanel(row, column, controller)
           cells(row)(column) = cellPanel
           contents += cellPanel.cell
-          //listenTo(cellPanel)
         }
     }
     gameField
@@ -202,7 +201,7 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
     statusLine.text = "aktiver Spieler: " + GameStatus.activePlayer.get + " Hitpoints: " +
       GameStatus.activeTank.get.hp + "\n" + "MovesLeft: " + GameStatus.currentPlayerActions + "\n" +
       "passiver Spieler: " + GameStatus.passivePlayer.get + " Hitpoints: " +
-      GameStatus.passiveTank.get.hp + "\n"
+      GameStatus.passiveTank.get.hp + "\n" + "Hitchance: " + GameStatus.currentHitChance
     repaint
   }
 }
