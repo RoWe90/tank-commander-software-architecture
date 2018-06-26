@@ -1,6 +1,7 @@
 package de.htwg.se.tankcommander.aview
 
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
+import javax.swing.ImageIcon
 
 import scala.swing._
 
@@ -29,16 +30,29 @@ class MainMenu(controller: Controller) extends Frame {
     }
   }
 
-  contents = new GridPanel(3, 1) {
-    contents += new Label("Hauptmenü")
+  contents = new GridPanel(2, 1) {
+    contents += new Label("Hauptmenü") {
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\logo_cut.png")
+        .getImage().getScaledInstance(600, 300, java.awt.Image.SCALE_SMOOTH)))
+    }
     contents += new GridPanel(2, 1) {
+      val start = new Button() {
+        this.preferredSize = new Dimension(600, 300)
+        this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\start_final.png")
+          .getImage().getScaledInstance(600, 300, java.awt.Image.SCALE_SMOOTH)))
+      }
       contents += Button("Start") {
+
         val gameInterface = new GameFieldGUI(controller)
         dispose()
       }
-      contents += Button("Exit")(
-        sys.exit(0)
-      )
+      val exit = new Button() {
+        this.preferredSize = new Dimension(600, 300)
+        this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\exit_final.png")
+          .getImage().getScaledInstance(600, 300, java.awt.Image.SCALE_SMOOTH)))
+
+      }
+      contents += exit
     }
   }
 

@@ -5,6 +5,7 @@ import java.awt.Dimension
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.util.Observer
+import javax.swing.ImageIcon
 
 import scala.swing.Swing.LineBorder
 import scala.swing._
@@ -20,19 +21,54 @@ class GameFieldGUI(controller: Controller) extends Frame with Observer {
   controller.setUpGame()
 
   val controls = new GridPanel(5, 1) {
-    val up = new Button("Up")
+    val up = new Button("Up") {
+      this.preferredSize = (new Dimension(100, 120))
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\up.png")
+        .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
+      this.borderPainted = (true)
+    }
     contents += up
-    val down = new Button("Down")
+    val down = new Button("Down") {
+      this.preferredSize = (new Dimension(50, 50))
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\down.png")
+        .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
+      this.borderPainted = (true)
+    }
     contents += down
-    val left = new Button("Left")
+    val left = new Button("Left") {
+      this.preferredSize = (new Dimension(50, 50))
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\left.png")
+        .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
+      this.borderPainted = (true)
+    }
     contents += left
-    val right = new Button("Right")
+    val right = new Button("Right") {
+      this.preferredSize = (new Dimension(50, 50))
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\right.png")
+        .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
+      this.borderPainted = (true)
+    }
     contents += right
-    val shoot = new Button("Shoot!")
+    val shoot = new Button("Shoot!") {
+      this.preferredSize = (new Dimension(50, 50))
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\explosion.png")
+        .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
+      this.borderPainted = (true)
+    }
     contents += shoot
-    val end_turn = new Button("End Turn")
+    val end_turn = new Button("End Turn") {
+      this.preferredSize = (new Dimension(50, 50))
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\sandclock_take.png")
+        .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
+      this.borderPainted = (true)
+    }
     contents += end_turn
-    val give_up = new Button("Give up")
+    val give_up = new Button("Give up") {
+      this.preferredSize = (new Dimension(50, 50))
+      this.icon = (new ImageIcon(new ImageIcon("C:\\Users\\Robin\\Desktop\\test\\white_flag.png")
+        .getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)))
+      this.borderPainted = (true)
+    }
     contents += give_up
     up.reactions += {
       case ButtonClicked(up) => if (controller.checkIfPlayerHasMovesLeft())
