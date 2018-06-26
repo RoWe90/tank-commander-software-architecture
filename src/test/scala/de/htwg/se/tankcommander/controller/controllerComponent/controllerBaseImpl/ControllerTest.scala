@@ -1,6 +1,5 @@
-package controller
+package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.GameField
 import org.scalatest.{FlatSpec, Matchers}
 

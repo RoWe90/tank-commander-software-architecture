@@ -6,7 +6,6 @@ import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.F
 import de.htwg.se.tankcommander.model.gridComponent.GameFieldInterface
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, TankModel}
 import de.htwg.se.tankcommander.model.playerComponent.Player
-
 import scala.xml.{NodeSeq, PrettyPrinter}
 import scala.xml.XML
 

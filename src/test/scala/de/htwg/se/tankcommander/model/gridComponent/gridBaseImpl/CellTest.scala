@@ -1,6 +1,5 @@
-package model
+package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
-import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.Cell
 import org.scalatest.{FlatSpec, Matchers}
 
 

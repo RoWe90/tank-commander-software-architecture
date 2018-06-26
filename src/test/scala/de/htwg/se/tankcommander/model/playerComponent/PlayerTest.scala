@@ -1,6 +1,5 @@
-package model
+package de.htwg.se.tankcommander.model.playerComponent
 
-import de.htwg.se.tankcommander.model.playerComponent.Player
 import org.scalatest.{FlatSpec, Matchers}
 
 class PlayerTest extends FlatSpec with Matchers {

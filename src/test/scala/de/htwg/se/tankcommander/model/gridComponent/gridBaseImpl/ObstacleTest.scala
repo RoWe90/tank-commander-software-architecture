@@ -1,6 +1,5 @@
-package model
+package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
-import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl._
 import org.scalatest.{FlatSpec, Matchers}
 
 class ObstacleTest extends FlatSpec with Matchers {
