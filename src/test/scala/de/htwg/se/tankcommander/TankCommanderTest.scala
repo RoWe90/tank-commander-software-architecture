@@ -1,27 +1,6 @@
 package de.htwg.se.tankcommander
 
-import org.scalatest.FunSuite
+import org.scalatest.{FlatSpec, FunSuite, Matchers}
 
-class TankCommanderTest extends FunSuite {
-
-  test("testController") {
-
-  }
-
-  test("testTui") {
-
-  }
-
-  test("testMain") {
-
-  }
-
-  test("testGui") {
-
-  }
-
-  test("testInjector") {
-
-  }
-
+class TankCommanderTest extends FlatSpec with Matchers {
 }
