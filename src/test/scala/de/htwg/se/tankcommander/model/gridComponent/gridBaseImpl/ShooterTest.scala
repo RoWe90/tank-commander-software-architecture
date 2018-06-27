@@ -8,7 +8,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class ShooterTest extends FlatSpec with Matchers {
   "Shooter" should "deal Dmg to passive Tank" in {
-
+    GameStatus.currentPlayerActions = 2
     val gamefield = new GameField
     val controller = new Controller(gamefield)
     val shot = new Shooter
