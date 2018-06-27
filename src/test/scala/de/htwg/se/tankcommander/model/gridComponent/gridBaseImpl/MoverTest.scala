@@ -1,27 +1,6 @@
 package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
-import org.scalatest.FunSuite
+import org.scalatest.{FlatSpec, FunSuite, Matchers}
 
-class MoverTest extends FunSuite {
-
-  test("testLineOfSightContainsTank") {
-
-  }
-
-  test("testAMoveOfTank") {
-
-  }
-
-  test("testCalcHitChance") {
-
-  }
-
-  test("testMovePossible") {
-
-  }
-
-  test("testMoveTank") {
-
-  }
-
+class MoverTest extends FlatSpec with Matchers {
 }

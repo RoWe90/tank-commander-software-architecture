@@ -1,19 +1,6 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.fileIoJsonImpl
 
-import org.scalatest.FunSuite
+import org.scalatest.{FlatSpec, FunSuite, Matchers}
 
-class FileIOTest extends FunSuite {
-
-  test("testSave") {
-
-  }
-
-  test("testGameStateToJson") {
-
-  }
-
-  test("testLoad") {
-
-  }
-
+class FileIOTest extends FlatSpec with Matchers {
 }

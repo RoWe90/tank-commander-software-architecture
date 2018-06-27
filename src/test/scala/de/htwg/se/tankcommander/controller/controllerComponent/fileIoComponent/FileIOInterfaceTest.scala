@@ -1,15 +1,8 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent
 
-import org.scalatest.FunSuite
+import org.scalatest.{FlatSpec, FunSuite, Matchers}
 
-class FileIOInterfaceTest extends FunSuite {
+class FileIOInterfaceTest extends FlatSpec with Matchers {
 
-  test("testSave") {
-
-  }
-
-  test("testLoad") {
-
-  }
 
 }
