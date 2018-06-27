@@ -1,19 +1,6 @@
 package de.htwg.se.tankcommander.util
 
-import org.scalatest.FunSuite
+import org.scalatest.{FlatSpec, FunSuite, Matchers}
 
-class UndoManagerTest extends FunSuite {
-
-  test("testRedoStep") {
-
-  }
-
-  test("testUndoStep") {
-
-  }
-
-  test("testDoStep") {
-
-  }
-
+class UndoManagerTest extends FlatSpec with Matchers {
 }

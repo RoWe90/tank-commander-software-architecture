@@ -1,27 +1,8 @@
 package de.htwg.se.tankcommander.util
 
-import org.scalatest.FunSuite
+import org.scalatest.{FlatSpec, FunSuite, Matchers}
 
-class ObservableTest extends FunSuite {
+class ObservableTest extends FlatSpec with Matchers{
 
-  test("testAdd") {
-
-  }
-
-  test("testSubscribers") {
-
-  }
-
-  test("testSubscribers_$eq") {
-
-  }
-
-  test("testNotifyObservers") {
-
-  }
-
-  test("testRemove") {
-
-  }
 
 }
