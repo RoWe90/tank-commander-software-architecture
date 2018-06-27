@@ -161,6 +161,10 @@ class ControllerTest extends FlatSpec with Matchers {
     matchfield.marray(10)(10).containsThisTank = Option(tank2)
     controller.shoot()
     assert(GameStatus.movesLeft === false)
+    controller.undo()
+    assert(GameStatus.movesLeft === false)
+    controller.redo()
+    assert(GameStatus.movesLeft === false)
 
   }
 
