@@ -13,7 +13,7 @@ class FileIOTest extends FunSuite {
   }
 
   test("testLoad") {
-
+""
   }
 
   test("testSaveXML") {
