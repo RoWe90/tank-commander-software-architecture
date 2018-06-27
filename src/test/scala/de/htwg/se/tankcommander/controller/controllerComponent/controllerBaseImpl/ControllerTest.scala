@@ -70,7 +70,8 @@ class ControllerTest extends FlatSpec with Matchers {
     gameField.marray(10)(10).containsThisTank = Option(tank2)
     gameField.marray(9)(10) = new Cell(9, 10)
     val controller = new Controller(gameField)
-    assert(controller.toString canEqual  "\n" +
+    val gameFieldtoString = controller.toString
+    assert( controller.matchfieldToString ===  "\n" +
       "T  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
@@ -86,6 +87,11 @@ class ControllerTest extends FlatSpec with Matchers {
   }
   "The UndoManager" should "remember the actions taken accordingly" in {
     val matchfield = new GameField
+    for (y <- 0 until matchfield.gridsX) {
+      for (x <- 0 until matchfield.gridsY) {
+        matchfield.marray(x)(y).cobstacle = Option(new Bush)
+      }
+    }
     val controller = new Controller(matchfield)
     val player1 = Player("p1")
     val player2 = Player("p2")
@@ -96,17 +102,65 @@ class ControllerTest extends FlatSpec with Matchers {
     GameStatus.activeTank = Option(tank1)
     GameStatus.passiveTank = Option(tank2)
     matchfield.marray(0)(0).containsThisTank = Option(tank1)
-    matchfield.marray(10)(10) = new Cell(10, 10)
     matchfield.marray(10)(10).containsThisTank = Option(tank2)
-    matchfield.marray(9)(10) = new Cell(9, 10)
-    val undoManager = new UndoManager
+    assert(matchfield.marray(0)(0).containsThisTank === Some(tank1))
     controller.move("down")
     assert(matchfield.marray(0)(1).containsThisTank === Some(tank1))
-    undoManager.undoStep
-    assert(matchfield.marray(0)(0).containsThisTank === Some(tank1))
-    undoManager.redoStep
+    controller.undo()
+    assert(matchfield.marray(0)(1).containsThisTank === Some(tank1))
+    controller.redo()
     assert(matchfield.marray(0)(1).containsThisTank === Some(tank1))
 
+
+  }
+  it should "save and load correctly" in {
+    val matchfield = new GameField
+    for (y <- 0 until matchfield.gridsX) {
+      for (x <- 0 until matchfield.gridsY) {
+        matchfield.marray(x)(y).cobstacle = Option(new Bush)
+      }
+    }
+    val controller = new Controller(matchfield)
+    val player1 = Player("p1")
+    val player2 = Player("p2")
+    val tank1 = new TankModel()
+    val tank2 = new TankModel()
+    GameStatus.activePlayer = Option(player1)
+    GameStatus.passivePlayer = Option(player2)
+    GameStatus.activeTank = Option(tank1)
+    GameStatus.passiveTank = Option(tank2)
+    matchfield.marray(0)(0).containsThisTank = Option(tank1)
+    matchfield.marray(10)(10).containsThisTank = Option(tank2)
+    assert(matchfield.marray(0)(0).containsThisTank === Some(tank1))
+    controller.move("down")
+    assert(matchfield.marray(0)(1).containsThisTank === Some(tank1))
+    controller.save()
+    assert(matchfield.marray(0)(1).containsThisTank === Some(tank1))
+    controller.move("down")
+    assert(matchfield.marray(0)(2).containsThisTank === Some(tank1))
+    controller.load()
+    assert(matchfield.marray(0)(2).containsThisTank === Some(tank1))
+  }
+  "Shoot method" should "shoot" in {
+    val matchfield = new GameField
+    for (y <- 0 until matchfield.gridsX) {
+      for (x <- 0 until matchfield.gridsY) {
+        matchfield.marray(x)(y).cobstacle = Option(new Bush)
+      }
+    }
+    val controller = new Controller(matchfield)
+    val player1 = Player("p1")
+    val player2 = Player("p2")
+    val tank1 = new TankModel()
+    val tank2 = new TankModel()
+    GameStatus.activePlayer = Option(player1)
+    GameStatus.passivePlayer = Option(player2)
+    GameStatus.activeTank = Option(tank1)
+    GameStatus.passiveTank = Option(tank2)
+    matchfield.marray(0)(0).containsThisTank = Option(tank1)
+    matchfield.marray(10)(10).containsThisTank = Option(tank2)
+    controller.shoot()
+    assert(GameStatus.movesLeft === false)
 
   }
 
