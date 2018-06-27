@@ -61,7 +61,7 @@ class MainMenu(controller: Controller) extends Frame {
       val gameInterface = new GameFieldGUI(controller)
       dispose()
     }
-    case ButtonClicked(`exit`) => exit(0)
+   // case ButtonClicked(`exit`) => exit(0)
   }
 
 

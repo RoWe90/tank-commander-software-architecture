@@ -16,7 +16,6 @@ case class Bush() extends Obstacle {
   override val passable: Boolean = true
   override val shortName: String = "B"
   override val hitmalus: Int = 10
-
   override def deepClone(): Obstacle = new Bush
 }
 
