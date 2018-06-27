@@ -1,35 +1,6 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
-import org.scalatest.FunSuite
+import org.scalatest.{FlatSpec, FunSuite, Matchers}
 
-class MoveCommandTest extends FunSuite {
-
-  test("testRedoStep") {
-
-  }
-
-  test("testMemento") {
-
-  }
-
-  test("testMemento_$eq") {
-
-  }
-
-  test("testUndoStep") {
-
-  }
-
-  test("testBackupGameStatus") {
-
-  }
-
-  test("testBackupGameStatus_$eq") {
-
-  }
-
-  test("testDoStep") {
-
-  }
-
+class MoveCommandTest extends FlatSpec with Matchers {
 }

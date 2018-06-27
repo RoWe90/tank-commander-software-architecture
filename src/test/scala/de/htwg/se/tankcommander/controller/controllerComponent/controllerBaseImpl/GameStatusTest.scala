@@ -1,5 +1,6 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
-class GameStatusTest {
+import org.scalatest.{FlatSpec, Matchers}
 
+class GameStatusTest extends FlatSpec with Matchers {
 }
