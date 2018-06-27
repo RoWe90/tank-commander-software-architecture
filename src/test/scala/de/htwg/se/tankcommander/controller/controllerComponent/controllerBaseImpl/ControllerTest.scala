@@ -82,7 +82,7 @@ class ControllerTest extends FlatSpec with Matchers {
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
-      "B  B  B  B  B  B  B  B  B  o  T  HS: 0\n"
+      "B  B  B  B  B  B  B  B  B  o  T  HS: 100\n"
     )
   }
   "The UndoManager" should "remember the actions taken accordingly" in {

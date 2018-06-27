@@ -50,7 +50,6 @@ class GameFieldTest extends FlatSpec with Matchers {
     gameField.marray(10)(10) = new Cell(10, 10)
     gameField.marray(10)(10).containsThisTank = Option(tank2)
     gameField.marray(9)(10) = new Cell(9, 10)
-
     assert(gameField.toString === "\n" +
       "T  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
@@ -62,7 +61,7 @@ class GameFieldTest extends FlatSpec with Matchers {
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
-      "B  B  B  B  B  B  B  B  B  o  T  HS: 0\n"
+      "B  B  B  B  B  B  B  B  B  o  T  HS: 100\n"
     )
 
   }
