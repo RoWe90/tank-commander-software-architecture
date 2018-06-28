@@ -15,14 +15,14 @@ class ControllerTest extends FlatSpec with Matchers {
   it should "position tanks in the right spot at beginning of match" in {
     val tank1 = new TankModel()
     val tank2 = new TankModel()
-    val matchfield = GameFieldFactory.apply("M1")
+    val matchfield = GameFieldFactory.apply("Map 1")
     val controller = new Controller(matchfield)
     controller.fillGameFieldWithTank((0, 0), tank1, (5, 5), tank2)
     assert(matchfield.marray(0)(0).containsThisTank === Some(tank1))
     assert(matchfield.marray(5)(5).containsThisTank canEqual Some(tank2))
   }
   it should "change the active player" in {
-    val matchfield = GameFieldFactory.apply("M1")
+    val matchfield = GameFieldFactory.apply("Map 1")
     val controller = new Controller(matchfield)
     val player1 = Player("p1")
     val player2 = Player("p2")

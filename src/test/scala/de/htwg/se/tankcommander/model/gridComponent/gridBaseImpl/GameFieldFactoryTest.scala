@@ -4,12 +4,12 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class GameFieldFactoryTest extends FlatSpec with Matchers {
   "A GameField Object" should "have an Array with a size of 11x11" in {
-    val gameField = GameFieldFactory.apply("M1")
+    val gameField = GameFieldFactory.apply("Map 1")
     assert(gameField.gridsX === 11 & gameField.gridsY === 11)
   }
   it should "be filled with Cells" in {
 
-    val gameField = GameFieldFactory.apply("M1")
+    val gameField = GameFieldFactory.apply("Map 1")
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
         assert(gameField.marray(x)(y).isInstanceOf[Cell])
@@ -22,7 +22,7 @@ class GameFieldFactoryTest extends FlatSpec with Matchers {
     }
   }
   "Every Cell" should "have been filled with an Obstacle-Option" in {
-    val gameField = GameFieldFactory.apply("M1")
+    val gameField = GameFieldFactory.apply("Map 1")
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
         assert(gameField.marray(x)(y).cobstacle.isInstanceOf[Option[Bush]] === true |
@@ -34,7 +34,7 @@ class GameFieldFactoryTest extends FlatSpec with Matchers {
     }
   }
   "A GameField Object" should "print out the Gamefield with toString" in {
-    val gameField = GameFieldFactory.apply("M1")
+    val gameField = GameFieldFactory.apply("Map 1")
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
         gameField.marray(x)(y).cobstacle = Option(new Bush)
@@ -76,7 +76,6 @@ class GameFieldFactoryTest extends FlatSpec with Matchers {
       "B  B  o  o  W  o  W  o  o  B  B  HS: 0\n"
     )
     map = GameFieldFactory.apply("Map 2")
-    print(map.toString)
     assert(map.toString === "\n" +
       "F  o  o  o  o  S  o  o  o  o  F  \n" +
       "o  F  o  o  o  S  o  o  o  F  o  \n" +

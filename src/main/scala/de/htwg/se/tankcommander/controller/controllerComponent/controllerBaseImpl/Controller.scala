@@ -13,7 +13,7 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import scala.swing.Publisher
 
 class Controller @Inject()() extends Observable with Publisher with ControllerInterface {
-  var matchfield: GameFieldInterface = GameFieldFactory.apply("M1")
+  var matchfield: GameFieldInterface = GameFieldFactory.apply("Map 1")
   var mapChosen: String = ""
   private val undoManager = new UndoManager
   val injector = Guice.createInjector(new TankCommanderModule)
