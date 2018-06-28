@@ -1,5 +1,4 @@
 # Htwg TankCommander Project 
-=====================================================
 This is a seed project to create a basic scala project as used in the
 class Software Engineering at the University of Applied Science HTWG Konstanz.
 
@@ -11,7 +10,6 @@ The project has
 * .gitignore defaults
 
 # Commands to play
-=====================================================
 * Start: Start the game
 * Exit: Leave the Application
 * up,down,right,left: Move your Tank accordingly
