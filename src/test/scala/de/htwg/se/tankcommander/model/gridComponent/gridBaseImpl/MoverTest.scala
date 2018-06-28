@@ -8,7 +8,7 @@ import scala.collection.mutable.ListBuffer
 
 class MoverTest extends FlatSpec with Matchers {
   "calcHitChance method" should "correctly calc hitchance" in {
-    val matchfield = GameFieldFactory.apply("M1")
+    val matchfield = GameFieldFactory.apply("Map 1")
     val controller = new Controller(matchfield)
     val tank1 = new TankModel()
     val tank2 = new TankModel()

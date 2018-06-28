@@ -61,7 +61,7 @@ class GameFieldFactoryTest extends FlatSpec with Matchers {
     )
   }
   "Factory" should "give back the right map" in {
-    var map = GameFieldFactory.apply("M1")
+    var map = GameFieldFactory.apply("Map 1")
     assert(map.toString === "\n" +
       "B  B  o  o  W  o  W  o  o  B  B  \n" +
       "B  B  o  o  o  o  o  o  o  B  B  \n" +
@@ -75,7 +75,7 @@ class GameFieldFactoryTest extends FlatSpec with Matchers {
       "B  B  o  o  o  o  o  o  o  B  B  \n" +
       "B  B  o  o  W  o  W  o  o  B  B  HS: 0\n"
     )
-    map = GameFieldFactory.apply("M2")
+    map = GameFieldFactory.apply("Map 2")
     print(map.toString)
     assert(map.toString === "\n" +
       "F  o  o  o  o  S  o  o  o  o  F  \n" +
