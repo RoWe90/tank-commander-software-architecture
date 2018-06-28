@@ -1,5 +1,6 @@
 package de.htwg.se.tankcommander.model.gridComponent
-import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{Cell, GameField}
+
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.Cell
 
 trait GameFieldInterface {
   val gridsX: Int
@@ -12,5 +13,5 @@ trait GameFieldInterface {
 
   def toString: String
 
-  def deepCopy: GameField
+  def deepCopy: GameFieldInterface
 }

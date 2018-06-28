@@ -1,13 +1,12 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.fileIOXmlImpl
 
-import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
+import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.FileIOInterface
 import de.htwg.se.tankcommander.model.gridComponent.GameFieldInterface
-import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, TankModel}
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.TankModel
 import de.htwg.se.tankcommander.model.playerComponent.Player
-import scala.xml.{NodeSeq, PrettyPrinter}
-import scala.xml.XML
+import scala.xml.{PrettyPrinter, XML}
 
 class FileIO() extends FileIOInterface {
   def saveString: Unit = {

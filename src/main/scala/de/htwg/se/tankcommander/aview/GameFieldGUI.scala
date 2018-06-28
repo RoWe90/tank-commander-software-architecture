@@ -11,14 +11,14 @@ import scala.swing.Swing.LineBorder
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
-class GameFieldGUI(controller: Controller, name1: String, name2: String) extends Frame with Observer {
+class GameFieldGUI(controller: Controller, name1: String, name2: String, map: String) extends Frame with Observer {
   controller.add(this)
   var cells = Array.ofDim[CellPanel](controller.matchfield.gridsX, controller.matchfield.gridsY)
   val statusLine = new TextArea()
   val messages = new TextArea("Welcome to the Game. \n" +
     "Use the Buttons on the right to control your tank.")
   paintGameField(controller)
-  controller.setUpGame(name1, name2)
+  controller.setUpGame(name1, name2, map)
   //Main Panel
   title = "Tank Commander"
   menuBar = new MenuBar {
@@ -47,7 +47,6 @@ class GameFieldGUI(controller: Controller, name1: String, name2: String) extends
       })
     }
   }
-
   val controls = new GridPanel(8, 1) {
     val up = new Button() {
       this.preferredSize = (new Dimension(100, 120))
@@ -141,14 +140,12 @@ class GameFieldGUI(controller: Controller, name1: String, name2: String) extends
     }
     give_up.reactions += {
       case ButtonClicked(give_up) => GameStatus.endGame()
-        messages.append("\n" + GameStatus.activePlayer.toString + " gave up, \n" + GameStatus.passivePlayer.toString + " has won!")
+        messages.append("\n" + GameStatus.activePlayer.toString + " gave up, \n" + GameStatus.passivePlayer.toString
+          + " has won!")
     }
-
   }
-
   visible = true
   centerOnScreen()
-
   val dimension = new Dimension(1000, 1000)
   contents = new BorderPanel {
     add(paintWindow(controller), BorderPanel.Position.Center)
@@ -156,14 +153,12 @@ class GameFieldGUI(controller: Controller, name1: String, name2: String) extends
     add(messages, BorderPanel.Position.West)
   }
 
-
   def paintWindow(controller: Controller): BorderPanel = {
     import BorderPanel.Position._
     val mainFrame = new BorderPanel {
       val gameArea = paintGameField(controller)
       layout += gameArea -> Center
       layout += statusLine -> South
-
     }
     mainFrame
   }

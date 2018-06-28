@@ -2,7 +2,7 @@ package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseIm
 
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.model.gridComponent.GameFieldInterface
-import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, Mover}
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.Mover
 import de.htwg.se.tankcommander.util.Command
 
 //Success or not yet to be implemented

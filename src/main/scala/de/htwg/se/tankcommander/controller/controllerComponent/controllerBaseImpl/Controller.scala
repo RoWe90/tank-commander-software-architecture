@@ -5,25 +5,47 @@ import de.htwg.se.tankcommander.TankCommanderModule
 import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.FileIOInterface
 import de.htwg.se.tankcommander.controller.controllerComponent.{ControllerInterface, GameStatus}
 import de.htwg.se.tankcommander.model.gridComponent.GameFieldInterface
-import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameField, TankModel}
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameFieldFactory, TankModel}
 import de.htwg.se.tankcommander.model.playerComponent.Player
 import de.htwg.se.tankcommander.util.{Observable, UndoManager}
 import net.codingwell.scalaguice.InjectorExtensions._
 
 import scala.swing.Publisher
 
-class Controller @Inject()(var matchfield: GameFieldInterface) extends Observable with Publisher with ControllerInterface {
+class Controller @Inject()() extends Observable with Publisher with ControllerInterface {
+  var matchfield: GameFieldInterface = null
+  var mapChosen: String = ""
   private val undoManager = new UndoManager
   val injector = Guice.createInjector(new TankCommanderModule)
   val fileIO = injector.instance[FileIOInterface]
 
 
   override def setUpGame(): Unit = {
-    matchfield = new GameField
     print("Welcome to Tank-Commander\n" + "Player 1 please choose your Name" + "\n")
     val player1 = Player(Console.readLine)
     print("Player 2 please choose your Name" + "\n")
     val player2 = Player(Console.readLine)
+    val tank1 = new TankModel()
+    val tank2 = new TankModel()
+    print("Choose your Map: M1 or M2" + "\n")
+    mapChosen = Console.readLine
+    matchfield = GameFieldFactory.apply(mapChosen)
+    fillGameFieldWithTank((0, 5), tank1, (10, 5), tank2)
+    GameStatus.activePlayer = Option(player1)
+    GameStatus.passivePlayer = Option(player2)
+    GameStatus.activeTank = Option(tank1)
+    GameStatus.passiveTank = Option(tank2)
+    notifyObservers()
+  }
+
+  def setUpGame(name1: String, name2: String, map: String): Unit = {
+    print("Welcome to Tank-Commander\n" + "Player 1 please choose your Name" + "\n")
+    val player1 = Player(name1)
+    print("Player 2 please choose your Name" + "\n")
+    val player2 = Player(name2)
+    print("Choose your Map: M1 or M2" + "\n")
+    mapChosen = map
+    matchfield = GameFieldFactory.apply(mapChosen)
     val tank1 = new TankModel()
     val tank2 = new TankModel()
     fillGameFieldWithTank((0, 5), tank1, (10, 5), tank2)
@@ -34,21 +56,6 @@ class Controller @Inject()(var matchfield: GameFieldInterface) extends Observabl
     notifyObservers()
   }
 
-  def setUpGame(name1: String, name2: String): Unit = {
-    matchfield = new GameField
-    print("Welcome to Tank-Commander\n" + "Player 1 please choose your Name" + "\n")
-    val player1 = Player(name1)
-    print("Player 2 please choose your Name" + "\n")
-    val player2 = Player(name2)
-    val tank1 = new TankModel()
-    val tank2 = new TankModel()
-    fillGameFieldWithTank((0, 5), tank1, (10, 5), tank2)
-    GameStatus.activePlayer = Option(player1)
-    GameStatus.passivePlayer = Option(player2)
-    GameStatus.activeTank = Option(tank1)
-    GameStatus.passiveTank = Option(tank2)
-    notifyObservers()
-  }
   override def fillGameFieldWithTank(pos: (Int, Int), tank: TankModel, pos2: (Int, Int), tank2: TankModel): Unit = {
     tank.posC = pos
     tank2.posC = pos2
@@ -108,11 +115,10 @@ class Controller @Inject()(var matchfield: GameFieldInterface) extends Observabl
   }
 
   override def load(): Unit = {
-    matchfield = new GameField;
+    matchfield = GameFieldFactory.apply(mapChosen)
     fileIO.load(this)
     notifyObservers()
   }
-
 }
 
 
