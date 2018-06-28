@@ -54,6 +54,14 @@ object GameStatus {
   def endGame(): Unit = {
     print(GameStatus.activePlayer.get + " Won\n")
   }
-
+  def resetGameStatus() : Unit = {
+    GameStatus.activePlayer = None
+    GameStatus.passivePlayer = None
+    GameStatus.activeTank = None
+    GameStatus.passiveTank = None
+    GameStatus.movesLeft = true
+    GameStatus.currentPlayerActions = 2
+    GameStatus.currentHitChance = 0
+  }
 }
 
