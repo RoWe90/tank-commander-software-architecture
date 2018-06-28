@@ -6,12 +6,13 @@ import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.F
 import de.htwg.se.tankcommander.model.gridComponent.GameFieldInterface
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.TankModel
 import de.htwg.se.tankcommander.model.playerComponent.Player
+
 import scala.xml.{PrettyPrinter, XML}
 
 class FileIO() extends FileIOInterface {
   def saveString: Unit = {
     import java.io._
-    val file = new File("src/main/ressources/savegame.json")
+    val file = new File("src/main/ressources/savegame.xml")
     file.createNewFile()
     val pw = new PrintWriter(file)
     val prettyPrinter = new PrettyPrinter(120, 4)
