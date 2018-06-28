@@ -16,7 +16,6 @@ class ShooterTest extends FlatSpec with Matchers {
     val player2 = new Player("test1")
     GameStatus.activePlayer = Option(player1)
     GameStatus.passivePlayer = Option(player2)
-    val undo = new UndoManager
     val activeTank = new TankModel
     val passiveTank = new TankModel
     GameStatus.activeTank = Option(activeTank)
