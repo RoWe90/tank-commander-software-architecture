@@ -45,7 +45,7 @@ class ControllerTest extends FlatSpec with Matchers {
     GameStatus.activeTank = Option(tank1)
     GameStatus.passiveTank = Option(tank2)
     val backup = controller.createGameStatusBackup
-    assert( backup.activePlayer === GameStatus.activePlayer &
+    assert(backup.activePlayer === GameStatus.activePlayer &
       backup.passivePlayer === GameStatus.passivePlayer)
     GameStatus.resetGameStatus()
   }
@@ -83,7 +83,7 @@ class ControllerTest extends FlatSpec with Matchers {
     gameField.marray(9)(10) = new Cell(9, 10)
     val controller = new Controller(gameField)
     val gameFieldtoString = controller.toString
-    assert( controller.matchfieldToString ===  "\n" +
+    assert(controller.matchfieldToString === "\n" +
       "T  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
@@ -175,17 +175,20 @@ class ControllerTest extends FlatSpec with Matchers {
     GameStatus.movesLeft = true
     GameStatus.currentPlayerActions = 2
     GameStatus.currentHitChance = 0
-    matchfield.marray(0)(0).containsThisTank = Option(tank1)
-    matchfield.marray(10)(10).containsThisTank = Option(tank2)
-    controller.move("down")
-    controller.move("down")
-    assert(GameStatus.movesLeft === false)
-    controller.undo()
-    assert(GameStatus.movesLeft === true)
-    controller.redo()
-    assert(GameStatus.movesLeft === false)
+    matchfield.marray(5)(5).containsThisTank = Option(tank1)
+    matchfield.marray(6)(5).containsThisTank = Option(tank2)
+    controller.shoot()
+    assert(GameStatus.currentPlayerActions === 2)
     GameStatus.resetGameStatus()
 
+  }
+  "SetupGame" should "set up a game correctly when parameters are given" in {
+    val controller = new Controller
+    controller.setUpGame("p1", "p2", map = "Map 1")
+    assert(GameStatus.activePlayer.get.name === "p1")
+    assert(GameStatus.passivePlayer.get.name === "p2")
+    assert(controller.mapChosen === "Map 1")
+  GameStatus.resetGameStatus()
   }
 
 }

@@ -32,7 +32,7 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     val tank1 = new TankModel()
     val tank2 = new TankModel()
     print("Choose your Map: Map 1 or Map 2" + "\n")
-    mapChosen = Console.readLine
+    mapChosen = scala.io.StdIn.readLine()
     matchfield = GameFieldFactory.apply(mapChosen)
     fillGameFieldWithTank((0, 5), tank1, (10, 5), tank2)
     GameStatus.activePlayer = Option(player1)
