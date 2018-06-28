@@ -19,7 +19,7 @@ class GameFieldGUI(controller: Controller, name1: String, name2: String) extends
     "Use the Buttons on the right to control your tank.")
   paintGameField(controller)
   controller.setUpGame(name1, name2)
-
+  //Main Panel
   title = "Tank Commander"
   menuBar = new MenuBar {
     contents += new Menu("File") {

@@ -7,7 +7,7 @@ import scala.swing._
 import scala.swing.event.ButtonClicked
 
 class MainMenu(controller: Controller) extends Frame {
-
+  //Main Menu
   title = "Tank Commander"
   menuBar = new MenuBar {
     contents += new Menu("File") {

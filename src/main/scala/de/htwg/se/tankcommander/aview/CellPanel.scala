@@ -6,6 +6,7 @@ import javax.swing.ImageIcon
 
 import scala.swing._
 
+//Individual Cells
 class CellPanel(row: Int, column: Int, controller: Controller) extends FlowPanel with Observer {
   controller.add(this)
   val label = new Label {
