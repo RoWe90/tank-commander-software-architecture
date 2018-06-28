@@ -49,7 +49,7 @@ class MainMenu(controller: Controller) extends Frame {
     }
     start.reactions += {
       case ButtonClicked(start) => {
-        val gameInterface = new GameFieldGUI(controller, name1.text, name2.text)
+        // val gameInterface = new GameFieldGUI(controller, name1.text, name2.text)
         dispose()
       }
     }

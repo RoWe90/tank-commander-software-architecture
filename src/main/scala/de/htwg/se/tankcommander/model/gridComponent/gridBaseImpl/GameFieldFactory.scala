@@ -100,14 +100,14 @@ object GameFieldFactory {
   private class Map2 extends GameField {
     override def fillGameFieldCellsWithObstacles: Unit = {
       //first row
-      val listBush = Array((4, 4), (4, 6), (5, 4), (5, 6))
+      val listBush = Array((4, 4), (6, 4), (4, 5), (6, 5))
       listBush.foreach(j => marray(j._1)(j._2).cobstacle = Option(new Bush))
-      val listForest = Array((0, 0), (0, 10), (1, 1), (1, 9), (2, 2), (2, 8), (3, 3), (3, 7), (6, 3),
-        (6, 7), (7, 2), (7, 8), (8, 1), (8, 9), (9, 0), (9, 10))
+      val listForest = Array((0, 0), (10, 0), (1, 1), (9, 1), (2, 2), (8, 2), (3, 3), (7, 3), (3, 6),
+        (7, 6), (2, 7), (8, 7), (1, 8), (9, 8), (0, 9), (10, 9))
       listForest.foreach(j => marray(j._1)(j._2).cobstacle = Option(new Forest))
-      val listStone = Array((0, 5), (1, 5), (2, 5), (7, 5), (8, 5), (9, 5))
+      val listStone = Array((5, 0), (5, 1), (5, 2), (5, 7), (5, 8), (5, 9))
       listStone.foreach(j => marray(j._1)(j._2).cobstacle = Option(new Rock))
-      val listWater = Array((3, 1), (4, 1), (5, 1), (6, 1), (3, 9), (4, 9), (5, 9), (6, 9))
+      val listWater = Array((1, 3), (1, 4), (1, 5), (1, 6), (9, 3), (9, 4), (9, 5), (9, 6))
       listWater.foreach(j => marray(j._1)(j._2).cobstacle = Option(new Water))
     }
 

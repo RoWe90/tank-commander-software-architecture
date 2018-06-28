@@ -3,13 +3,12 @@ package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.model.playerComponent.Player
-import de.htwg.se.tankcommander.util.UndoManager
 import org.scalatest.{FlatSpec, Matchers}
 //
 class ShooterTest extends FlatSpec with Matchers {
   "Shooter" should "deal Dmg to passive Tank" in {
     GameStatus.currentPlayerActions = 2
-    val gamefield = new GameField
+    val gamefield = GameFieldFactory.apply("M1")
     val controller = new Controller(gamefield)
     val shot = new Shooter
     val player1 = new Player("test")

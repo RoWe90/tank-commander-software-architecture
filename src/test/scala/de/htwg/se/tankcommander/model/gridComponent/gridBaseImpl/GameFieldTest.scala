@@ -4,13 +4,13 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class GameFieldTest extends FlatSpec with Matchers {
   "A GameField Object" should "have an Array with a size of 11x11" in {
-    val gameField = new GameField
+    val gameField = GameFieldFactory.apply("M1")
     assert(gameField.gridsX === 11 & gameField.gridsY === 11)
 
   }
   it should "be filled with Cells" in {
 
-    val gameField = new GameField
+    val gameField = GameFieldFactory.apply("M1")
 
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
@@ -26,7 +26,7 @@ class GameFieldTest extends FlatSpec with Matchers {
     }
   }
   "Every Cell" should "have been filled with an Obstacle-Option" in {
-    val gameField = new GameField
+    val gameField = GameFieldFactory.apply("M1")
 
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
@@ -39,7 +39,7 @@ class GameFieldTest extends FlatSpec with Matchers {
     }
   }
   "A GameField Object" should "print out the Gamefield with toString" in {
-    val gameField = new GameField
+    val gameField = GameFieldFactory.apply("M1")
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
         gameField.marray(x)(y).cobstacle = Option(new Bush)

@@ -19,6 +19,10 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
   val injector = Guice.createInjector(new TankCommanderModule)
   val fileIO = injector.instance[FileIOInterface]
 
+  def this(matchfield2: GameFieldInterface) {
+    this()
+    matchfield = matchfield2
+  }
 
   override def setUpGame(): Unit = {
     print("Welcome to Tank-Commander\n" + "Player 1 please choose your Name" + "\n")

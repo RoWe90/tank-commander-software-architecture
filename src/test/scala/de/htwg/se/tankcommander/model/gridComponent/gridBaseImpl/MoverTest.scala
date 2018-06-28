@@ -2,12 +2,13 @@ package de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl
 
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
-import org.scalatest.{FlatSpec, FunSuite, Matchers}
+import org.scalatest.{FlatSpec, Matchers}
+
 import scala.collection.mutable.ListBuffer
 
 class MoverTest extends FlatSpec with Matchers {
   "calcHitChance method" should "correctly calc hitchance" in {
-    val matchfield = new GameField
+    val matchfield = GameFieldFactory.apply("M1")
     val controller = new Controller(matchfield)
     val tank1 = new TankModel()
     val tank2 = new TankModel()
