@@ -27,5 +27,6 @@ class ShooterTest extends FlatSpec with Matchers {
     GameStatus.currentHitChance = 100
     shot.shoot()
     assert(GameStatus.currentPlayerActions === 1)
+    GameStatus.resetGameStatus()
   }
 }
