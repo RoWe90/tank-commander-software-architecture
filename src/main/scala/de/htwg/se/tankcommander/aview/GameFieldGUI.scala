@@ -13,12 +13,19 @@ import scala.swing.event.ButtonClicked
 
 class GameFieldGUI(controller: Controller, name1: String, name2: String, map: String) extends Frame with Observer {
   controller.add(this)
+  controller.setUpGame(name1, name2, map)
   var cells = Array.ofDim[CellPanel](controller.matchfield.gridsX, controller.matchfield.gridsY)
   val statusLine = new TextArea()
   val messages = new TextArea("Welcome to the Game. \n" +
-    "Use the Buttons on the right to control your tank.")
+    "Use the Buttons on the right to control your tank."){
+    lineWrap = true
+    editable = false
+  }
+  val scrollPanel = new ScrollPane(messages)
+  var scrollBar = scrollPanel.verticalScrollBar
+
+
   paintGameField(controller)
-  controller.setUpGame(name1, name2, map)
   //Main Panel
   title = "Tank Commander"
   menuBar = new MenuBar {
@@ -116,7 +123,8 @@ class GameFieldGUI(controller: Controller, name1: String, name2: String, map: St
         if (controller.checkIfPlayerHasMovesLeft())
           controller.move("left")
         else {
-          messages.append("\nNo more Moves left, end your turn!")
+          messages.text = ("\nNo more Moves left, end your turn!")
+
         }
     }
     right.reactions += {
@@ -150,7 +158,7 @@ class GameFieldGUI(controller: Controller, name1: String, name2: String, map: St
   contents = new BorderPanel {
     add(paintWindow(controller), BorderPanel.Position.Center)
     add(controls, BorderPanel.Position.East)
-    add(messages, BorderPanel.Position.West)
+    add(scrollPanel, BorderPanel.Position.West)
   }
 
   def paintWindow(controller: Controller): BorderPanel = {

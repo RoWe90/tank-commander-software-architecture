@@ -13,7 +13,7 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import scala.swing.Publisher
 
 class Controller @Inject()() extends Observable with Publisher with ControllerInterface {
-  var matchfield: GameFieldInterface = null
+  var matchfield: GameFieldInterface = GameFieldFactory.apply("M1")
   var mapChosen: String = ""
   private val undoManager = new UndoManager
   val injector = Guice.createInjector(new TankCommanderModule)
@@ -26,9 +26,9 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
 
   override def setUpGame(): Unit = {
     print("Welcome to Tank-Commander\n" + "Player 1 please choose your Name" + "\n")
-    val player1 = Player(Console.readLine)
+    val player1 = Player(scala.io.StdIn.readLine())
     print("Player 2 please choose your Name" + "\n")
-    val player2 = Player(Console.readLine)
+    val player2 = Player(scala.io.StdIn.readLine())
     val tank1 = new TankModel()
     val tank2 = new TankModel()
     print("Choose your Map: M1 or M2" + "\n")

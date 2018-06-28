@@ -43,13 +43,18 @@ class MainMenu(controller: Controller) extends Frame {
     val name2 = new TextField("Player 2: Type your Name here") {
       this.preferredSize = new Dimension(600, 50)
     }
-    val textFields = new GridPanel(2, 1) {
+    val map = new ComboBox(List("Map 1", "Map 2")){
+
+    }
+
+    val textFields = new GridPanel(3, 1) {
       contents += name1
       contents += name2
+      contents += map
     }
     start.reactions += {
       case ButtonClicked(start) => {
-        // val gameInterface = new GameFieldGUI(controller, name1.text, name2.text)
+        val gameInterface = new GameFieldGUI(controller, name1.text, name2.text, map = map.selection.item)
         dispose()
       }
     }
