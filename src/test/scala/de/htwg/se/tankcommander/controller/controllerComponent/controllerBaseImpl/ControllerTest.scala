@@ -34,7 +34,7 @@ class ControllerTest extends FlatSpec with Matchers {
     GameStatus.resetGameStatus()
   }
   it should "return GameStatus" in {
-    val matchfield = GameFieldFactory.apply("M1")
+    val matchfield = GameFieldFactory.apply("Map 1")
     val controller = new Controller(matchfield)
     val player1 = Player("p1")
     val player2 = Player("p2")
@@ -51,7 +51,7 @@ class ControllerTest extends FlatSpec with Matchers {
   }
   it should "check if Player has moves left" in {
     GameStatus.movesLeft = true
-    val matchfield = GameFieldFactory.apply("M1")
+    val matchfield = GameFieldFactory.apply("Map 1")
     val controller = new Controller(matchfield)
     assert(controller.checkIfPlayerHasMovesLeft() === true)
     GameStatus.movesLeft = false
@@ -60,7 +60,7 @@ class ControllerTest extends FlatSpec with Matchers {
   }
   it should "print the Gamefield" in {
 
-    val gameField = GameFieldFactory.apply("M1")
+    val gameField = GameFieldFactory.apply("Map 1")
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
         gameField.marray(x)(y).cobstacle = Option(new Bush)
@@ -98,7 +98,7 @@ class ControllerTest extends FlatSpec with Matchers {
     )
   }
   "The UndoManager" should "remember the actions taken accordingly" in {
-    val matchfield = GameFieldFactory.apply("M1")
+    val matchfield = GameFieldFactory.apply("Map 1")
     for (y <- 0 until matchfield.gridsX) {
       for (x <- 0 until matchfield.gridsY) {
         matchfield.marray(x)(y).cobstacle = Option(new Bush)
@@ -128,7 +128,7 @@ class ControllerTest extends FlatSpec with Matchers {
 
   }
   it should "save and load correctly" in {
-    val matchfield = GameFieldFactory.apply("M1")
+    val matchfield = GameFieldFactory.apply("Map 1")
     for (y <- 0 until matchfield.gridsX) {
       for (x <- 0 until matchfield.gridsY) {
         matchfield.marray(x)(y).cobstacle = Option(new Bush)
@@ -157,7 +157,7 @@ class ControllerTest extends FlatSpec with Matchers {
     GameStatus.resetGameStatus()
   }
   "Shoot method" should "shoot" in {
-    val matchfield = GameFieldFactory.apply("M1")
+    val matchfield = GameFieldFactory.apply("Map 1")
     for (y <- 0 until matchfield.gridsX) {
       for (x <- 0 until matchfield.gridsY) {
         matchfield.marray(x)(y).cobstacle = Option(new Bush)
