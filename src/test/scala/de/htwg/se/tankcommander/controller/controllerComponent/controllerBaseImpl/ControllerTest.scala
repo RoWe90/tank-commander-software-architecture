@@ -1,6 +1,8 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
 
+import java.io.ByteArrayInputStream
+
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl._
 import de.htwg.se.tankcommander.model.playerComponent.Player
@@ -190,5 +192,15 @@ class ControllerTest extends FlatSpec with Matchers {
     assert(controller.mapChosen === "Map 1")
   GameStatus.resetGameStatus()
   }
-
+  it should "set up a game correctly without parameters" in {
+    val controller = new Controller
+    val in = new ByteArrayInputStream(("p1\np2\nMap 1\n").getBytes)
+    System.setIn(in)
+    Console.withIn(in){
+      controller.setUpGame()
+    assert(GameStatus.activePlayer.get.name === "p1")
+    assert(GameStatus.passivePlayer.get.name === "p2")
+    assert(controller.mapChosen === "Map 1")}
+    GameStatus.resetGameStatus()
+  }
 }
