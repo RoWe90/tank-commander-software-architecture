@@ -18,6 +18,7 @@ class GameFieldTest extends FlatSpec with Matchers {
       }
     }
 
+
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
         assert(gameField.marray(x)(y).isInstanceOf[Cell])
