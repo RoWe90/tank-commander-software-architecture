@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
+[![Coverage Status](https://coveralls.io/repos/github/RoWe90/TankCommander/badge.svg?branch=master)](https://coveralls.io/github/RoWe90/TankCommander?branch=master)
+
 # Htwg TankCommander Project 
 This is a seed project to create a basic scala project as used in the
 class Software Engineering at the University of Applied Science HTWG Konstanz.
