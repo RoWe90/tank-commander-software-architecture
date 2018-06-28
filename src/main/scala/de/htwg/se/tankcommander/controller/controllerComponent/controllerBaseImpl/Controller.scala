@@ -34,6 +34,21 @@ class Controller @Inject()(var matchfield: GameFieldInterface) extends Observabl
     notifyObservers()
   }
 
+  def setUpGame(name1: String, name2: String): Unit = {
+    matchfield = new GameField
+    print("Welcome to Tank-Commander\n" + "Player 1 please choose your Name" + "\n")
+    val player1 = Player(name1)
+    print("Player 2 please choose your Name" + "\n")
+    val player2 = Player(name2)
+    val tank1 = new TankModel()
+    val tank2 = new TankModel()
+    fillGameFieldWithTank((0, 5), tank1, (10, 5), tank2)
+    GameStatus.activePlayer = Option(player1)
+    GameStatus.passivePlayer = Option(player2)
+    GameStatus.activeTank = Option(tank1)
+    GameStatus.passiveTank = Option(tank2)
+    notifyObservers()
+  }
   override def fillGameFieldWithTank(pos: (Int, Int), tank: TankModel, pos2: (Int, Int), tank2: TankModel): Unit = {
     tank.posC = pos
     tank2.posC = pos2
