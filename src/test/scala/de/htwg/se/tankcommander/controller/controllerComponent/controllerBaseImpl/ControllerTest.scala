@@ -57,6 +57,7 @@ class ControllerTest extends FlatSpec with Matchers {
     assert(controller.checkIfPlayerHasMovesLeft() === false)
   }
   it should "print the Gamefield" in {
+
     val gameField = new GameField
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
@@ -65,6 +66,15 @@ class ControllerTest extends FlatSpec with Matchers {
     }
     val tank1 = new TankModel
     val tank2 = new TankModel
+    val player1 = new Player("p1")
+    val player2 = new Player("p2")
+    GameStatus.activePlayer = Option(player1)
+    GameStatus.passivePlayer = Option(player2)
+    GameStatus.activeTank = Option(tank1)
+    GameStatus.passiveTank = Option(tank2)
+    GameStatus.movesLeft = true
+    GameStatus.currentPlayerActions = 2
+    GameStatus.currentHitChance = 0
     gameField.marray(0)(0).containsThisTank = Option(tank1)
     gameField.marray(10)(10) = new Cell(10, 10)
     gameField.marray(10)(10).containsThisTank = Option(tank2)
@@ -82,7 +92,7 @@ class ControllerTest extends FlatSpec with Matchers {
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
-      "B  B  B  B  B  B  B  B  B  o  T  HS: 100\n"
+      "B  B  B  B  B  B  B  B  B  o  T  HS: 0\n"
     )
   }
   "The UndoManager" should "remember the actions taken accordingly" in {
@@ -157,12 +167,16 @@ class ControllerTest extends FlatSpec with Matchers {
     GameStatus.passivePlayer = Option(player2)
     GameStatus.activeTank = Option(tank1)
     GameStatus.passiveTank = Option(tank2)
+    GameStatus.movesLeft = true
+    GameStatus.currentPlayerActions = 2
+    GameStatus.currentHitChance = 0
     matchfield.marray(0)(0).containsThisTank = Option(tank1)
     matchfield.marray(10)(10).containsThisTank = Option(tank2)
-    controller.shoot()
+    controller.move("down")
+    controller.move("down")
     assert(GameStatus.movesLeft === false)
     controller.undo()
-    assert(GameStatus.movesLeft === false)
+    assert(GameStatus.movesLeft === true)
     controller.redo()
     assert(GameStatus.movesLeft === false)
 
