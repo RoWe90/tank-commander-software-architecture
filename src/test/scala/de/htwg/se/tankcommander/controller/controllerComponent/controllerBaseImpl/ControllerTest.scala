@@ -32,6 +32,7 @@ class ControllerTest extends FlatSpec with Matchers {
     assert(GameStatus.activePlayer.get === player1)
     controller.endTurnChangeActivePlayer()
     assert(GameStatus.activePlayer.get === player2)
+    GameStatus.resetGameStatus()
   }
   it should "return GameStatus" in {
     val matchfield = new GameField
@@ -47,6 +48,7 @@ class ControllerTest extends FlatSpec with Matchers {
     val backup = controller.createGameStatusBackup
     assert( backup.activePlayer === GameStatus.activePlayer &
       backup.passivePlayer === GameStatus.passivePlayer)
+    GameStatus.resetGameStatus()
   }
   it should "check if Player has moves left" in {
     GameStatus.movesLeft = true
@@ -55,6 +57,7 @@ class ControllerTest extends FlatSpec with Matchers {
     assert(controller.checkIfPlayerHasMovesLeft() === true)
     GameStatus.movesLeft = false
     assert(controller.checkIfPlayerHasMovesLeft() === false)
+    GameStatus.resetGameStatus()
   }
   it should "print the Gamefield" in {
 
@@ -121,6 +124,8 @@ class ControllerTest extends FlatSpec with Matchers {
     controller.redo()
     assert(matchfield.marray(0)(1).containsThisTank === Some(tank1))
 
+    GameStatus.resetGameStatus()
+
 
   }
   it should "save and load correctly" in {
@@ -150,6 +155,7 @@ class ControllerTest extends FlatSpec with Matchers {
     assert(matchfield.marray(0)(2).containsThisTank === Some(tank1))
     controller.load()
     assert(matchfield.marray(0)(2).containsThisTank === Some(tank1))
+    GameStatus.resetGameStatus()
   }
   "Shoot method" should "shoot" in {
     val matchfield = new GameField
@@ -179,6 +185,7 @@ class ControllerTest extends FlatSpec with Matchers {
     assert(GameStatus.movesLeft === true)
     controller.redo()
     assert(GameStatus.movesLeft === false)
+    GameStatus.resetGameStatus()
 
   }
 

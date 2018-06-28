@@ -62,7 +62,7 @@ class GameFieldTest extends FlatSpec with Matchers {
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +
-      "B  B  B  B  B  B  B  B  B  o  T  HS: 100\n"
+      "B  B  B  B  B  B  B  B  B  o  T  HS: 0\n"
     )
 
   }
