@@ -13,16 +13,16 @@ import scala.swing.event.ButtonClicked
 
 class GameFieldGUI(controller: Controller, name1: String, name2: String, map: String) extends Frame with Observer {
   controller.add(this)
-  controller.setUpGame(name1, name2, map)
   var cells = Array.ofDim[CellPanel](controller.matchfield.gridsX, controller.matchfield.gridsY)
   val statusLine = new TextArea()
   val messages = new TextArea("Welcome to the Game. \n" +
     "Use the Buttons on the right to control your tank."){
-    lineWrap = true
+    lineWrap = false
     editable = false
   }
   val scrollPanel = new ScrollPane(messages)
   var scrollBar = scrollPanel.verticalScrollBar
+  controller.setUpGame(name1, name2, map)
 
 
   paintGameField(controller)

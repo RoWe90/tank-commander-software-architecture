@@ -6,7 +6,7 @@ import de.htwg.se.tankcommander.model.gridComponent.GameFieldInterface
 object GameFieldFactory {
   // our 'factory' method
   def apply(s: String): GameFieldInterface = {
-    if (s == "M1") new Map1
+    if (s == "Map 1") new Map1
     else new Map2
   }
 
