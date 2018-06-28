@@ -30,11 +30,11 @@ class GameFieldGUI(controller: Controller, name1: String, name2: String, map: St
   title = "Tank Commander"
   menuBar = new MenuBar {
     contents += new Menu("File") {
-      contents += new MenuItem("New Game") {
-      }
-      contents += new MenuItem("Restart") {
-      }
-      contents += new Separator()
+  //    contents += new MenuItem("New Game") {
+  //    }
+  //    contents += new MenuItem("Restart") {
+  //    }
+  //    contents += new Separator()
       contents += new MenuItem(Action("Load") {
         controller.load()
       })

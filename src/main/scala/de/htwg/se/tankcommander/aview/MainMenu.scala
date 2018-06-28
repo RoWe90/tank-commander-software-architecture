@@ -11,13 +11,13 @@ class MainMenu(controller: Controller) extends Frame {
   title = "Tank Commander"
   menuBar = new MenuBar {
     contents += new Menu("File") {
-      contents += new MenuItem("New Game") {
+    // contents += new MenuItem("New Game") {
 
-      }
-      contents += new MenuItem("Restart") {
+    // }
+    // contents += new MenuItem("Restart") {
 
-      }
-      contents += new Separator()
+    // }
+    //  contents += new Separator()
       contents += new MenuItem("Load") {
 
       }
