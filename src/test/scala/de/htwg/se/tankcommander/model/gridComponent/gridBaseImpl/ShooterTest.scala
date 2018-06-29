@@ -4,7 +4,7 @@ import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.model.playerComponent.Player
 import org.scalatest.{FlatSpec, Matchers}
-//
+
 class ShooterTest extends FlatSpec with Matchers {
   "Shooter" should "deal Dmg to passive Tank" in {
     GameStatus.currentPlayerActions = 2

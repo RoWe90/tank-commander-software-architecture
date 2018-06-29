@@ -1,13 +1,12 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.fileIoJsonImpl
 
-import com.google.inject.Guice
-import de.htwg.se.tankcommander.TankCommanderModule
-import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
+import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.FileIOInterface
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.TankModel
 import de.htwg.se.tankcommander.model.playerComponent.Player
 import play.api.libs.json._
+
 import scala.io.Source
 
 class FileIO extends FileIOInterface {
@@ -24,7 +23,7 @@ class FileIO extends FileIOInterface {
     Json.obj(
       "game" -> Json.obj(
         "aPlayer" -> JsString(GameStatus.activePlayer.get.name),
-        "pPlayer" -> JsString(GameStatus.activePlayer.get.name),
+        "pPlayer" -> JsString(GameStatus.passivePlayer.get.name),
         "movesCount" -> JsNumber(GameStatus.currentPlayerActions),
         "hitchance" -> JsNumber(GameStatus.currentHitChance),
         "posATankX" -> JsNumber(GameStatus.activeTank.get.posC._1),
@@ -45,7 +44,7 @@ class FileIO extends FileIOInterface {
     val source: String = Source.fromFile("src/main/ressources/savegame.json").getLines.mkString
     val json: JsValue = Json.parse(source)
     GameStatus.activePlayer = Option(new Player((json \ "game" \ "aPlayer").get.toString()))
-    GameStatus.activePlayer = Option(new Player((json \ "game" \ "pPlayer").get.toString()))
+    GameStatus.passivePlayer = Option(new Player((json \ "game" \ "pPlayer").get.toString()))
     GameStatus.currentPlayerActions = (json \ "game" \ "movesCount").get.toString().toInt
     GameStatus.currentHitChance = (json \ "game" \ "hitchance").get.toString().toInt
     val tank1: TankModel = new TankModel((json \ "game" \ "aTankHP").get.toString().toInt,
