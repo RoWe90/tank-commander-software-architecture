@@ -34,7 +34,7 @@ class MainMenu(controller: Controller) extends Frame {
   contents = new GridPanel(4, 1) {
     val start = new Button() {
       this.preferredSize = new Dimension(600, 300)
-      this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/start_final.png")
+      this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/start_final_kleiner.png")
         .getImage().getScaledInstance(600, 300, java.awt.Image.SCALE_SMOOTH)))
     }
     val name1 = new TextField("Player 1: Type your Name here") {
@@ -59,7 +59,7 @@ class MainMenu(controller: Controller) extends Frame {
     }
     val exit = new Button() {
       this.preferredSize = new Dimension(600, 300)
-      this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/exit_final.png")
+      this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/exit_final_kleiner.png")
         .getImage().getScaledInstance(600, 300, java.awt.Image.SCALE_SMOOTH)))
 
     }
@@ -67,7 +67,7 @@ class MainMenu(controller: Controller) extends Frame {
       case ButtonClicked(exit) => System.exit(0)
     }
     val label = new Label("Hauptmenü") {
-      this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/logo_cut.png")
+      this.icon = (new ImageIcon(new ImageIcon("src/main/ressources/icons/TankCommanderLogo.png")
         .getImage().getScaledInstance(600, 300, java.awt.Image.SCALE_SMOOTH)))
     }
     contents += label
