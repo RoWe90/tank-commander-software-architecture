@@ -11,17 +11,17 @@ object GameFieldFactory {
     new Map1
   }
 
-  private case class GameField(gamefield: Vector[Vector[Cell]] = Vector.tabulate(11,11)((i,j) => Cell(pos=(i,j)))) extends GameFieldInterface {
+  private case class GameField(gamefield: Vector[Vector[Cell]] = Vector.tabulate(11, 11)((i, j) => Cell(pos = (i, j)))) extends GameFieldInterface {
     override val gridsX = 11
     override val gridsY = 11
-    override val mvector: Vector[Vector[Cell]] = Vector.tabulate(gridsX,gridsY)((i,j) => Cell(pos=(i,j)))//[Vector[Cell]]()//Array.ofDim[Cell](gridsX, gridsY)
+    override val mvector: Vector[Vector[Cell]] = Vector.tabulate(gridsX, gridsY)((i, j) => Cell(pos = (i, j))) //[Vector[Cell]]()//Array.ofDim[Cell](gridsX, gridsY)
     //fillGameFieldWithCells()
     //fillGameFieldCellsWithObstacles()
 
-//    override def copy(x: Int = this.gridsX, y: Int = this.gridsX, vector: Vector[Vector[Cell]]): GameFieldInterface = {
-//      val gamefield = new GameField
-//      gamefield
-//    }
+    //    override def copy(x: Int = this.gridsX, y: Int = this.gridsX, vector: Vector[Vector[Cell]]): GameFieldInterface = {
+    //      val gamefield = new GameField
+    //      gamefield
+    //    }
 
     //    override def fillGameFieldWithCells(): Unit = {
     //      for (x <- 0 until gridsX) {
@@ -34,7 +34,7 @@ object GameFieldFactory {
 
     //override def fillGameFieldCellsWithObstacles(): Unit = {
     //}
-
+    //TODO String Builder scheint nicht zu gehen!
     override def toString: String = {
       var output = new StringBuilder
       for (z <- 0 until gridsY) {
@@ -60,17 +60,17 @@ object GameFieldFactory {
     }
 
     override def update(vector: Vector[Vector[Cell]]): GameFieldInterface = {
-      val newGamefield = GameField(gamefield = vector )
+      val newGamefield = GameField(gamefield = vector)
       newGamefield
     }
 
     override def deepCopy: GameFieldInterface = {
-      val gameFieldClone: GameField =  GameField()
-//      for (x <- 0 until gridsX) {
-//        for (y <- 0 until gridsY) {
-//          gameFieldClone.mvector(x)(y) = this.mvector(x)(y).deepClone()
-//        }
-//      }
+      val gameFieldClone: GameField = GameField()
+      //      for (x <- 0 until gridsX) {
+      //        for (y <- 0 until gridsY) {
+      //          gameFieldClone.mvector(x)(y) = this.mvector(x)(y).deepClone()
+      //        }
+      //      }
       gameFieldClone
     }
   }
@@ -96,27 +96,29 @@ object GameFieldFactory {
     private val listWater = Vector((4, 0), (6, 0), (4, 2), (6, 2), (4, 8), (6, 8), (4, 10), (6, 10))
     //      listWater.foreach(j => mvector(j._1)(j._2).cobstacle = Option(new Water))
     private val listHill = Vector((5, 4), (5, 5), (5, 6))
+    println(listHill)
     //      listHill.foreach(j => mvector(j._1)(j._2).cobstacle = Option(new Hill))
     override val mvector: Vector[Vector[Cell]]
-    = Vector.tabulate(gridsX, gridsY)((i, j) => Cell(pos = (i, j),
-      cobstacle = this.mvector(i)(j).cobstacle match {
-        case _ if listBush.contains((i, j)) => Option(new Bush)
-        case _ if listForest.contains((i, j)) => Option(new Forest)
-        case _ if listHill.contains((i, j)) => Option(new Hill)
-        case _ if listRock.contains((i, j)) => Option(new Rock)
-        case _ if listWater.contains((i, j)) => Option(new Water)
-      }))
+    = Vector.tabulate(gridsX, gridsY)((i, j) => Cell(pos = (i, j), cobstacle = this
+    match {
+      case _ if listBush.contains((i, j)) => Option(new Bush)
+      case _ if listForest.contains((i, j)) => Option(new Forest)
+      case _ if listHill.contains((i, j)) => Option(new Hill)
+      case _ if listRock.contains((i, j)) => Option(new Rock)
+      case _ if listWater.contains((i, j)) => Option(new Water)
+      case _ => None
+    }))
   }
 
-//  override def deepCopy: GameFieldInterface = {
-//    val gameFieldClone: Map1 = new Map1
-//    for (x <- 0 until gridsX) {
-//      for (y <- 0 until gridsY) {
-//        gameFieldClone.mvector(x)(y) = this.mvector(x)(y).deepClone()
-//      }
-//    }
-//    gameFieldClone
-//  }
+  //  override def deepCopy: GameFieldInterface = {
+  //    val gameFieldClone: Map1 = new Map1
+  //    for (x <- 0 until gridsX) {
+  //      for (y <- 0 until gridsY) {
+  //        gameFieldClone.mvector(x)(y) = this.mvector(x)(y).deepClone()
+  //      }
+  //    }
+  //    gameFieldClone
+  //  }
 
 
   private class Map2() extends GameField {
@@ -142,13 +144,13 @@ object GameFieldFactory {
       }))
   }
 
-//  override def deepCopy: GameFieldInterface = {
-//    val gameFieldClone: Map2 = new Map2
-//    for (x <- 0 until gridsX) {
-//      for (y <- 0 until gridsY) {
-//        gameFieldClone.mvector(x)(y) = this.mvector(x)(y).deepClone()
-//      }
-//    }
-//    gameFieldClone
-//  }
+  //  override def deepCopy: GameFieldInterface = {
+  //    val gameFieldClone: Map2 = new Map2
+  //    for (x <- 0 until gridsX) {
+  //      for (y <- 0 until gridsY) {
+  //        gameFieldClone.mvector(x)(y) = this.mvector(x)(y).deepClone()
+  //      }
+  //    }
+  //    gameFieldClone
+  //  }
 }

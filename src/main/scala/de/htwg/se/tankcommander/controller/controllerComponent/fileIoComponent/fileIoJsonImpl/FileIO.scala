@@ -3,7 +3,7 @@ package de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.
 import de.htwg.se.tankcommander.controller.controllerComponent.GameStatus
 import de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.FileIOInterface
-import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.TankModel
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{Cell, TankModel}
 import de.htwg.se.tankcommander.model.playerComponent.Player
 import play.api.libs.json._
 
@@ -43,23 +43,35 @@ class FileIO extends FileIOInterface {
   override def load(controller: Controller): Unit = {
     val source: String = Source.fromFile("src/main/ressources/savegame.json").getLines.mkString
     val json: JsValue = Json.parse(source)
-    GameStatus.activePlayer = Option(new Player((json \ "game" \ "aPlayer").get.toString()))
-    GameStatus.passivePlayer = Option(new Player((json \ "game" \ "pPlayer").get.toString()))
+    GameStatus.activePlayer = Option(Player((json \ "game" \ "aPlayer").get.toString()))
+    GameStatus.passivePlayer = Option(Player((json \ "game" \ "pPlayer").get.toString()))
     GameStatus.currentPlayerActions = (json \ "game" \ "movesCount").get.toString().toInt
     GameStatus.currentHitChance = (json \ "game" \ "hitchance").get.toString().toInt
-    val tank1: TankModel = new TankModel((json \ "game" \ "aTankHP").get.toString().toInt,
-      ((json \ "game" \ "posATankX").get.toString().toInt, (json \ "game" \ "posATankY").get.toString().toInt),
-      (json \ "game" \ "aTankFacing").get.toString())
-    val tank2: TankModel = new TankModel((json \ "game" \ "pTankHP").get.toString().toInt,
-      ((json \ "game" \ "posPTankX").get.toString().toInt, (json \ "game" \ "posPTankY").get.toString().toInt),
-      (json \ "game" \ "pTankFacing").get.toString().toString)
+    val tank1: TankModel = TankModel(
+      hp = (json \ "game" \ "aTankHP").get.toString().toInt,
+      posC = ((json \ "game" \ "posATankX").get.toString().toInt, (json \ "game" \ "posATankY").get.toString().toInt),
+      facing = (json \ "game" \ "aTankFacing").get.toString())
+    val tank2: TankModel = TankModel(
+      hp = (json \ "game" \ "pTankHP").get.toString().toInt,
+      posC = ((json \ "game" \ "posPTankX").get.toString().toInt, (json \ "game" \ "posPTankY").get.toString().toInt),
+      facing = (json \ "game" \ "pTankFacing").get.toString().toString)
     GameStatus.activeTank = Option(tank1)
     GameStatus.passiveTank = Option(tank2)
     GameStatus.currentHitChance = (json \ "game" \ "currentHS").get.toString().toInt
     GameStatus.movesLeft = (json \ "game" \ "movesLeft").get.toString().toBoolean
-    controller.matchfield.mvector(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._2)
-      .containsThisTank = Option(tank1)
-    controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._2)
-      .containsThisTank = Option(tank2)
+
+    controller.matchfield = controller.matchfield.update(controller.matchfield.mvector.updated(
+      GameStatus.activeTank.get.posC._1, controller.matchfield.mvector(GameStatus.activeTank.get.posC._1).updated(
+        GameStatus.activeTank.get.posC._2, Cell(GameStatus.activeTank.get.posC,
+          controller.matchfield.mvector(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._1).cobstacle, Option(GameStatus.activeTank.get)))))
+
+    controller.matchfield = controller.matchfield.update(controller.matchfield.mvector.updated(
+      GameStatus.passiveTank.get.posC._1, controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1).updated(
+        GameStatus.passiveTank.get.posC._2, Cell(GameStatus.passiveTank.get.posC,
+          controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._1).cobstacle, Option(GameStatus.passiveTank.get)))))
+    //    controller.matchfield.mvector(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._2)
+    //      .containsThisTank = Option(tank1)
+    //    controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._2)
+    //      .containsThisTank = Option(tank2)
   }
 }
