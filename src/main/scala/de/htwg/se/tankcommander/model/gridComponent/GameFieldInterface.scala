@@ -5,13 +5,11 @@ import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.Cell
 trait GameFieldInterface {
   val gridsX: Int
   val gridsY: Int
-  var marray: Array[Array[Cell]]
+  val mvector: Vector[Vector[Cell]]
 
   def fillGameFieldWithCells(): Unit
 
   def fillGameFieldCellsWithObstacles(): Unit
 
   def toString: String
-
-  def deepCopy: GameFieldInterface
 }

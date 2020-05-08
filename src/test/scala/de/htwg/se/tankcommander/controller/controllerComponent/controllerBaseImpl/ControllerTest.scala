@@ -20,8 +20,8 @@ class ControllerTest extends FlatSpec with Matchers {
     val matchfield = GameFieldFactory.apply("Map 1")
     val controller = new Controller(matchfield)
     controller.fillGameFieldWithTank((0, 0), tank1, (5, 5), tank2)
-    assert(matchfield.marray(0)(0).containsThisTank === Some(tank1))
-    assert(matchfield.marray(5)(5).containsThisTank canEqual Some(tank2))
+    assert(matchfield.mvector(0)(0).containsThisTank === Some(tank1))
+    assert(matchfield.mvector(5)(5).containsThisTank canEqual Some(tank2))
   }
   it should "change the active player" in {
     val matchfield = GameFieldFactory.apply("Map 1")
@@ -65,7 +65,7 @@ class ControllerTest extends FlatSpec with Matchers {
     val gameField = GameFieldFactory.apply("Map 1")
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
-        gameField.marray(x)(y).cobstacle = Option(new Bush)
+        gameField.mvector(x)(y).cobstacle = Option(new Bush)
       }
     }
     val tank1 = new TankModel
@@ -79,10 +79,10 @@ class ControllerTest extends FlatSpec with Matchers {
     GameStatus.movesLeft = true
     GameStatus.currentPlayerActions = 2
     GameStatus.currentHitChance = 0
-    gameField.marray(0)(0).containsThisTank = Option(tank1)
-    gameField.marray(10)(10) = new Cell(10, 10)
-    gameField.marray(10)(10).containsThisTank = Option(tank2)
-    gameField.marray(9)(10) = new Cell(9, 10)
+    gameField.mvector(0)(0).containsThisTank = Option(tank1)
+    gameField.mvector(10)(10) = new Cell(10, 10)
+    gameField.mvector(10)(10).containsThisTank = Option(tank2)
+    gameField.mvector(9)(10) = new Cell(9, 10)
     val controller = new Controller(gameField)
     val gameFieldtoString = controller.toString
     assert(controller.matchfieldToString === "\n" +
@@ -103,7 +103,7 @@ class ControllerTest extends FlatSpec with Matchers {
     val matchfield = GameFieldFactory.apply("Map 1")
     for (y <- 0 until matchfield.gridsX) {
       for (x <- 0 until matchfield.gridsY) {
-        matchfield.marray(x)(y).cobstacle = Option(new Bush)
+        matchfield.mvector(x)(y).cobstacle = Option(new Bush)
       }
     }
     val controller = new Controller(matchfield)
@@ -115,15 +115,15 @@ class ControllerTest extends FlatSpec with Matchers {
     GameStatus.passivePlayer = Option(player2)
     GameStatus.activeTank = Option(tank1)
     GameStatus.passiveTank = Option(tank2)
-    matchfield.marray(0)(0).containsThisTank = Option(tank1)
-    matchfield.marray(10)(10).containsThisTank = Option(tank2)
-    assert(matchfield.marray(0)(0).containsThisTank === Some(tank1))
+    matchfield.mvector(0)(0).containsThisTank = Option(tank1)
+    matchfield.mvector(10)(10).containsThisTank = Option(tank2)
+    assert(matchfield.mvector(0)(0).containsThisTank === Some(tank1))
     controller.move("down")
-    assert(matchfield.marray(0)(1).containsThisTank === Some(tank1))
+    assert(matchfield.mvector(0)(1).containsThisTank === Some(tank1))
     controller.undo()
-    assert(matchfield.marray(0)(1).containsThisTank === Some(tank1))
+    assert(matchfield.mvector(0)(1).containsThisTank === Some(tank1))
     controller.redo()
-    assert(matchfield.marray(0)(1).containsThisTank === Some(tank1))
+    assert(matchfield.mvector(0)(1).containsThisTank === Some(tank1))
 
     GameStatus.resetGameStatus()
 
@@ -133,7 +133,7 @@ class ControllerTest extends FlatSpec with Matchers {
     val matchfield = GameFieldFactory.apply("Map 1")
     for (y <- 0 until matchfield.gridsX) {
       for (x <- 0 until matchfield.gridsY) {
-        matchfield.marray(x)(y).cobstacle = Option(new Bush)
+        matchfield.mvector(x)(y).cobstacle = Option(new Bush)
       }
     }
     val controller = new Controller(matchfield)
@@ -145,24 +145,24 @@ class ControllerTest extends FlatSpec with Matchers {
     GameStatus.passivePlayer = Option(player2)
     GameStatus.activeTank = Option(tank1)
     GameStatus.passiveTank = Option(tank2)
-    matchfield.marray(0)(0).containsThisTank = Option(tank1)
-    matchfield.marray(10)(10).containsThisTank = Option(tank2)
-    assert(matchfield.marray(0)(0).containsThisTank === Some(tank1))
+    matchfield.mvector(0)(0).containsThisTank = Option(tank1)
+    matchfield.mvector(10)(10).containsThisTank = Option(tank2)
+    assert(matchfield.mvector(0)(0).containsThisTank === Some(tank1))
     controller.move("down")
-    assert(matchfield.marray(0)(1).containsThisTank === Some(tank1))
+    assert(matchfield.mvector(0)(1).containsThisTank === Some(tank1))
     controller.save()
-    assert(matchfield.marray(0)(1).containsThisTank === Some(tank1))
+    assert(matchfield.mvector(0)(1).containsThisTank === Some(tank1))
     controller.move("down")
-    assert(matchfield.marray(0)(2).containsThisTank === Some(tank1))
+    assert(matchfield.mvector(0)(2).containsThisTank === Some(tank1))
     controller.load()
-    assert(matchfield.marray(0)(2).containsThisTank === Some(tank1))
+    assert(matchfield.mvector(0)(2).containsThisTank === Some(tank1))
     GameStatus.resetGameStatus()
   }
   "Shoot method" should "shoot" in {
     val matchfield = GameFieldFactory.apply("Map 1")
     for (y <- 0 until matchfield.gridsX) {
       for (x <- 0 until matchfield.gridsY) {
-        matchfield.marray(x)(y).cobstacle = Option(new Bush)
+        matchfield.mvector(x)(y).cobstacle = Option(new Bush)
       }
     }
     val controller = new Controller(matchfield)
@@ -177,8 +177,8 @@ class ControllerTest extends FlatSpec with Matchers {
     GameStatus.movesLeft = true
     GameStatus.currentPlayerActions = 2
     GameStatus.currentHitChance = 0
-    matchfield.marray(5)(5).containsThisTank = Option(tank1)
-    matchfield.marray(6)(5).containsThisTank = Option(tank2)
+    matchfield.mvector(5)(5).containsThisTank = Option(tank1)
+    matchfield.mvector(6)(5).containsThisTank = Option(tank2)
     controller.shoot()
     assert(GameStatus.currentPlayerActions === 2)
     GameStatus.resetGameStatus()

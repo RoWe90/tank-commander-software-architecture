@@ -14,7 +14,7 @@ class TankModelTest extends FlatSpec with Matchers {
   }
   "deepClone" should "should clone a TankModel" in {
     val testTank = new TankModel
-    val testTank2 = testTank.deepClone()
+    val testTank2 = testTank.copy()
 
     assert(
       testTank.tankBaseDamage === testTank2.tankBaseDamage & testTank.accuracy === testTank2.accuracy

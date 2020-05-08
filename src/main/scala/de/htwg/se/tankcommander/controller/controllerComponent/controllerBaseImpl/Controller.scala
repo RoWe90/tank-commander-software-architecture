@@ -60,8 +60,8 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
   override def fillGameFieldWithTank(pos: (Int, Int), tank: TankModel, pos2: (Int, Int), tank2: TankModel): Unit = {
     tank.posC = pos
     tank2.posC = pos2
-    matchfield.marray(pos._1)(pos._2).containsThisTank = Option(tank)
-    matchfield.marray(pos2._1)(pos2._2).containsThisTank = Option(tank)
+    matchfield.mvector(pos._1)(pos._2).containsThisTank = Option(tank)
+    matchfield.mvector(pos2._1)(pos2._2).containsThisTank = Option(tank)
   }
 
   override def endTurnChangeActivePlayer(): Unit = {

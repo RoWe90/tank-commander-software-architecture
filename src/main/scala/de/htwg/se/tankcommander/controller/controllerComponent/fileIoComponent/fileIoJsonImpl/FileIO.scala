@@ -57,9 +57,9 @@ class FileIO extends FileIOInterface {
     GameStatus.passiveTank = Option(tank2)
     GameStatus.currentHitChance = (json \ "game" \ "currentHS").get.toString().toInt
     GameStatus.movesLeft = (json \ "game" \ "movesLeft").get.toString().toBoolean
-    controller.matchfield.marray(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._2)
+    controller.matchfield.mvector(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._2)
       .containsThisTank = Option(tank1)
-    controller.matchfield.marray(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._2)
+    controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._2)
       .containsThisTank = Option(tank2)
   }
 }

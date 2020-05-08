@@ -12,12 +12,12 @@ class GameFieldFactoryTest extends FlatSpec with Matchers {
     val gameField = GameFieldFactory.apply("Map 1")
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
-        assert(gameField.marray(x)(y).isInstanceOf[Cell])
+        assert(gameField.mvector(x)(y).isInstanceOf[Cell])
       }
     }
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
-        assert(gameField.marray(x)(y).isInstanceOf[Cell])
+        assert(gameField.mvector(x)(y).isInstanceOf[Cell])
       }
     }
   }
@@ -25,11 +25,11 @@ class GameFieldFactoryTest extends FlatSpec with Matchers {
     val gameField = GameFieldFactory.apply("Map 1")
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
-        assert(gameField.marray(x)(y).cobstacle.isInstanceOf[Option[Bush]] === true |
-          gameField.marray(x)(y).cobstacle.isInstanceOf[Option[Hill]] === true |
-          gameField.marray(x)(y).cobstacle.isInstanceOf[Option[Rock]] === true |
-          gameField.marray(x)(y).cobstacle.isInstanceOf[Option[Forest]] === true |
-          gameField.marray(x)(y).cobstacle.isInstanceOf[Option[Water]])
+        assert(gameField.mvector(x)(y).cobstacle.isInstanceOf[Option[Bush]] === true |
+          gameField.mvector(x)(y).cobstacle.isInstanceOf[Option[Hill]] === true |
+          gameField.mvector(x)(y).cobstacle.isInstanceOf[Option[Rock]] === true |
+          gameField.mvector(x)(y).cobstacle.isInstanceOf[Option[Forest]] === true |
+          gameField.mvector(x)(y).cobstacle.isInstanceOf[Option[Water]])
       }
     }
   }
@@ -37,15 +37,15 @@ class GameFieldFactoryTest extends FlatSpec with Matchers {
     val gameField = GameFieldFactory.apply("Map 1")
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
-        gameField.marray(x)(y).cobstacle = Option(new Bush)
+        gameField.mvector(x)(y).cobstacle = Option(new Bush)
       }
     }
     val tank1 = new TankModel
     val tank2 = new TankModel
-    gameField.marray(0)(0).containsThisTank = Option(tank1)
-    gameField.marray(10)(10) = new Cell(10, 10)
-    gameField.marray(10)(10).containsThisTank = Option(tank2)
-    gameField.marray(9)(10) = new Cell(9, 10)
+    gameField.mvector(0)(0).containsThisTank = Option(tank1)
+    gameField.mvector(10)(10) = new Cell(10, 10)
+    gameField.mvector(10)(10).containsThisTank = Option(tank2)
+    gameField.mvector(9)(10) = new Cell(9, 10)
     assert(gameField.toString === "\n" +
       "T  B  B  B  B  B  B  B  B  B  B  \n" +
       "B  B  B  B  B  B  B  B  B  B  B  \n" +

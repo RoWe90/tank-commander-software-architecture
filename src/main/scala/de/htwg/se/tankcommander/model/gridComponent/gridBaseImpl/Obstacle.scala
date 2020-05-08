@@ -8,7 +8,7 @@ trait Obstacle {
   val passable: Boolean
   val hitmalus: Int
   val imagePath: String
-  def deepClone(): Obstacle
+  def deepClone(): Option[Obstacle]
 
 }
 
@@ -19,7 +19,7 @@ class Bush extends Obstacle {
   override val shortName: String = "B"
   override val hitmalus: Int = 10
   override val imagePath: String = "src/main/ressources/icons/bush.png"
-  override def deepClone(): Obstacle = new Bush
+  override def deepClone(): Option[Obstacle] = Option(new Bush)
 
 }
 
@@ -30,7 +30,7 @@ class Hill extends Obstacle {
   override val shortName: String = "H"
   override val hitmalus: Int = 20
   override val imagePath: String = "src/main/ressources/icons/mountain.png"
-  override def deepClone(): Obstacle = new Hill
+  override def deepClone(): Option[Obstacle] = Option(new Hill)
 
 }
 
@@ -41,7 +41,7 @@ class Rock extends Obstacle {
   override val shortName: String = "S"
   override val hitmalus: Int = 100
   override val imagePath: String = "src/main/ressources/icons/rock.png"
-  override def deepClone(): Obstacle = new Rock
+  override def deepClone(): Option[Obstacle] = Option(new Rock)
 
 }
 
@@ -52,7 +52,7 @@ class Forest extends Obstacle {
   override val shortName: String = "F"
   override val hitmalus: Int = 10
   override val imagePath: String = "src/main/ressources/icons/tree.png"
-  override def deepClone(): Obstacle = new Forest
+  override def deepClone(): Option[Obstacle] = Option(new Forest)
 
 }
 
@@ -63,7 +63,7 @@ class Water extends Obstacle {
   override val shortName: String = "W"
   override val hitmalus: Int = 0
   override val imagePath: String = "src/main/ressources/icons/water.png"
-  override def deepClone(): Obstacle = new Water
+  override def deepClone(): Option[Obstacle] = Option(new Water)
 
 }
 

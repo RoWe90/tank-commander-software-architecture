@@ -7,8 +7,8 @@ import de.htwg.se.tankcommander.model.playerComponent.Player
 case class GameStatus() {
   var activePlayer: Option[Player] = Option(GameStatus.activePlayer.get.deepClone())
   var passivePlayer: Option[Player] = Option(GameStatus.passivePlayer.get.deepClone())
-  var activeTank: Option[TankModel] = Option(GameStatus.activeTank.get.deepClone())
-  var passiveTank: Option[TankModel] = Option(GameStatus.passiveTank.get.deepClone())
+  var activeTank: Option[TankModel] = Option(GameStatus.activeTank.get.copy())
+  var passiveTank: Option[TankModel] = Option(GameStatus.passiveTank.get.copy())
   var movesLeft: Boolean = GameStatus.movesLeft
   var currentPlayerActions: Int = GameStatus.currentPlayerActions
   var currentHitChance: Int = GameStatus.currentHitChance
