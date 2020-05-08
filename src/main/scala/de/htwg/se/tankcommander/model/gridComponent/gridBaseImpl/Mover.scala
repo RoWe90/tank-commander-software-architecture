@@ -18,7 +18,7 @@ class Mover(matchfield: GameFieldInterface) {
         cXY match {
           //Hoch zählt runter
           case _ if cXY._2 > 0 =>
-            GameStatus.activeTank = Option(GameStatus.activeTank.get.copy(facing="up"))
+            GameStatus.activeTank = Option(GameStatus.activeTank.get.copy(facing = "up"))
             for (i <- (atXY._2 - 1) to ptXY._2 by -1) {
               if (matchfield.mvector(atXY._1)(i).cobstacle.isDefined) {
                 obstacleList += matchfield.mvector(atXY._1)(i).cobstacle.get
@@ -31,7 +31,7 @@ class Mover(matchfield: GameFieldInterface) {
             }
           //Runter zählt hoch
           case _ if cXY._2 < 0 =>
-            GameStatus.activeTank = Option(GameStatus.activeTank.get.copy(facing="down"))
+            GameStatus.activeTank = Option(GameStatus.activeTank.get.copy(facing = "down"))
             for (i <- (atXY._2 + 1) to ptXY._2) {
               if (matchfield.mvector(atXY._1)(i).cobstacle.isDefined) {
                 obstacleList += matchfield.mvector(atXY._1)(i).cobstacle.get
@@ -48,7 +48,7 @@ class Mover(matchfield: GameFieldInterface) {
         cXY match {
           //Links zählt runter
           case _ if cXY._1 > 0 =>
-            GameStatus.activeTank = Option(GameStatus.activeTank.get.copy(facing="left"))
+            GameStatus.activeTank = Option(GameStatus.activeTank.get.copy(facing = "left"))
             for (i <- (atXY._1 - 1) to ptXY._1 by -1) {
               if (matchfield.mvector(i)(atXY._2).cobstacle.isDefined) {
                 obstacleList += matchfield.mvector(i)(atXY._2).cobstacle.get
@@ -61,7 +61,7 @@ class Mover(matchfield: GameFieldInterface) {
             }
           //Rechts zählt hoch
           case _ if cXY._1 < 0 =>
-            GameStatus.activeTank = Option(GameStatus.activeTank.get.copy(facing="right"))
+            GameStatus.activeTank = Option(GameStatus.activeTank.get.copy(facing = "right"))
             for (i <- (atXY._1 + 1) to ptXY._1) {
               if (matchfield.mvector(i)(atXY._2).cobstacle.isDefined) {
                 obstacleList += matchfield.mvector(i)(atXY._2).cobstacle.get
@@ -77,6 +77,7 @@ class Mover(matchfield: GameFieldInterface) {
       case _ => GameStatus.currentHitChance = 0
     }
   }
+
   def calcHitChance(distance: Int, List: List[Obstacle]): Int = {
     var obstacleMalus = 0
     List.foreach(n => obstacleMalus += n.hitmalus)
@@ -87,7 +88,8 @@ class Mover(matchfield: GameFieldInterface) {
       0
     }
   }
-//TODO hier weitermachen
+
+  //TODO hier weitermachen
   def moveTank(input: String): GameFieldInterface = {
     val activeTank = GameStatus.activeTank.get
     var positionOfActiveTank: (Int, Int) = (activeTank.posC._1, activeTank.posC._2)
@@ -143,16 +145,26 @@ class Mover(matchfield: GameFieldInterface) {
 
   def aMoveOfTank(pos: (Int, Int), activeTank: TankModel, x: Boolean): GameFieldInterface = {
     if (x) {
-      val temp_matchfield = matchfield.mvector.updated(activeTank.posC._1,matchfield.mvector(activeTank.posC._1).updated(activeTank.posC._2,None))
-      //matchfield.mvector(activeTank.posC._1)(activeTank.posC._2).containsThisTank = None
+      val temp_matchfield_vector = matchfield.mvector.updated(
+        activeTank.posC._1,
+        matchfield.mvector(activeTank.posC._1).updated(activeTank.posC._2,
+          Cell(activeTank.posC, matchfield.mvector(activeTank.posC._1)(activeTank.posC._2).cobstacle)))
+      // matchfield.mvector(activeTank.posC._1)(activeTank.posC._2).containsThisTank = None
 
       val new_tank = activeTank.copy(posC = pos)
-      val final_matchfield = temp_matchfield.updated(activeTank.posC._1,temp_matchfield(activeTank.posC._1).updated(activeTank.posC._2,Option(activeTank)))
-
-      //matchfield.mvector(pos._1)(pos._2).containsThisTank = Option(activeTank)
+      // activeTank.posC = pos
+      val final_matchfield_vector = temp_matchfield_vector.updated(
+        activeTank.posC._1,
+        temp_matchfield_vector(pos._1).
+          updated(pos._2, Cell(activeTank.posC, matchfield.mvector(activeTank.posC._1)(activeTank.posC._2).cobstacle,Option(new_tank))))
+      val new_matchfield = matchfield.copy(
+        matchfield.gridsX,
+        matchfield.gridsY,
+        final_matchfield_vector)
+      // matchfield.mvector(pos._1)(pos._2).containsThisTank = Option(activeTank)
       lineOfSightContainsTank()
       GameStatus.increaseTurns()
-      matchfield
+      new_matchfield
 
     }
     else {
