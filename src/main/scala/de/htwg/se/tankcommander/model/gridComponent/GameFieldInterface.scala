@@ -2,16 +2,20 @@ package de.htwg.se.tankcommander.model.gridComponent
 
 import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.Cell
 
-trait GameFieldInterface {
+trait GameFieldInterface extends Cloneable {
   val gridsX: Int
   val gridsY: Int
-  val mvector: scala.collection.immutable.Vector[scala.collection.immutable.Vector[Cell]]
+  val mvector: Vector[Vector[Cell]]
 
-  def fillGameFieldWithCells(): Unit
+  //def fillGameFieldWithCells(): Unit
 
-  def fillGameFieldCellsWithObstacles(): Unit
+  //def fillGameFieldCellsWithObstacles(): Unit
 
-  def copy(x : Int,y:Int,vector: scala.collection.immutable.Vector[scala.collection.immutable.Vector[Cell]]): GameFieldInterface
+  def update(vector: Vector[Vector[Cell]]): GameFieldInterface
 
   def toString: String
+
+  def deepCopy: GameFieldInterface
+
+
 }

@@ -12,7 +12,7 @@ class MoverTest extends FlatSpec with Matchers {
     val controller = new Controller(matchfield)
     val tank1 = new TankModel()
     val tank2 = new TankModel()
-    controller.fillGameFieldWithTank((0, 0), tank1, (5, 0), tank2)
+    controller.fillGameFieldWithTanks((0, 0), tank1, (5, 0), tank2)
     val mover = new Mover(controller.matchfield)
     var obstacleList = new ListBuffer[Obstacle]()
     obstacleList += new Bush

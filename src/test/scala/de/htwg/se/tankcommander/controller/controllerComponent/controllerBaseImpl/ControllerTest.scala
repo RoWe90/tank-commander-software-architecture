@@ -19,7 +19,7 @@ class ControllerTest extends FlatSpec with Matchers {
     val tank2 = new TankModel()
     val matchfield = GameFieldFactory.apply("Map 1")
     val controller = new Controller(matchfield)
-    controller.fillGameFieldWithTank((0, 0), tank1, (5, 5), tank2)
+    controller.fillGameFieldWithTanks((0, 0), tank1, (5, 5), tank2)
     assert(matchfield.mvector(0)(0).containsThisTank === Some(tank1))
     assert(matchfield.mvector(5)(5).containsThisTank canEqual Some(tank2))
   }

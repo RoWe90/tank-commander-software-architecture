@@ -6,8 +6,8 @@ case class Cell(pos: (Int, Int), cobstacle: Option[Obstacle] = None, containsThi
   val x: Int = pos._1
   val y: Int = pos._2
 
-  def deepClone(): Cell = {
-    val cellClone = Cell((this.x, this.y), this.cobstacle.get.deepClone(), Option(this.containsThisTank.get.copy()))
-    cellClone
-  }
+//  def deepClone(): Cell = {
+//    val cellClone = Cell((this.x, this.y), this.cobstacle.get.deepClone(), Option(this.containsThisTank.get.copy()))
+//    cellClone
+//  }
 }

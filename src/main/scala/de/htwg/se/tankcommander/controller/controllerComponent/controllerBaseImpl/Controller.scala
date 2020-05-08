@@ -1,11 +1,11 @@
 package de.htwg.se.tankcommander.controller.controllerComponent.controllerBaseImpl
 
-import com.google.inject.{Guice, Inject}
+import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.tankcommander.TankCommanderModule
 import de.htwg.se.tankcommander.controller.controllerComponent.fileIoComponent.FileIOInterface
 import de.htwg.se.tankcommander.controller.controllerComponent.{ControllerInterface, GameStatus}
 import de.htwg.se.tankcommander.model.gridComponent.GameFieldInterface
-import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{GameFieldFactory, TankModel}
+import de.htwg.se.tankcommander.model.gridComponent.gridBaseImpl.{Cell, GameFieldFactory, TankModel}
 import de.htwg.se.tankcommander.model.playerComponent.Player
 import de.htwg.se.tankcommander.util.{Observable, UndoManager}
 import net.codingwell.scalaguice.InjectorExtensions._
@@ -16,8 +16,8 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
   var matchfield: GameFieldInterface = GameFieldFactory.apply("Map 1")
   var mapChosen: String = ""
   private val undoManager = new UndoManager
-  val injector = Guice.createInjector(new TankCommanderModule)
-  val fileIO = injector.instance[FileIOInterface]
+  val injector: Injector = Guice.createInjector(new TankCommanderModule)
+  val fileIO: FileIOInterface = injector.instance[FileIOInterface]
 
   def this(matchfield2: GameFieldInterface) {
     this()
@@ -29,12 +29,12 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     val player1 = Player(scala.io.StdIn.readLine())
     print("Player 2 please choose your Name" + "\n")
     val player2 = Player(scala.io.StdIn.readLine())
-    val tank1 = new TankModel()
-    val tank2 = new TankModel()
+    val tank1 = TankModel()
+    val tank2 = TankModel()
     print("Choose your Map: Map 1 or Map 2" + "\n")
     mapChosen = scala.io.StdIn.readLine()
     matchfield = GameFieldFactory.apply(mapChosen)
-    fillGameFieldWithTank((0, 5), tank1, (10, 5), tank2)
+    fillGameFieldWithTanks((0, 5), tank1, (10, 5), tank2)
     GameStatus.activePlayer = Option(player1)
     GameStatus.passivePlayer = Option(player2)
     GameStatus.activeTank = Option(tank1)
@@ -47,9 +47,9 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     val player2 = Player(name2)
     mapChosen = map
     matchfield = GameFieldFactory.apply(mapChosen)
-    val tank1 = new TankModel()
-    val tank2 = new TankModel()
-    fillGameFieldWithTank((0, 5), tank1, (10, 5), tank2)
+    val tank1 = TankModel()
+    val tank2 = TankModel()
+    fillGameFieldWithTanks((0, 5), tank1, (10, 5), tank2)
     GameStatus.activePlayer = Option(player1)
     GameStatus.passivePlayer = Option(player2)
     GameStatus.activeTank = Option(tank1)
@@ -57,11 +57,21 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     notifyObservers()
   }
 
-  override def fillGameFieldWithTank(pos: (Int, Int), tank: TankModel, pos2: (Int, Int), tank2: TankModel): Unit = {
-    tank.posC = pos
-    tank2.posC = pos2
-    matchfield.mvector(pos._1)(pos._2).containsThisTank = Option(tank)
-    matchfield.mvector(pos2._1)(pos2._2).containsThisTank = Option(tank)
+  override def fillGameFieldWithTanks(pos: (Int, Int), tank: TankModel, pos2: (Int, Int), tank2: TankModel): Unit = {
+    GameStatus.activeTank = Option(TankModel(posC = pos))
+    GameStatus.passiveTank = Option(TankModel(posC = pos2))
+//    tank.posC = pos
+//    tank2.posC = pos2
+    matchfield = matchfield.update(matchfield.mvector.updated(
+      pos._1,matchfield.mvector(pos._1).updated(
+        pos._2,Cell(pos,matchfield.mvector(pos._1)(pos._2).cobstacle,Option(tank)))))
+
+    matchfield = matchfield.update(matchfield.mvector.updated(
+      pos2._1,matchfield.mvector(pos2._1).updated(
+        pos2._2,Cell(pos2,matchfield.mvector(pos2._1)(pos2._2).cobstacle,Option(tank2)))))
+
+//    matchfield.mvector(pos._1)(pos._2).containsThisTank = Option(tank)
+//    matchfield.mvector(pos2._1)(pos2._2).containsThisTank = Option(tank2)
   }
 
   override def endTurnChangeActivePlayer(): Unit = {

@@ -89,7 +89,6 @@ class Mover(matchfield: GameFieldInterface) {
     }
   }
 
-  //TODO hier weitermachen
   def moveTank(input: String): GameFieldInterface = {
     val activeTank = GameStatus.activeTank.get
     var positionOfActiveTank: (Int, Int) = (activeTank.posC._1, activeTank.posC._2)
@@ -143,8 +142,8 @@ class Mover(matchfield: GameFieldInterface) {
     false
   }
 
-  def aMoveOfTank(pos: (Int, Int), activeTank: TankModel, x: Boolean): GameFieldInterface = {
-    if (x) {
+  def aMoveOfTank(pos: (Int, Int), activeTank: TankModel, movePossible: Boolean): GameFieldInterface = {
+    if (movePossible) {
       val temp_matchfield_vector = matchfield.mvector.updated(
         activeTank.posC._1,
         matchfield.mvector(activeTank.posC._1).updated(activeTank.posC._2,
@@ -156,12 +155,10 @@ class Mover(matchfield: GameFieldInterface) {
       val final_matchfield_vector = temp_matchfield_vector.updated(
         activeTank.posC._1,
         temp_matchfield_vector(pos._1).
-          updated(pos._2, Cell(activeTank.posC, matchfield.mvector(activeTank.posC._1)(activeTank.posC._2).cobstacle,Option(new_tank))))
-      val new_matchfield = matchfield.copy(
-        matchfield.gridsX,
-        matchfield.gridsY,
-        final_matchfield_vector)
+          updated(pos._2, Cell(activeTank.posC, matchfield.mvector(activeTank.posC._1)(activeTank.posC._2).cobstacle, Option(new_tank))))
       // matchfield.mvector(pos._1)(pos._2).containsThisTank = Option(activeTank)
+      val new_matchfield = matchfield.update(
+        final_matchfield_vector)
       lineOfSightContainsTank()
       GameStatus.increaseTurns()
       new_matchfield

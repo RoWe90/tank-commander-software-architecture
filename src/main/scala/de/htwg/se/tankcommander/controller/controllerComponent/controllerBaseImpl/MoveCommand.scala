@@ -8,9 +8,9 @@ import de.htwg.se.tankcommander.util.Command
 //Success or not yet to be implemented
 class MoveCommand(controller: Controller, s: String) extends Command {
   //noinspection ScalaStyle
-  var memento: GameFieldInterface = null
+  var memento: GameFieldInterface = _
   //noinspection ScalaStyle
-  var backupGameStatus: GameStatus = null
+  var backupGameStatus: GameStatus = _
 
   override def doStep: Unit = {
     memento = controller.matchfield.deepCopy
