@@ -11,10 +11,10 @@ object GameFieldFactory {
     new Map1
   }
 
-  private case class GameField(gamefield: Vector[Vector[Cell]] = Vector.tabulate(11, 11)((i, j) => Cell(pos = (i, j)))) extends GameFieldInterface {
+  private case class GameField(mvector: Vector[Vector[Cell]] = Vector.tabulate(11, 11)((i, j) => Cell(pos = (i, j)))) extends GameFieldInterface {
     override val gridsX = 11
     override val gridsY = 11
-    override val mvector: Vector[Vector[Cell]] = Vector.tabulate(gridsX, gridsY)((i, j) => Cell(pos = (i, j))) //[Vector[Cell]]()//Array.ofDim[Cell](gridsX, gridsY)
+    //override val mvector: Vector[Vector[Cell]] = Vector.tabulate(gridsX, gridsY)((i, j) => Cell(pos = (i, j))) //[Vector[Cell]]()//Array.ofDim[Cell](gridsX, gridsY)
     //fillGameFieldWithCells()
     //fillGameFieldCellsWithObstacles()
 
@@ -60,7 +60,7 @@ object GameFieldFactory {
     }
 
     override def update(vector: Vector[Vector[Cell]]): GameFieldInterface = {
-      val newGamefield = GameField(gamefield = vector)
+      val newGamefield = GameField(mvector = vector)
       newGamefield
     }
 
