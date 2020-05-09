@@ -34,29 +34,29 @@ object GameFieldFactory {
 
     //override def fillGameFieldCellsWithObstacles(): Unit = {
     //}
-    //TODO String Builder scheint nicht zu gehen!
+
     override def toString: String = {
-      var output = new StringBuilder
+      var output = ""
       for (z <- 0 until gridsY) {
-        output.append("\n")
+        output = output.concat("\n")
         for (i <- 0 until gridsX) {
           if (mvector(i)(z).cobstacle.isDefined) {
             if (mvector(i)(z).containsThisTank.isDefined) {
-              output.append("T" + "  ")
+              output = output.concat("T" + "  ")
             } else {
-              output.append(mvector(i)(z).cobstacle.get.shortName + "  ")
+              output = output.concat(mvector(i)(z).cobstacle.get.shortName + "  ")
             }
           } else {
             if (mvector(i)(z).containsThisTank.isDefined) {
-              output.append("T" + "  ")
+              output = output.concat("T" + "  ")
             } else {
-              output.append("o" + "  ")
+              output = output.concat("o" + "  ")
             }
           }
         }
       }
-      output.append("HS: " + GameStatus.currentHitChance + "\n")
-      output.toString()
+      output = output.concat("HS: " + GameStatus.currentHitChance + "\n")
+      output
     }
 
     override def update(vector: Vector[Vector[Cell]]): GameFieldInterface = {
