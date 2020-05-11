@@ -95,8 +95,7 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     }
   }
 
-  override def matchfieldToString: String = matchfield.toString
-
+  override def matchfieldToString: String = matchfield.displayField()
   /*
  * Undo manager
  */

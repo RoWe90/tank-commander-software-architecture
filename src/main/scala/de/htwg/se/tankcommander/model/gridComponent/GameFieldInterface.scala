@@ -13,7 +13,7 @@ trait GameFieldInterface extends Cloneable {
 
   def update(vector: Vector[Vector[Cell]]): GameFieldInterface
 
-  def toString: String
+  def displayField(field: String = "", pos: (Int, Int) = (0,0)): String
 
   def deepCopy: GameFieldInterface
 

@@ -35,28 +35,27 @@ object GameFieldFactory {
     //override def fillGameFieldCellsWithObstacles(): Unit = {
     //}
 
-    override def toString: String = {
-      var output = ""
-      for (z <- 0 until gridsY) {
-        output = output.concat("\n")
-        for (i <- 0 until gridsX) {
-          if (mvector(i)(z).cobstacle.isDefined) {
-            if (mvector(i)(z).containsThisTank.isDefined) {
-              output = output.concat("T" + "  ")
-            } else {
-              output = output.concat(mvector(i)(z).cobstacle.get.shortName + "  ")
-            }
-          } else {
-            if (mvector(i)(z).containsThisTank.isDefined) {
-              output = output.concat("T" + "  ")
-            } else {
-              output = output.concat("o" + "  ")
-            }
-          }
-        }
+    override def displayField(field: String = "", pos: (Int, Int) = (0, 0)): String = {
+      var gamefield = field match {
+        case _ if (mvector(pos._1)(pos._2).containsThisTank.isDefined) => field.concat("T" + "  ")
+        case _ if ((mvector(pos._1)(pos._2).cobstacle.isDefined)
+          && (mvector(pos._1)(pos._2).containsThisTank.isEmpty))
+        => field.concat(mvector(pos._1)(pos._2).cobstacle.get.shortName + "  ")
+        case _ if ((mvector(pos._1)(pos._2).cobstacle.isEmpty)
+          && (mvector(pos._1)(pos._2).cobstacle.isEmpty)) => field.concat("o" + "  ")
       }
-      output = output.concat("HS: " + GameStatus.currentHitChance + "\n")
-      output
+      if (pos._1 == gridsX - 1 && pos._2 == gridsY - 1) {
+        gamefield = gamefield.concat("\n" + "HS: " + GameStatus.currentHitChance + "\n")
+        return gamefield
+      }
+      if (pos._1 < gridsX - 1) {
+        displayField(gamefield, (pos._1 + 1, pos._2))
+      }
+      else if (pos._2 < gridsY - 1) {
+        gamefield = gamefield.concat("\n")
+        displayField(gamefield, (0, pos._2 + 1))
+      }
+      else ""
     }
 
     override def update(vector: Vector[Vector[Cell]]): GameFieldInterface = {
