@@ -37,8 +37,6 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     fillGameFieldWithTanks((0, 5), tank1, (10, 5), tank2)
     GameStatus.activePlayer = Option(player1)
     GameStatus.passivePlayer = Option(player2)
-    GameStatus.activeTank = Option(tank1)
-    GameStatus.passiveTank = Option(tank2)
     notifyObservers()
   }
 
@@ -52,8 +50,6 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     fillGameFieldWithTanks((0, 5), tank1, (10, 5), tank2)
     GameStatus.activePlayer = Option(player1)
     GameStatus.passivePlayer = Option(player2)
-    GameStatus.activeTank = Option(tank1)
-    GameStatus.passiveTank = Option(tank2)
     notifyObservers()
   }
 
