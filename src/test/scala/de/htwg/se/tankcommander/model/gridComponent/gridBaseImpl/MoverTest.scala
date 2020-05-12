@@ -17,8 +17,8 @@ class MoverTest extends FlatSpec with Matchers {
     var obstacleList = new ListBuffer[Obstacle]()
     obstacleList += new Bush
     val List = obstacleList.toList
-    GameStatus.activeTank = Option(tank1)
-    GameStatus.passiveTank = Option(tank2)
+    GameStatus.activeTank = Some(tank1)
+    GameStatus.passiveTank = Some(tank2)
     mover.lineOfSightContainsTank()
     GameStatus.currentHitChance = mover.calcHitChance(5, List)
     assert(GameStatus.currentHitChance === 65)

@@ -21,7 +21,10 @@ class Shooter {
     }
   }
   def dealDmgTo(dmg: Int): Unit = {
-    GameStatus.passiveTank = Option(GameStatus.passiveTank.get.copy(hp= GameStatus.passiveTank.get.hp -dmg))
+    GameStatus.passiveTank = GameStatus.passiveTank match {
+      case Some(i) => Some(i.copy(hp = i.hp - dmg))
+      case None => None
+    }
     if(GameStatus.passiveTank.get.hp<=0){
       GameStatus.endGame()
     }

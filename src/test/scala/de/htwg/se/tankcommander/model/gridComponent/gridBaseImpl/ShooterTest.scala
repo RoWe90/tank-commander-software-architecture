@@ -13,12 +13,12 @@ class ShooterTest extends FlatSpec with Matchers {
     val shot = new Shooter
     val player1 = new Player("test")
     val player2 = new Player("test1")
-    GameStatus.activePlayer = Option(player1)
-    GameStatus.passivePlayer = Option(player2)
+    GameStatus.activePlayer = Some(player1)
+    GameStatus.passivePlayer = Some(player2)
     val activeTank = new TankModel
     val passiveTank = new TankModel
-    GameStatus.activeTank = Option(activeTank)
-    GameStatus.passiveTank = Option(passiveTank)
+    GameStatus.activeTank = Some(activeTank)
+    GameStatus.passiveTank = Some(passiveTank)
     shot.dealDmgTo(20)
     assert(GameStatus.passiveTank.get.hp === 80)
     shot.shoot()

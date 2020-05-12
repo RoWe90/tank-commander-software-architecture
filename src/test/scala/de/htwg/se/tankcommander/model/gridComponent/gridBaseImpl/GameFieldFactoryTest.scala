@@ -37,14 +37,14 @@ class GameFieldFactoryTest extends FlatSpec with Matchers {
     val gameField = GameFieldFactory.apply("Map 1")
     for (y <- 0 until gameField.gridsX) {
       for (x <- 0 until gameField.gridsY) {
-        gameField.mvector(x)(y).cobstacle = Option(new Bush)
+        gameField.mvector(x)(y).cobstacle = Some(new Bush)
       }
     }
     val tank1 = new TankModel
     val tank2 = new TankModel
-    gameField.mvector(0)(0).containsThisTank = Option(tank1)
+    gameField.mvector(0)(0).containsThisTank = Some(tank1)
     gameField.mvector(10)(10) = new Cell(10, 10)
-    gameField.mvector(10)(10).containsThisTank = Option(tank2)
+    gameField.mvector(10)(10).containsThisTank = Some(tank2)
     gameField.mvector(9)(10) = new Cell(9, 10)
     assert(gameField.toString === "\n" +
       "T  B  B  B  B  B  B  B  B  B  B  \n" +

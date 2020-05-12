@@ -35,8 +35,8 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     mapChosen = scala.io.StdIn.readLine()
     matchfield = GameFieldFactory.apply(mapChosen)
     fillGameFieldWithTanks((0, 5), tank1, (10, 5), tank2)
-    GameStatus.activePlayer = Option(player1)
-    GameStatus.passivePlayer = Option(player2)
+    GameStatus.activePlayer = Some(player1)
+    GameStatus.passivePlayer = Some(player2)
     notifyObservers()
   }
 
@@ -48,23 +48,23 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     val tank1 = TankModel()
     val tank2 = TankModel()
     fillGameFieldWithTanks((0, 5), tank1, (10, 5), tank2)
-    GameStatus.activePlayer = Option(player1)
-    GameStatus.passivePlayer = Option(player2)
+    GameStatus.activePlayer = Some(player1)
+    GameStatus.passivePlayer = Some(player2)
     notifyObservers()
   }
 
   override def fillGameFieldWithTanks(pos: (Int, Int), tank: TankModel, pos2: (Int, Int), tank2: TankModel): Unit = {
-    GameStatus.activeTank = Option(TankModel(posC = pos))
-    GameStatus.passiveTank = Option(TankModel(posC = pos2))
+    GameStatus.activeTank = Some(TankModel(posC = pos))
+    GameStatus.passiveTank = Some(TankModel(posC = pos2))
 //    tank.posC = pos
 //    tank2.posC = pos2
     matchfield = matchfield.update(matchfield.mvector.updated(
       pos._1,matchfield.mvector(pos._1).updated(
-        pos._2,Cell(pos,matchfield.mvector(pos._1)(pos._2).cobstacle,Option(tank)))))
+        pos._2,Cell(pos,matchfield.mvector(pos._1)(pos._2).cobstacle,Some(tank)))))
 
     matchfield = matchfield.update(matchfield.mvector.updated(
       pos2._1,matchfield.mvector(pos2._1).updated(
-        pos2._2,Cell(pos2,matchfield.mvector(pos2._1)(pos2._2).cobstacle,Option(tank2)))))
+        pos2._2,Cell(pos2,matchfield.mvector(pos2._1)(pos2._2).cobstacle,Some(tank2)))))
 
 //    matchfield.mvector(pos._1)(pos._2).containsThisTank = Option(tank)
 //    matchfield.mvector(pos2._1)(pos2._2).containsThisTank = Option(tank2)

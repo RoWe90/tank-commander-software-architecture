@@ -77,8 +77,8 @@ class FileIO() extends FileIOInterface {
 
   override def load(controller: Controller): Unit = {
     val file = XML.loadFile("src/main/ressources/savegame.xml")
-    GameStatus.activePlayer = Option(new Player((file \\ "game" \\ "aPlayer").text))
-    GameStatus.passivePlayer = Option(new Player((file \\ "game" \\ "pPlayer").text))
+    GameStatus.activePlayer = Some(new Player((file \\ "game" \\ "aPlayer").text))
+    GameStatus.passivePlayer = Some(new Player((file \\ "game" \\ "pPlayer").text))
     GameStatus.currentPlayerActions = (file \\ "game" \\ "movesCount").text.replaceAll(" ", "").toInt
     GameStatus.currentHitChance = (file \\ "game" \ "hitchance").text.replaceAll(" ", "").toInt
     val tank1: TankModel = new TankModel(
@@ -91,18 +91,18 @@ class FileIO() extends FileIOInterface {
       posC = ((file \\ "game" \ "posPTankX").text.replaceAll(" ", "").toInt,
         (file \\ "game" \ "posPTankY").text.replaceAll(" ", "").toInt),
       facing = (file \\ "game" \ "pTankFacing").text.replaceAll(" ", ""))
-    GameStatus.activeTank = Option(tank1)
-    GameStatus.passiveTank = Option(tank2)
+    GameStatus.activeTank = Some(tank1)
+    GameStatus.passiveTank = Some(tank2)
     GameStatus.movesLeft = (file \\ "game" \ "movesLeft").text.replaceAll(" ", "").toBoolean
     controller.matchfield = controller.matchfield.update(controller.matchfield.mvector.updated(
       GameStatus.activeTank.get.posC._1, controller.matchfield.mvector(GameStatus.activeTank.get.posC._1).updated(
         GameStatus.activeTank.get.posC._2, Cell(GameStatus.activeTank.get.posC,
-          controller.matchfield.mvector(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._1).cobstacle, Option(GameStatus.activeTank.get)))))
+          controller.matchfield.mvector(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._1).cobstacle, Some(GameStatus.activeTank.get)))))
 
     controller.matchfield = controller.matchfield.update(controller.matchfield.mvector.updated(
       GameStatus.passiveTank.get.posC._1, controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1).updated(
         GameStatus.passiveTank.get.posC._2, Cell(GameStatus.passiveTank.get.posC,
-          controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._1).cobstacle, Option(GameStatus.passiveTank.get)))))
+          controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._1).cobstacle, Some(GameStatus.passiveTank.get)))))
     //    controller.matchfield.mvector(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._2)
     //      .containsThisTank = Option(tank1)
     //    controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._2)

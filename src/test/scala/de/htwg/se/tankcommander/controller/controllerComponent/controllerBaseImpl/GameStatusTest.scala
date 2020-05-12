@@ -9,12 +9,12 @@ class GameStatusTest extends FlatSpec with Matchers {
   "GameStatus" should "" in {
     val player1 = new Player("test")
     val player2 = new Player("test1")
-    GameStatus.activePlayer = Option(player1)
-    GameStatus.passivePlayer = Option(player2)
+    GameStatus.activePlayer = Some(player1)
+    GameStatus.passivePlayer = Some(player2)
     val activeTank = new TankModel
     val passiveTank = new TankModel
-    GameStatus.activeTank = Option(activeTank)
-    GameStatus.passiveTank = Option(passiveTank)
+    GameStatus.activeTank = Some(activeTank)
+    GameStatus.passiveTank = Some(passiveTank)
     val gameStatus = new GameStatus
     assert(gameStatus.activePlayer === GameStatus.activePlayer &
       gameStatus.passivePlayer === GameStatus.passivePlayer &

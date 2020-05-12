@@ -100,11 +100,11 @@ object GameFieldFactory {
     override val mvector: Vector[Vector[Cell]]
     = Vector.tabulate(gridsX, gridsY)((i, j) => Cell(pos = (i, j), cobstacle = this
     match {
-      case _ if listBush.contains((i, j)) => Option(new Bush)
-      case _ if listForest.contains((i, j)) => Option(new Forest)
-      case _ if listHill.contains((i, j)) => Option(new Hill)
-      case _ if listRock.contains((i, j)) => Option(new Rock)
-      case _ if listWater.contains((i, j)) => Option(new Water)
+      case _ if listBush.contains((i, j)) => Some(new Bush)
+      case _ if listForest.contains((i, j)) => Some(new Forest)
+      case _ if listHill.contains((i, j)) => Some(new Hill)
+      case _ if listRock.contains((i, j)) => Some(new Rock)
+      case _ if listWater.contains((i, j)) => Some(new Water)
       case _ => None
     }))
   }
@@ -136,10 +136,10 @@ object GameFieldFactory {
     override val mvector: Vector[Vector[Cell]]
     = Vector.tabulate(gridsX, gridsY)((i, j) => Cell(pos = (i, j),
       cobstacle = this.mvector(i)(j).cobstacle match {
-        case _ if listBush.contains((i, j)) => Option(new Bush)
-        case _ if listForest.contains((i, j)) => Option(new Forest)
-        case _ if listRock.contains((i, j)) => Option(new Rock)
-        case _ if listWater.contains((i, j)) => Option(new Water)
+        case _ if listBush.contains((i, j)) => Some(new Bush)
+        case _ if listForest.contains((i, j)) => Some(new Forest)
+        case _ if listRock.contains((i, j)) => Some(new Rock)
+        case _ if listWater.contains((i, j)) => Some(new Water)
       }))
   }
 

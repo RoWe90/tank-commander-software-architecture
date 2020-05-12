@@ -5,10 +5,22 @@ import de.htwg.se.tankcommander.model.playerComponent.Player
 
 //noinspection ScalaStyle
 case class GameStatus() {
-  var activePlayer: Option[Player] = Option(GameStatus.activePlayer.get.deepClone())
-  var passivePlayer: Option[Player] = Option(GameStatus.passivePlayer.get.deepClone())
-  var activeTank: Option[TankModel] = Option(GameStatus.activeTank.get.copy())
-  var passiveTank: Option[TankModel] = Option(GameStatus.passiveTank.get.copy())
+  var activePlayer: Option[Player] = GameStatus.activePlayer match {
+    case Some(i) => Some(i.copy()) //eventuell deepclone
+    case None => None
+  }
+  var passivePlayer: Option[Player] = GameStatus.passivePlayer match {
+    case Some(i) => Some(i.copy()) //eventuell deepclone
+    case None => None
+  }
+  var activeTank: Option[TankModel] = GameStatus.activeTank match {
+    case Some(i) => Some(i.copy())
+    case None => None
+  }
+  var passiveTank: Option[TankModel] = GameStatus.passiveTank match {
+    case Some(i) => Some(i.copy())
+    case None => None
+  }
   var movesLeft: Boolean = GameStatus.movesLeft
   var currentPlayerActions: Int = GameStatus.currentPlayerActions
   var currentHitChance: Int = GameStatus.currentHitChance
@@ -35,10 +47,22 @@ object GameStatus {
   }
 
   def restoreGameStatus(gameStatusBackUp: GameStatus): Unit = {
-    this.activePlayer = Option(gameStatusBackUp.activePlayer.get)
-    this.passivePlayer = Option(gameStatusBackUp.passivePlayer.get)
-    this.activeTank = Option(gameStatusBackUp.activeTank.get)
-    this.passiveTank = Option(gameStatusBackUp.passiveTank.get)
+    this.activePlayer = gameStatusBackUp.activePlayer match {
+      case Some(i) => Some(i.copy())
+      case None => None
+    }
+    this.passivePlayer = gameStatusBackUp.passivePlayer match {
+      case Some(i) => Some(i.copy())
+      case None => None
+    }
+    this.activeTank = gameStatusBackUp.activeTank match {
+      case Some(i) => Some(i.copy())
+      case None => None
+    }
+    this.passiveTank = gameStatusBackUp.passiveTank match {
+      case Some(i) => Some(i.copy())
+      case None => None
+    }
     this.movesLeft = gameStatusBackUp.movesLeft
     this.currentPlayerActions = gameStatusBackUp.currentPlayerActions
     this.currentHitChance = gameStatusBackUp.currentHitChance
@@ -52,7 +76,10 @@ object GameStatus {
   }
 
   def endGame(): Unit = {
-    print(GameStatus.activePlayer.get + " Won\n")
+    GameStatus.activePlayer match {
+      case Some(i) => print(i + " Won\n")
+      case None => print("Error couldn't get Winner")
+    }
   }
   def resetGameStatus() : Unit = {
     GameStatus.activePlayer = None
