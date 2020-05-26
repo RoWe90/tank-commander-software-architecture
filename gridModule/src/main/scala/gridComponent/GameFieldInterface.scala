@@ -18,5 +18,6 @@ trait GameFieldInterface extends Cloneable {
 
   def deepCopy: GameFieldInterface
 
+  def toHtml: String
 
 }

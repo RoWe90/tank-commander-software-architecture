@@ -7,8 +7,6 @@ lazy val commonSettings = Seq(
 lazy val root = (project in file(".")).settings(
   name := "TankCommander",
   libraryDependencies ++= commonDependencies,
-  libraryDependencies +="com.typesafe.akka" %% "akka-http"   % "10.1.12",
-  libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.6.5"
 ).aggregate(
   stateModule,
   gridModule,
@@ -20,6 +18,8 @@ lazy val uiControllerModule = project.settings(
   commonSettings,
   name := "UIControllerModule",
   libraryDependencies ++= commonDependencies,
+  libraryDependencies +="com.typesafe.akka" %% "akka-http"   % "10.1.12",
+  libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.6.5"
 ).dependsOn(gridModule).aggregate(gridModule)
 
 lazy val gridModule = project.settings(
@@ -50,9 +50,7 @@ val commonDependencies = Seq(
   "com.typesafe.play" %% "play-json" % "2.6.6",
   "net.liftweb" %% "lift-json" % "3.0.1",
   "org.scalatest" %% "scalatest" % "3.0.5" % "test",
-  "junit" % "junit" % "4.8" % "test",
-  "com.typesafe.akka" %% "akka-http"   % "10.1.12",
-  "com.typesafe.akka" %% "akka-stream" % "2.6.5"
+  "junit" % "junit" % "4.8" % "test"
 )
 
 

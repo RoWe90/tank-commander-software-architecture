@@ -53,6 +53,12 @@ object GameFieldFactory {
       //      }
       gameFieldClone
     }
+
+    override def toHtml: String = {
+      val html = "<p>" + displayField().replaceAll("\n", "<br>") + "</p>"
+      html
+    }
+
   }
 
   private class Map1() extends GameField {

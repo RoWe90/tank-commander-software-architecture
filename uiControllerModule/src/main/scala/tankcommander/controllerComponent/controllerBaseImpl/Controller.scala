@@ -122,6 +122,11 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     fileIO.load(this)
     notifyObservers()
   }
+
+  override def gamefieldToHtml(): String = {
+    matchfield.toHtml
+  }
+
 }
 
 
