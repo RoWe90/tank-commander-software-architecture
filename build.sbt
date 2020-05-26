@@ -26,19 +26,19 @@ lazy val gridModule = project.settings(
   commonSettings,
   name := "GridModule",
   libraryDependencies ++= commonDependencies,
-).dependsOn(playerModule).aggregate(playerModule)
-
-// Player - depends on Gamestatus
-lazy val playerModule = project.settings(
-  commonSettings,
-  name := "PlayerModule",
-  libraryDependencies ++= commonDependencies,
 ).dependsOn(stateModule).aggregate(stateModule)
 
 // Gamestatus
 lazy val stateModule = project.settings(
   commonSettings,
   name := "StateModule",
+  libraryDependencies ++= commonDependencies,
+).dependsOn(playerModule).aggregate(playerModule)
+
+// Player - depends on Gamestatus
+lazy val playerModule = project.settings(
+  commonSettings,
+  name := "PlayerModule",
   libraryDependencies ++= commonDependencies,
 )
 
