@@ -1,4 +1,4 @@
-package util
+package tankcommander.util
 
 trait Observer {
   def update(): Unit
