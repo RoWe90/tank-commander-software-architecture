@@ -1,9 +1,11 @@
-import com.google.inject.AbstractModule
-import controllerComponent.ControllerInterface
-import controllerComponent.fileIoComponent.FileIOInterface
-import controllerComponent.fileIoComponent.fileIoJsonImpl._
+package tankcommander
 
+
+import com.google.inject.AbstractModule
 import net.codingwell.scalaguice.ScalaModule
+import tankcommander.controllerComponent.ControllerInterface
+import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
+import tankcommander.controllerComponent.fileIoComponent.fileIoJsonImpl.FileIO
 
 class TankCommanderModule extends AbstractModule with ScalaModule {
   override def configure(): Unit = {

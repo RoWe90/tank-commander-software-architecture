@@ -1,4 +1,4 @@
-package util
+package tankcommander.util
 
 //noinspection ScalaStyle
 class UndoManager {
