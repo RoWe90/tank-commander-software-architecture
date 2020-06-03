@@ -1,5 +1,11 @@
 package tankcommander.controllerComponent.controllerBaseImpl
 
+import java.util.concurrent.TimeUnit
+
+import akka.actor.ActorSystem
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.unmarshalling.Unmarshal
+import akka.stream.ActorMaterializer
 import com.google.inject.{Guice, Inject, Injector}
 import tankcommander.gameState.GameStatus
 import tankcommander.controllerComponent.ControllerInterface
@@ -12,9 +18,16 @@ import tankcommander.TankCommanderModule
 import tankcommander.model.GameFieldFactory
 import tankcommander.util.{Observable, UndoManager}
 
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
 import scala.swing.Publisher
 
 class Controller @Inject()() extends Observable with Publisher with ControllerInterface {
+
+  implicit val system: ActorSystem = ActorSystem()
+  implicit val materializer: ActorMaterializer = ActorMaterializer()
+  implicit val executionContext: ExecutionContextExecutor = system.dispatcher
+
   var matchfield: GameFieldInterface = GameFieldFactory.apply("Map 1")
   var mapChosen: String = ""
   private val undoManager = new UndoManager
@@ -54,6 +67,27 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     GameStatus.passivePlayer = Some(player2)
     notifyObservers()
   }
+
+  def setUpGameHttp(): Unit = {
+    val player1 = Player(name1)
+    val player2 = Player(name2)
+    mapChosen = map
+    matchfield = GameFieldFactory.apply(mapChosen)
+    val tank1 = TankModel()
+    val tank2 = TankModel()
+    fillGameFieldWithTanks((0, 5), tank1, (10, 5), tank2)
+    GameStatus.activePlayer = Some(player1)
+    GameStatus.passivePlayer = Some(player2)
+    notifyObservers()
+  }
+
+  def getPlayerHttp(): String = {
+    val respone = Http().singleRequest(Get("http://localhost:54251/player/player"))
+    val playerFuture = respone.flatMap(r => Unmarshal(r.entity).to[String])
+    val playerString = Await.result(playerFuture, Duration(1, TimeUnit.SECONDS))
+    playerString
+  }
+
 
   override def fillGameFieldWithTanks(pos: (Int, Int), tank: TankModel, pos2: (Int, Int), tank2: TankModel): Unit = {
     GameStatus.activeTank = Some(TankModel(posC = pos))

@@ -6,8 +6,14 @@ import akka.http.scaladsl.server.Route
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
+import controller.PlayerControllerInterface
+import controller.baseImpl.{InitPlayerContainer}
+import play.api.libs.json.Json
+import playerComponent.Player
 
-class HttpServer(){
+import scala.concurrent.Future
+
+class HttpServer(player: PlayerControllerInterface){
 
   implicit val system = ActorSystem("my-system")
   implicit val materializer = ActorMaterializer()
@@ -15,24 +21,37 @@ class HttpServer(){
 
   val route: Route = concat(
     get {
-      path("tankcommander") {
-        complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<p> Welcome to TankCommander </p>"))
-      } ~
-        path("tankcommander" / "test") {
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "test"))
+      path("player" / "save") {
+        player.save()
+        complete("")
+      }},
+      get {
+        path("player" / "load") {
+          player.load()
+          complete("")
+        }
+      },
+      get {
+        path("player" / "player") {
+          val container = Player(player.playerName)
+          complete(Json.toJson(container).toString())
         }
     },
-    put {
-      path("tankcommander" / Segment) {
-        command => {
-          val response = "Command: " + command + "</br>" + "Field:</br>" + command
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, response))
-        }
+    post {
+      path("player" / "player") {
+            decodeRequest {
+              entity(as[String]) { string => {
+               val container = Json.fromJson(Json.parse(string))(InitPlayerContainer.containerReads).get
+                player.initPlayer(container.name)
+                complete("")
+              }
+              }
+            }
       }
     }
   )
 
-  val bindingFuture = Http().bindAndHandle(route, "localhost", 8080)
+  val bindingFuture : Future[Http.ServerBinding] = Http().bindAndHandle(route, "localhost", 54251)
 
 
   def unbind(): Unit = {

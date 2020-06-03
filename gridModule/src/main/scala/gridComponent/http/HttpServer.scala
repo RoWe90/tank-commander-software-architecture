@@ -15,15 +15,15 @@ class HttpServer(){
 
   val route: Route = concat(
     get {
-      path("tankcommander") {
+      path("grid") {
         complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<p> Welcome to TankCommander </p>"))
       } ~
-        path("tankcommander" / "gamefield") {
+        path("grid" / "gamefield") {
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "test"))
         }
     },
     put {
-      path("tankcommander" / Segment) {
+      path("grid" / Segment) {
         command => {
           val response = "Command: " + command + "</br>" + "Field:</br>" + command
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, response))

@@ -17,11 +17,8 @@ class HttpServer(controller: ControllerInterface){
   val route: Route = concat(
     get {
       path("tankcommander") {
-        complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<p> Welcome to TankCommander </p>"))
-      } ~
-        path("tankcommander" / "gamefield") {
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, gamefieldToHtml))
-        }
+        complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h2> Welcome to TankCommander </h2>"))
+      }
     },
     put {
       path("tankcommander" / Segment) {
