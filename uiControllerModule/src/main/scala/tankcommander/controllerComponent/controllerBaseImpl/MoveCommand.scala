@@ -1,7 +1,7 @@
 package tankcommander.controllerComponent.controllerBaseImpl
 
-import gamestate.GameStatus
 import gridComponent.GameFieldInterface
+import gridComponent.gameState.GameStatus
 import gridComponent.gridBaseImpl.Mover
 import tankcommander.util.Command
 

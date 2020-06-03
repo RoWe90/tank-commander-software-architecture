@@ -1,6 +1,6 @@
 package tankcommander.controllerComponent.controllerBaseImpl
 
-import gamestate.GameStatus
+import gridComponent.gameState.GameStatus
 import gridComponent.gridBaseImpl.Shooter
 import tankcommander.util.Command
 

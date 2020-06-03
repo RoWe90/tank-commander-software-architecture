@@ -1,6 +1,7 @@
 package tankcommander.controllerComponent
 
-import gamestate.{GameStatus, TankModel}
+import gridComponent.gameState.GameStatus
+import gridComponent.gridBaseImpl.TankModel
 
 import scala.swing.Publisher
 

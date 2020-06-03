@@ -1,5 +1,6 @@
-package gamestate
+package gridComponent.gameState
 
+import gridComponent.gridBaseImpl.TankModel
 import playerComponent.Player
 
 case class GameStatus() {

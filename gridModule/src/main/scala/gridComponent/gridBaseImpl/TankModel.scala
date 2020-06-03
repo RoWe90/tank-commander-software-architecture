@@ -1,4 +1,4 @@
-package gamestate
+package gridComponent.gridBaseImpl
 
 case class TankModel(tankBaseDamage: Int = 10
                      , accuracy: Int = 100

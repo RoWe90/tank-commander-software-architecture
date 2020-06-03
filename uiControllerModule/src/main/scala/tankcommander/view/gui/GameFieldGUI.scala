@@ -2,7 +2,7 @@ package tankcommander.view.gui
 
 import java.awt.Dimension
 
-import gamestate.GameStatus
+import gridComponent.gameState.GameStatus
 import javax.swing.ImageIcon
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
 import tankcommander.util.Observer

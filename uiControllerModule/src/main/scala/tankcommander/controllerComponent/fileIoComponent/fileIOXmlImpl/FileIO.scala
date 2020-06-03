@@ -2,9 +2,9 @@ package tankcommander.controllerComponent.fileIoComponent.fileIOXmlImpl
 
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
 import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
-import gamestate.{GameStatus, TankModel}
 import gridComponent.GameFieldInterface
-import gridComponent.gridBaseImpl.Cell
+import gridComponent.gameState.GameStatus
+import gridComponent.gridBaseImpl.{Cell, TankModel}
 import playerComponent.Player
 
 import scala.xml.{PrettyPrinter, XML}

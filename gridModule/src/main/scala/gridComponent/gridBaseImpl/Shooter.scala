@@ -1,6 +1,6 @@
 package gridComponent.gridBaseImpl
 
-import gamestate.GameStatus
+import gridComponent.gameState.GameStatus
 
 
 class Shooter {

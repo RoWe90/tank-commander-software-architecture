@@ -3,7 +3,7 @@ package tankcommander.view.http
 import tankcommander.controllerComponent.ControllerInterface
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{Route, StandardRoute}
+import akka.http.scaladsl.server.Route
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer

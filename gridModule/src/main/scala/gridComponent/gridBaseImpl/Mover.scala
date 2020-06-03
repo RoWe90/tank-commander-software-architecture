@@ -1,6 +1,6 @@
 package gridComponent.gridBaseImpl
-import gamestate.{GameStatus, TankModel}
 import gridComponent.GameFieldInterface
+import gridComponent.gameState.GameStatus
 
 import scala.collection.immutable.HashSet.HashSet1
 import scala.collection.mutable.ListBuffer

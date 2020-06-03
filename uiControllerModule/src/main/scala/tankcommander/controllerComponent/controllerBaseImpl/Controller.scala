@@ -1,11 +1,11 @@
 package tankcommander.controllerComponent.controllerBaseImpl
 
 import com.google.inject.{Guice, Inject, Injector}
+import gridComponent.gameState.GameStatus
 import tankcommander.controllerComponent.ControllerInterface
 import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
-import gamestate.{GameStatus, TankModel}
 import gridComponent.GameFieldInterface
-import gridComponent.gridBaseImpl.{Cell, GameFieldFactory}
+import gridComponent.gridBaseImpl.{Cell, GameFieldFactory, TankModel}
 import net.codingwell.scalaguice.InjectorExtensions._
 import playerComponent.Player
 import tankcommander.TankCommanderModule

@@ -1,7 +1,7 @@
 package gridComponent.gridBaseImpl
 
-import gamestate.GameStatus
 import gridComponent.GameFieldInterface
+import gridComponent.gameState.GameStatus
 
 object GameFieldFactory {
   // our 'factory' method
