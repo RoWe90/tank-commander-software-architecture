@@ -1,14 +1,15 @@
 package tankcommander.controllerComponent.controllerBaseImpl
 
 import com.google.inject.{Guice, Inject, Injector}
-import gridComponent.gameState.GameStatus
+import tankcommander.gameState.GameStatus
 import tankcommander.controllerComponent.ControllerInterface
 import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
 import gridComponent.GameFieldInterface
-import gridComponent.gridBaseImpl.{Cell, GameFieldFactory, TankModel}
+import gridComponent.gridBaseImpl.{Cell, TankModel}
 import net.codingwell.scalaguice.InjectorExtensions._
 import playerComponent.Player
 import tankcommander.TankCommanderModule
+import tankcommander.model.GameFieldFactory
 import tankcommander.util.{Observable, UndoManager}
 
 import scala.swing.Publisher

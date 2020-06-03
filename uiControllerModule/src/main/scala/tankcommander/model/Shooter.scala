@@ -1,6 +1,6 @@
-package gridComponent.gridBaseImpl
+package tankcommander.model
 
-import gridComponent.gameState.GameStatus
+import tankcommander.gameState.GameStatus
 
 
 class Shooter {

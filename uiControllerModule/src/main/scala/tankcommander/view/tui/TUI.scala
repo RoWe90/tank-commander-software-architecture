@@ -1,6 +1,6 @@
 package tankcommander.view.tui
 
-import gridComponent.gameState.GameStatus
+import tankcommander.gameState.GameStatus
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
 import tankcommander.util.Observer
 

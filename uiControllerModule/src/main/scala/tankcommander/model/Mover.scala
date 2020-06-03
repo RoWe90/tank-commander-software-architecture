@@ -1,9 +1,8 @@
-package gridComponent.gridBaseImpl
-import gridComponent.GameFieldInterface
-import gridComponent.gameState.GameStatus
+package tankcommander.model
 
-import scala.collection.immutable.HashSet.HashSet1
-import scala.collection.mutable.ListBuffer
+import gridComponent.GameFieldInterface
+import gridComponent.gridBaseImpl.{Cell, Obstacle, TankModel}
+import tankcommander.gameState.GameStatus
 
 class Mover(matchfield: GameFieldInterface) {
 

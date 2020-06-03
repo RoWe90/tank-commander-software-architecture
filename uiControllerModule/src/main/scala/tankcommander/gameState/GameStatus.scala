@@ -1,4 +1,4 @@
-package gridComponent.gameState
+package tankcommander.gameState
 
 import gridComponent.gridBaseImpl.TankModel
 import playerComponent.Player

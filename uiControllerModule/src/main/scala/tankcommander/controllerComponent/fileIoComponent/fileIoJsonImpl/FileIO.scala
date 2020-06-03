@@ -1,6 +1,6 @@
 package tankcommander.controllerComponent.fileIoComponent.fileIoJsonImpl
 
-import gridComponent.gameState.GameStatus
+import tankcommander.gameState.GameStatus
 import play.api.libs.json._
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
 import tankcommander.controllerComponent.fileIoComponent.FileIOInterface

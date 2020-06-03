@@ -3,7 +3,7 @@ package tankcommander.controllerComponent.fileIoComponent.fileIOXmlImpl
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
 import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
 import gridComponent.GameFieldInterface
-import gridComponent.gameState.GameStatus
+import tankcommander.gameState.GameStatus
 import gridComponent.gridBaseImpl.{Cell, TankModel}
 import playerComponent.Player
 

@@ -1,7 +1,7 @@
 package tankcommander.controllerComponent.controllerBaseImpl
 
-import gridComponent.gameState.GameStatus
-import gridComponent.gridBaseImpl.Shooter
+import tankcommander.gameState.GameStatus
+import tankcommander.model.Shooter
 import tankcommander.util.Command
 
 class ShootCommand(controller: Controller) extends Command {

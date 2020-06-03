@@ -1,8 +1,8 @@
 package tankcommander.controllerComponent.controllerBaseImpl
 
 import gridComponent.GameFieldInterface
-import gridComponent.gameState.GameStatus
-import gridComponent.gridBaseImpl.Mover
+import tankcommander.gameState.GameStatus
+import tankcommander.model.Mover
 import tankcommander.util.Command
 
 //Success or not yet to be implemented
