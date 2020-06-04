@@ -22,8 +22,8 @@ class FileIO extends FileIOInterface {
   def GameStateToJson: JsObject = {
     Json.obj(
       "game" -> Json.obj(
-        "aPlayer" -> JsString(GameStatus.activePlayer.get.name),
-        "pPlayer" -> JsString(GameStatus.passivePlayer.get.name),
+        "aPlayer" -> JsString(GameStatus.activePlayer.get),
+        "pPlayer" -> JsString(GameStatus.passivePlayer.get),
         "movesCount" -> JsNumber(GameStatus.currentPlayerActions),
         "hitchance" -> JsNumber(GameStatus.currentHitChance),
         "posATankX" -> JsNumber(GameStatus.activeTank.get.posC._1),
@@ -43,8 +43,8 @@ class FileIO extends FileIOInterface {
   override def load(controller: Controller): Unit = {
     val source: String = Source.fromFile("src/main/ressources/savegame.json").getLines.mkString
     val json: JsValue = Json.parse(source)
-    GameStatus.activePlayer = Some(Player((json \ "game" \ "aPlayer").get.toString()))
-    GameStatus.passivePlayer = Some(Player((json \ "game" \ "pPlayer").get.toString()))
+    GameStatus.activePlayer = Some((json \ "game" \ "aPlayer").get.toString())
+    GameStatus.passivePlayer = Some((json \ "game" \ "pPlayer").get.toString())
     GameStatus.currentPlayerActions = (json \ "game" \ "movesCount").get.toString().toInt
     GameStatus.currentHitChance = (json \ "game" \ "hitchance").get.toString().toInt
     val tank1: TankModel = TankModel(

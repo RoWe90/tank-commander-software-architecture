@@ -77,8 +77,8 @@ class FileIO() extends FileIOInterface {
 
   override def load(controller: Controller): Unit = {
     val file = XML.loadFile("src/main/ressources/savegame.xml")
-    GameStatus.activePlayer = Some(new Player((file \\ "game" \\ "aPlayer").text))
-    GameStatus.passivePlayer = Some(new Player((file \\ "game" \\ "pPlayer").text))
+    GameStatus.activePlayer = Some((file \\ "game" \\ "aPlayer").text)
+    GameStatus.passivePlayer = Some((file \\ "game" \\ "pPlayer").text)
     GameStatus.currentPlayerActions = (file \\ "game" \\ "movesCount").text.replaceAll(" ", "").toInt
     GameStatus.currentHitChance = (file \\ "game" \ "hitchance").text.replaceAll(" ", "").toInt
     val tank1: TankModel = new TankModel(

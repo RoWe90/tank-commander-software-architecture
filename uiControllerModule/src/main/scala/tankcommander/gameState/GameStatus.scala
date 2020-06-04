@@ -4,12 +4,12 @@ import gridComponent.gridBaseImpl.TankModel
 import playerComponent.Player
 
 case class GameStatus() {
-  var activePlayer: Option[Player] = GameStatus.activePlayer match {
-    case Some(i) => Some(i.copy())
+  var activePlayer: Option[String] = GameStatus.activePlayer match {
+    case Some(i) => Some(i)
     case None => None
   }
-  var passivePlayer: Option[Player] = GameStatus.passivePlayer match {
-    case Some(i) => Some(i.copy())
+  var passivePlayer: Option[String] = GameStatus.passivePlayer match {
+    case Some(i) => Some(i)
     case None => None
   }
   var activeTank: Option[TankModel] = GameStatus.activeTank match {
@@ -25,8 +25,8 @@ case class GameStatus() {
   var currentHitChance: Int = GameStatus.currentHitChance
 }
 object GameStatus {
-  var activePlayer: Option[Player] = None
-  var passivePlayer: Option[Player] = None
+  var activePlayer: Option[String] = None
+  var passivePlayer: Option[String] = None
   var activeTank: Option[TankModel] = None
   var passiveTank: Option[TankModel] = None
   var movesLeft: Boolean = true
@@ -46,11 +46,11 @@ object GameStatus {
 
   def restoreGameStatus(gameStatusBackUp: GameStatus): Unit = {
     this.activePlayer = gameStatusBackUp.activePlayer match {
-      case Some(i) => Some(i.copy())
+      case Some(i) => Some(i)
       case None => None
     }
     this.passivePlayer = gameStatusBackUp.passivePlayer match {
-      case Some(i) => Some(i.copy())
+      case Some(i) => Some(i)
       case None => None
     }
     this.activeTank = gameStatusBackUp.activeTank match {

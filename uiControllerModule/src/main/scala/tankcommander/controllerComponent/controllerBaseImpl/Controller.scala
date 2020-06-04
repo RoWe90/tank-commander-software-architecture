@@ -4,7 +4,10 @@ import java.util.concurrent.TimeUnit
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.unmarshalling.Unmarshal
+import akka.http.scaladsl.client.RequestBuilding._
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpRequest}
+import akka.http.scaladsl.server.ContentNegotiator.Alternative.ContentType
+import akka.http.scaladsl.unmarshalling._
 import akka.stream.ActorMaterializer
 import com.google.inject.{Guice, Inject, Injector}
 import tankcommander.gameState.GameStatus
@@ -13,6 +16,7 @@ import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
 import gridComponent.GameFieldInterface
 import gridComponent.gridBaseImpl.{Cell, TankModel}
 import net.codingwell.scalaguice.InjectorExtensions._
+import play.api.libs.json.Json
 import playerComponent.Player
 import tankcommander.TankCommanderModule
 import tankcommander.model.GameFieldFactory
@@ -41,23 +45,23 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
 
   override def setUpGame(): Unit = {
     print("Welcome to Tank-Commander\n" + "Player 1 please choose your Name" + "\n")
-    val player1 = Player(scala.io.StdIn.readLine())
+    setPlayerHttp(scala.io.StdIn.readLine(), 1)
     print("Player 2 please choose your Name" + "\n")
-    val player2 = Player(scala.io.StdIn.readLine())
+    setPlayerHttp(scala.io.StdIn.readLine(), 2)
     val tank1 = TankModel()
     val tank2 = TankModel()
     print("Choose your Map: Map 1 or Map 2" + "\n")
     mapChosen = scala.io.StdIn.readLine()
     matchfield = GameFieldFactory.apply(mapChosen)
     fillGameFieldWithTanks((0, 5), tank1, (10, 5), tank2)
-    GameStatus.activePlayer = Some(player1)
-    GameStatus.passivePlayer = Some(player2)
+    GameStatus.activePlayer = Some(getPlayerHttp(1))
+    GameStatus.passivePlayer = Some(getPlayerHttp(2))
     notifyObservers()
   }
 
   def setUpGame(name1: String, name2: String, map: String): Unit = {
-    val player1 = Player(name1)
-    val player2 = Player(name2)
+    val player1 = name1
+    val player2 = name2
     mapChosen = map
     matchfield = GameFieldFactory.apply(mapChosen)
     val tank1 = TankModel()
@@ -68,26 +72,18 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     notifyObservers()
   }
 
-  def setUpGameHttp(): Unit = {
-    val player1 = Player(name1)
-    val player2 = Player(name2)
-    mapChosen = map
-    matchfield = GameFieldFactory.apply(mapChosen)
-    val tank1 = TankModel()
-    val tank2 = TankModel()
-    fillGameFieldWithTanks((0, 5), tank1, (10, 5), tank2)
-    GameStatus.activePlayer = Some(player1)
-    GameStatus.passivePlayer = Some(player2)
-    notifyObservers()
-  }
-
-  def getPlayerHttp(): String = {
-    val respone = Http().singleRequest(Get("http://localhost:54251/player/player"))
-    val playerFuture = respone.flatMap(r => Unmarshal(r.entity).to[String])
+  def getPlayerHttp(which: Int): String = {
+    val response = Http().singleRequest(Get("http://localhost:54251/player/player/" + which))
+    val playerFuture = response.flatMap(r => Unmarshal(r.entity).to[String])
     val playerString = Await.result(playerFuture, Duration(1, TimeUnit.SECONDS))
-    playerString
+
+    playerString.replace("\"", "")
   }
 
+  def setPlayerHttp(name: String, which: Int): Unit = {
+    Http().singleRequest(Post("http://localhost:54251/player/player",
+      HttpEntity(ContentTypes.`application/json`, Json.obj("name" -> name, "which" -> which).toString())))
+  }
 
   override def fillGameFieldWithTanks(pos: (Int, Int), tank: TankModel, pos2: (Int, Int), tank2: TankModel): Unit = {
     GameStatus.activeTank = Some(TankModel(posC = pos))
