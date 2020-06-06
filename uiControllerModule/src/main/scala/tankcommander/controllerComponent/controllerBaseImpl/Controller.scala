@@ -5,21 +5,20 @@ import java.util.concurrent.TimeUnit
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.client.RequestBuilding._
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpRequest}
-import akka.http.scaladsl.server.ContentNegotiator.Alternative.ContentType
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.unmarshalling._
 import akka.stream.ActorMaterializer
 import com.google.inject.{Guice, Inject, Injector}
-import tankcommander.gameState.GameStatus
-import tankcommander.controllerComponent.ControllerInterface
-import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
-import gridComponent.GameFieldInterface
-import gridComponent.gridBaseImpl.{Cell, TankModel}
 import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json.Json
-import playerComponent.Player
+import tankModelComponent.TankModel
 import tankcommander.TankCommanderModule
+import tankcommander.controllerComponent.ControllerInterface
+import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
+import tankcommander.gameState.GameStatus
 import tankcommander.model.GameFieldFactory
+import tankcommander.model.girdComponent.GameFieldInterface
+import tankcommander.model.girdComponent.gridBaseImpl.Cell
 import tankcommander.util.{Observable, UndoManager}
 
 import scala.concurrent.duration.Duration

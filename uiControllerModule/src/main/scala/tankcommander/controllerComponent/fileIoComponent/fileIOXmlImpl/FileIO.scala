@@ -1,16 +1,22 @@
 package tankcommander.controllerComponent.fileIoComponent.fileIOXmlImpl
 
+import tankModelComponent.TankModel
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
 import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
-import gridComponent.GameFieldInterface
 import tankcommander.gameState.GameStatus
-import gridComponent.gridBaseImpl.{Cell, TankModel}
-import playerComponent.Player
+import tankcommander.model.girdComponent.GameFieldInterface
+import tankcommander.model.girdComponent.gridBaseImpl.Cell
 
-import scala.xml.{PrettyPrinter, XML}
+import scala.xml.{Elem, PrettyPrinter, XML}
 
 class FileIO() extends FileIOInterface {
-  def saveString: Unit = {
+  override def save(): Unit = saveString()
+
+  def saveXML(gamefield: GameFieldInterface): Unit = {
+    XML.save("src/main/ressources/savegame.xml", gameStateToXML())
+  }
+
+  def saveString(): Unit = {
     import java.io._
     val file = new File("src/main/ressources/savegame.xml")
     file.createNewFile()
@@ -21,20 +27,14 @@ class FileIO() extends FileIOInterface {
     pw.close()
   }
 
-  def saveXML(gamefield: GameFieldInterface): Unit = {
-    XML.save("src/main/ressources/savegame.xml", gameStateToXML())
-  }
-
-  override def save(): Unit = saveString
-
   //noinspection ScalaStyle
-  def gameStateToXML() = {
+  def gameStateToXML(): Elem = {
     <game>
       <aPlayer>
-        {GameStatus.activePlayer.get.toString}
+        {GameStatus.activePlayer.get}
       </aPlayer>
       <pPlayer>
-        {GameStatus.passivePlayer.get.toString}
+        {GameStatus.passivePlayer.get}
       </pPlayer>
       <movesCount>
         {GameStatus.currentPlayerActions}
@@ -81,12 +81,12 @@ class FileIO() extends FileIOInterface {
     GameStatus.passivePlayer = Some((file \\ "game" \\ "pPlayer").text)
     GameStatus.currentPlayerActions = (file \\ "game" \\ "movesCount").text.replaceAll(" ", "").toInt
     GameStatus.currentHitChance = (file \\ "game" \ "hitchance").text.replaceAll(" ", "").toInt
-    val tank1: TankModel = new TankModel(
+    val tank1: TankModel = TankModel(
       hp = (file \\ "game" \ "aTankHP").text.replaceAll(" ", "").toInt,
       posC = ((file \\ "game" \ "posATankX").text.replaceAll(" ", "").toInt,
         (file \\ "game" \ "posATankY").text.replaceAll(" ", "").toInt),
       facing = (file \\ "game" \ "aTankFacing").text.replaceAll(" ", ""))
-    val tank2: TankModel = new TankModel(
+    val tank2: TankModel = TankModel(
       hp = (file \\ "game" \ "pTankHP").text.replaceAll(" ", "").toInt,
       posC = ((file \\ "game" \ "posPTankX").text.replaceAll(" ", "").toInt,
         (file \\ "game" \ "posPTankY").text.replaceAll(" ", "").toInt),

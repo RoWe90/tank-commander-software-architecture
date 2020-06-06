@@ -1,6 +1,4 @@
-package gridComponent
-
-import gridComponent.http.HttpServer
+import http.HttpServer
 
 object GridMain {
   val webserver = new HttpServer()

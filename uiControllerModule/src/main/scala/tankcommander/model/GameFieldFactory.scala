@@ -1,8 +1,8 @@
 package tankcommander.model
 
-import gridComponent.GameFieldInterface
-import gridComponent.gridBaseImpl._
 import tankcommander.gameState.GameStatus
+import tankcommander.model.girdComponent.GameFieldInterface
+import tankcommander.model.girdComponent.gridBaseImpl._
 
 object GameFieldFactory {
   // our 'factory' method

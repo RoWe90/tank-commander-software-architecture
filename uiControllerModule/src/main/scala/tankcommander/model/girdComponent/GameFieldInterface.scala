@@ -1,7 +1,6 @@
-package gridComponent
+package tankcommander.model.girdComponent
 
-import gridComponent.gridBaseImpl.Cell
-
+import tankcommander.model.girdComponent.gridBaseImpl.Cell
 
 trait GameFieldInterface extends Cloneable {
   val gridsX: Int
@@ -14,7 +13,7 @@ trait GameFieldInterface extends Cloneable {
 
   def update(vector: Vector[Vector[Cell]]): GameFieldInterface
 
-  def displayField(field: String = "", pos: (Int, Int) = (0,0)): String
+  def displayField(field: String = "", pos: (Int, Int) = (0, 0)): String
 
   def deepCopy: GameFieldInterface
 

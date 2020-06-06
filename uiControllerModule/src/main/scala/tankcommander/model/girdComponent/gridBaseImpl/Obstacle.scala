@@ -1,4 +1,4 @@
-package gridComponent.gridBaseImpl
+package tankcommander.model.girdComponent.gridBaseImpl
 
 trait Obstacle {
   val name: String
@@ -7,6 +7,7 @@ trait Obstacle {
   val passable: Boolean
   val hitmalus: Int
   val imagePath: String
+
   def deepClone(): Option[Obstacle]
 
 }

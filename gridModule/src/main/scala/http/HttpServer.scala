@@ -1,4 +1,4 @@
-package gridComponent.http
+package http
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
@@ -7,11 +7,13 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 
-class HttpServer(){
+import scala.concurrent.{ExecutionContextExecutor, Future}
 
-  implicit val system = ActorSystem("my-system")
-  implicit val materializer = ActorMaterializer()
-  implicit val executionContext = system.dispatcher
+class HttpServer() {
+
+  implicit val system: ActorSystem = ActorSystem("my-system")
+  implicit val materializer: ActorMaterializer = ActorMaterializer()
+  implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
   val route: Route = concat(
     get {
@@ -32,7 +34,7 @@ class HttpServer(){
     }
   )
 
-  val bindingFuture = Http().bindAndHandle(route, "localhost", 8080)
+  val bindingFuture: Future[Http.ServerBinding] = Http().bindAndHandle(route, "localhost", 8080)
 
 
   def unbind(): Unit = {

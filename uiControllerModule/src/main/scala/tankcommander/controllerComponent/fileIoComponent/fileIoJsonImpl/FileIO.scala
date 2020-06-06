@@ -1,22 +1,22 @@
 package tankcommander.controllerComponent.fileIoComponent.fileIoJsonImpl
 
-import tankcommander.gameState.GameStatus
 import play.api.libs.json._
+import tankModelComponent.TankModel
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
 import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
-import gridComponent.gridBaseImpl.{Cell, TankModel}
-import playerComponent.Player
+import tankcommander.gameState.GameStatus
+import tankcommander.model.girdComponent.gridBaseImpl.Cell
 
 import scala.io.Source
 
 class FileIO extends FileIOInterface {
-  override def save: Unit = {
+  override def save(): Unit = {
     import java.io._
     val file = new File("src/main/ressources/savegame.json")
     file.createNewFile()
     val pw = new PrintWriter(file)
     pw.write(Json.prettyPrint(GameStateToJson))
-    pw.close
+    pw.close()
   }
 
   def GameStateToJson: JsObject = {
@@ -54,7 +54,7 @@ class FileIO extends FileIOInterface {
     val tank2: TankModel = TankModel(
       hp = (json \ "game" \ "pTankHP").get.toString().toInt,
       posC = ((json \ "game" \ "posPTankX").get.toString().toInt, (json \ "game" \ "posPTankY").get.toString().toInt),
-      facing = (json \ "game" \ "pTankFacing").get.toString().toString)
+      facing = (json \ "game" \ "pTankFacing").get.toString())
     GameStatus.activeTank = Some(tank1)
     GameStatus.passiveTank = Some(tank2)
     GameStatus.currentHitChance = (json \ "game" \ "currentHS").get.toString().toInt

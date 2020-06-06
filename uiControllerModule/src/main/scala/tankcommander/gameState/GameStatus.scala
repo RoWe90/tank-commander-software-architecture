@@ -1,7 +1,6 @@
 package tankcommander.gameState
 
-import gridComponent.gridBaseImpl.TankModel
-import playerComponent.Player
+import tankModelComponent.TankModel
 
 case class GameStatus() {
   var activePlayer: Option[String] = GameStatus.activePlayer match {

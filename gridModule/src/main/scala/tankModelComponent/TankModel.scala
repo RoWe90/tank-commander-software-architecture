@@ -1,4 +1,4 @@
-package gridComponent.gridBaseImpl
+package tankModelComponent
 
 case class TankModel(tankBaseDamage: Int = 10
                      , accuracy: Int = 100
