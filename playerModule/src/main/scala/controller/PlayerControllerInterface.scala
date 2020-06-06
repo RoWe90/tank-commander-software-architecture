@@ -1,11 +1,17 @@
 package controller
 
+import playerComponent.Player
+
 trait PlayerControllerInterface {
-  def initPlayer(name: String): Unit
 
-  def save(): Unit
+  var player1: Player
+  var player2: Player
 
-  def load(): Unit
+  def initPlayer(name: String, whichPlayer: Int): Unit
 
-  def playerName: String
+  //def save(): Unit
+
+ // def load(): Unit
+
+  def playerNameList: List[String]
 }

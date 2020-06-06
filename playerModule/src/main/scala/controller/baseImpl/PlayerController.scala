@@ -6,12 +6,17 @@ import playerComponent.Player
 
 import scala.util.{Failure, Success}
 
-case class PlayerController(var player: Player, fileIo: FileIOInterface) extends PlayerControllerInterface {
+case class PlayerController(var player1: Player, var player2: Player) extends PlayerControllerInterface {
 
-  override def initPlayer(name: String): Unit = {
-    player.initPlayer(name)
+  override def initPlayer(name: String, whichPlayer: Int): Unit = {
+    whichPlayer match {
+      case 1 => player1 = new Player(name)
+      case 2 => player2 = new Player(name)
+      case _ =>
+    }
   }
 
+  /*
   override def save(): Unit = {
     fileIo.save(player, "PlayerModule")
   }
@@ -22,15 +27,7 @@ case class PlayerController(var player: Player, fileIo: FileIOInterface) extends
       case Success(playerInfo) => playerInfo
     }
   }
+*/
+  override def playerNameList: List[String] = List(player1.toString, player2.toString)
 
-  override def playerName: String = player.toString
-
-}
-
-case class InitPlayerContainer(name: String)
-
-object InitPlayerContainer {
-  import play.api.libs.json._
-  implicit val containerWrites: OWrites[InitPlayerContainer] = Json.writes[InitPlayerContainer]
-  implicit val containerReads: Reads[InitPlayerContainer] = Json.reads[InitPlayerContainer]
 }

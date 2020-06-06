@@ -1,13 +1,13 @@
 import controller.PlayerControllerInterface
 import controller.baseImpl.PlayerController
 import http.HttpServer
-import model.FileIOInterface
-import model.FileIOJSON.FileIO
 import playerComponent.Player
 
 object PlayerMain {
-  val controller = PlayerController(new Player("Anon"), new FileIO)
+  val controller: PlayerControllerInterface = PlayerController(Player("1"), Player("2"))
   val webserver = new HttpServer(controller)
 
-  def main(args: Array[String]): Unit = {}
+  def main(args: Array[String]): Unit = {
+    println("TankModule started...")
+  }
 }

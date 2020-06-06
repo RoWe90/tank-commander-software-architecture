@@ -7,42 +7,39 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import controller.PlayerControllerInterface
-import controller.baseImpl.{InitPlayerContainer}
 import play.api.libs.json.Json
 import playerComponent.Player
 
 import scala.concurrent.Future
 
-class HttpServer(player: PlayerControllerInterface){
+class HttpServer(playerController: PlayerControllerInterface){
 
   implicit val system = ActorSystem("my-system")
   implicit val materializer = ActorMaterializer()
   implicit val executionContext = system.dispatcher
 
   val route: Route = concat(
+      get {
+        path("player" / "player" / "1") {
+          val container = playerController.playerNameList(0)
+          complete(Json.toJson(container.replace("\"", "")).toString())
+        }
+    },
     get {
-      path("player" / "save") {
-        player.save()
-        complete("")
-      }},
-      get {
-        path("player" / "load") {
-          player.load()
-          complete("")
-        }
-      },
-      get {
-        path("player" / "player") {
-          val container = Player(player.playerName)
-          complete(Json.toJson(container).toString())
-        }
+      path("player" / "player" / "2") {
+        val container = playerController.playerNameList(1)
+        complete(Json.toJson(container.replace("\"", "")).toString())
+      }
     },
     post {
       path("player" / "player") {
             decodeRequest {
               entity(as[String]) { string => {
-               val container = Json.fromJson(Json.parse(string))(InitPlayerContainer.containerReads).get
-                player.initPlayer(container.name)
+                println(string)
+                val name = (Json.parse(string) \ "name").get.toString
+                val which = (Json.parse(string) \ "which").get.toString.toInt
+                playerController.initPlayer(name, which)
+                println("Player "+ which +" created: " + name)
                 complete("")
               }
               }
