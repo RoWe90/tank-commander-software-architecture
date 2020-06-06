@@ -8,7 +8,7 @@ import scala.util.{Failure, Success}
 
 case class TankModelController(var tankModel: TankModel, fileIo: FileIOInterface) extends TankModelControllerInterface {
 
-  override def initPlayer(name: String): Unit = {
+  override def initTank(name: String): Unit = {
     tankModel.initPlayer(name)
   }
 
