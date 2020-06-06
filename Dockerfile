@@ -8,7 +8,7 @@ EXPOSE 8080
 WORKDIR /tankcommander
 
 # Copy the file from your host to your current location.
-COPY target/scala-2.12/tankcommander_2.12-0.1.0-SNAPSHOT.jar /tankcommander
+COPY target/scala-2.12/TankCommander-assembly-0.0.1.jar /tankcommander
 
 # Run the specified command within the container.
-CMD java -jar tankcommander_2.12-0.1.0-SNAPSHOT.jar
+CMD java -jar TankCommander-assembly-0.0.1.jar

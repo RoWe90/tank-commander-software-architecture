@@ -9,7 +9,7 @@ object TankCommander {
   val injector: Injector = Guice.createInjector(new TankCommanderModule)
   val controller = new Controller()
   val tui = new TUI(controller)
-  val gui = new MainMenu(controller)
+  //val gui = new MainMenu(controller)
 
   def main(args: Array[String]): Unit = {
     var input: String = ""
