@@ -8,6 +8,6 @@ object PlayerMain {
   val webserver = new HttpServer(controller)
 
   def main(args: Array[String]): Unit = {
-    println("TankModule started...")
+    println("PlayerModule started...")
   }
 }

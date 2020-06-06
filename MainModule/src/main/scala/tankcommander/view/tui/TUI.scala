@@ -2,9 +2,12 @@ package tankcommander.view.tui
 
 import tankcommander.gameState.GameStatus
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
-import tankcommander.util.Observer
+import tankcommander.util.{AttributeHandler, Observer}
 
 class TUI(controller: Controller) extends Observer {
+
+  val attributeHandler = AttributeHandler()
+
   controller.add(this)
 
   def processInputLine(input: String): Unit = {
@@ -36,9 +39,9 @@ class TUI(controller: Controller) extends Observer {
   override def update(): Unit = {
     print(controller.matchfieldToString)
     print("aktiver Spieler: " + GameStatus.activePlayer.get + " Hitpoints: " +
-      GameStatus.activeTank.get.hp + "\n" + "MovesLeft: " + GameStatus.currentPlayerActions + "\n" +
+      attributeHandler.getAttribute(GameStatus.activeTank.get, "hp") + "\n" + "MovesLeft: " + GameStatus.currentPlayerActions + "\n" +
       "passiver Spieler: " + GameStatus.passivePlayer.get + " Hitpoints: " +
-      GameStatus.passiveTank.get.hp + "\n")
+      attributeHandler.getAttribute(GameStatus.passiveTank.get, "hp") + "\n")
   }
 }
 

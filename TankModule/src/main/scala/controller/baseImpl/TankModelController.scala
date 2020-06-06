@@ -18,36 +18,38 @@ case class TankModelController(var tankModel1: TankModel, var tankModel2: TankMo
   override def getTankBaseDamage(whichTank: Int): Int = {
     whichTank match {
       case 1 => tankModel1.tankBaseDamage
-      case 2 => tankModel1.tankBaseDamage
+      case 2 => tankModel2.tankBaseDamage
       case _ => 0
     }
   }
   override def getTankAccuracy(whichTank: Int): Int = {
     whichTank match {
       case 1 => tankModel1.accuracy
-      case 2 => tankModel1.accuracy
+      case 2 => tankModel2.accuracy
       case _ => 0
     }
   }
   override def getTankHp(whichTank: Int): Int = {
     whichTank match {
       case 1 => tankModel1.hp
-      case 2 => tankModel1.hp
+      case 2 => tankModel2.hp
       case _ => 0
     }
   }
   override def getTankPosC(whichTank: Int): (Int, Int) = {
     whichTank match {
     case 1 => tankModel1.posC
-    case 2 => tankModel1.posC
+    case 2 => tankModel2.posC
     case _ => (0,0)
-  }}
+    }
+  }
   override def getTankFacing(whichTank: Int): String = {
     whichTank match {
     case 1 => tankModel1.facing
-    case 2 => tankModel1.facing
+    case 2 => tankModel2.facing
     case _ => ""
-  }}
+    }
+  }
 
   override def setTankBaseDamage(whichTank: Int, tankBaseDamage: Int): Unit = {
     whichTank match {

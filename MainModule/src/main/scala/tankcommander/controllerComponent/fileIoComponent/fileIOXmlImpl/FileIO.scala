@@ -6,10 +6,13 @@ import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
 import tankcommander.gameState.GameStatus
 import tankcommander.model.girdComponent.GameFieldInterface
 import tankcommander.model.girdComponent.gridBaseImpl.Cell
+import tankcommander.util.AttributeHandler
 
 import scala.xml.{Elem, PrettyPrinter, XML}
 
 class FileIO() extends FileIOInterface {
+  val attributeHandler = AttributeHandler()
+
   override def save(): Unit = saveString()
 
   def saveXML(gamefield: GameFieldInterface): Unit = {
@@ -43,28 +46,28 @@ class FileIO() extends FileIOInterface {
         {GameStatus.currentHitChance}
       </hitchance>
       <posATankX>
-        {GameStatus.activeTank.get.posC._1}
+        {attributeHandler.getPosC(GameStatus.activeTank.get)._1}
       </posATankX>
       <posATankY>
-        {GameStatus.activeTank.get.posC._2}
+        {attributeHandler.getPosC(GameStatus.activeTank.get)._2}
       </posATankY>
       <posPTankX>
-        {GameStatus.passiveTank.get.posC._1}
+        {attributeHandler.getPosC(GameStatus.passiveTank.get)._1}
       </posPTankX>
       <posPTankY>
-        {GameStatus.passiveTank.get.posC._2}
+        {attributeHandler.getPosC(GameStatus.passiveTank.get)._2}
       </posPTankY>
       <aTankHP>
-        {GameStatus.activeTank.get.hp}
+        {attributeHandler.getAttribute(GameStatus.activeTank.get, "hp")}
       </aTankHP>
       <pTankHP>
-        {GameStatus.passiveTank.get.hp}
+        {attributeHandler.getAttribute(GameStatus.passiveTank.get, "hp")}
       </pTankHP>
       <aTankFacing>
-        {GameStatus.activeTank.get.facing}
+        {attributeHandler.getAttribute(GameStatus.activeTank.get, "facing")}
       </aTankFacing>
       <pTankFacing>
-        {GameStatus.passiveTank.get.facing}
+        {attributeHandler.getAttribute(GameStatus.passiveTank.get, "facing")}
       </pTankFacing>
       <currentHS>
         {GameStatus.currentHitChance}
@@ -81,28 +84,24 @@ class FileIO() extends FileIOInterface {
     GameStatus.passivePlayer = Some((file \\ "game" \\ "pPlayer").text)
     GameStatus.currentPlayerActions = (file \\ "game" \\ "movesCount").text.replaceAll(" ", "").toInt
     GameStatus.currentHitChance = (file \\ "game" \ "hitchance").text.replaceAll(" ", "").toInt
-    val tank1: TankModel = TankModel(
-      hp = (file \\ "game" \ "aTankHP").text.replaceAll(" ", "").toInt,
-      posC = ((file \\ "game" \ "posATankX").text.replaceAll(" ", "").toInt,
-        (file \\ "game" \ "posATankY").text.replaceAll(" ", "").toInt),
-      facing = (file \\ "game" \ "aTankFacing").text.replaceAll(" ", ""))
-    val tank2: TankModel = TankModel(
-      hp = (file \\ "game" \ "pTankHP").text.replaceAll(" ", "").toInt,
-      posC = ((file \\ "game" \ "posPTankX").text.replaceAll(" ", "").toInt,
-        (file \\ "game" \ "posPTankY").text.replaceAll(" ", "").toInt),
-      facing = (file \\ "game" \ "pTankFacing").text.replaceAll(" ", ""))
-    GameStatus.activeTank = Some(tank1)
-    GameStatus.passiveTank = Some(tank2)
+    attributeHandler.setAttribute(1, "hp",(file \\ "game" \ "aTankHP").text.replaceAll(" ", ""))
+    attributeHandler.setAttribute(1, "posC", (file \\ "game" \ "posATankX").text.replaceAll(" ", "") + "_" + (file \\ "game" \ "posATankY").text.replaceAll(" ", ""))
+    attributeHandler.setAttribute(1, "facing", (file \\ "game" \ "aTankFacing").text.replaceAll(" ", ""))
+    attributeHandler.setAttribute(2, "hp", (file \\ "game" \ "pTankHP").text.replaceAll(" ", ""))
+    attributeHandler.setAttribute(2, "posC", (file \\ "game" \ "posPTankX").text.replaceAll(" ", "") + "_"+ (file \\ "game" \ "posPTankY").text.replaceAll(" ", ""))
+    attributeHandler.setAttribute(2, "facing", (file \\ "game" \ "pTankFacing").text.replaceAll(" ", ""))
+    GameStatus.activeTank = Some(1)
+    GameStatus.passiveTank = Some(2)
     GameStatus.movesLeft = (file \\ "game" \ "movesLeft").text.replaceAll(" ", "").toBoolean
     controller.matchfield = controller.matchfield.update(controller.matchfield.mvector.updated(
-      GameStatus.activeTank.get.posC._1, controller.matchfield.mvector(GameStatus.activeTank.get.posC._1).updated(
-        GameStatus.activeTank.get.posC._2, Cell(GameStatus.activeTank.get.posC,
-          controller.matchfield.mvector(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._1).cobstacle, Some(GameStatus.activeTank.get)))))
+      attributeHandler.getPosC(GameStatus.activeTank.get)._1, controller.matchfield.mvector(attributeHandler.getPosC(GameStatus.activeTank.get)._1).updated(
+        attributeHandler.getPosC(GameStatus.activeTank.get)._2, Cell(attributeHandler.getPosC(GameStatus.activeTank.get),
+          controller.matchfield.mvector(attributeHandler.getPosC(GameStatus.activeTank.get)._1)(attributeHandler.getPosC(GameStatus.activeTank.get)._1).cobstacle, Some(GameStatus.activeTank.get)))))
 
     controller.matchfield = controller.matchfield.update(controller.matchfield.mvector.updated(
-      GameStatus.passiveTank.get.posC._1, controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1).updated(
-        GameStatus.passiveTank.get.posC._2, Cell(GameStatus.passiveTank.get.posC,
-          controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._1).cobstacle, Some(GameStatus.passiveTank.get)))))
+      attributeHandler.getPosC(GameStatus.passiveTank.get)._1, controller.matchfield.mvector(attributeHandler.getPosC(GameStatus.passiveTank.get)._1).updated(
+        attributeHandler.getPosC(GameStatus.passiveTank.get)._2, Cell(attributeHandler.getPosC(GameStatus.passiveTank.get),
+          controller.matchfield.mvector(attributeHandler.getPosC(GameStatus.passiveTank.get)._1)(attributeHandler.getPosC(GameStatus.passiveTank.get)._1).cobstacle, Some(GameStatus.passiveTank.get)))))
     //    controller.matchfield.mvector(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._2)
     //      .containsThisTank = Option(tank1)
     //    controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._2)

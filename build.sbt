@@ -8,20 +8,20 @@ lazy val root = (project in file(".")).settings(
   name := "TankCommander",
   libraryDependencies ++= commonDependencies,
 ).aggregate(
-  gridModule,
+  tankModule,
   playerModule,
-  uiControllerModule
+  MainModule
 )
 
-lazy val uiControllerModule = project.settings(
+lazy val MainModule = project.settings(
   commonSettings,
-  name := "UIControllerModule",
+  name := "MainModule",
   libraryDependencies ++= commonDependencies,
-).dependsOn(gridModule).aggregate(gridModule)
+).dependsOn(tankModule).aggregate(tankModule)
 
-lazy val gridModule = project.settings(
+lazy val tankModule = project.settings(
   commonSettings,
-  name := "GridModule",
+  name := "TankModule",
   libraryDependencies ++= commonDependencies,
 ).dependsOn(playerModule).aggregate(playerModule)
 

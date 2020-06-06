@@ -1,6 +1,5 @@
 package tankcommander.gameState
 
-import tankModelComponent.TankModel
 
 case class GameStatus() {
   var activePlayer: Option[String] = GameStatus.activePlayer match {
@@ -11,12 +10,12 @@ case class GameStatus() {
     case Some(i) => Some(i)
     case None => None
   }
-  var activeTank: Option[TankModel] = GameStatus.activeTank match {
-    case Some(i) => Some(i.copy())
+  var activeTank: Option[Int] = GameStatus.activeTank match {
+    case Some(i) => Some(i)
     case None => None
   }
-  var passiveTank: Option[TankModel] = GameStatus.passiveTank match {
-    case Some(i) => Some(i.copy())
+  var passiveTank: Option[Int] = GameStatus.passiveTank match {
+    case Some(i) => Some(i)
     case None => None
   }
   var movesLeft: Boolean = GameStatus.movesLeft
@@ -26,8 +25,8 @@ case class GameStatus() {
 object GameStatus {
   var activePlayer: Option[String] = None
   var passivePlayer: Option[String] = None
-  var activeTank: Option[TankModel] = None
-  var passiveTank: Option[TankModel] = None
+  var activeTank: Option[Int] = None
+  var passiveTank: Option[Int] = None
   var movesLeft: Boolean = true
   var currentPlayerActions: Int = 2
   var currentHitChance: Int = 0
@@ -53,11 +52,11 @@ object GameStatus {
       case None => None
     }
     this.activeTank = gameStatusBackUp.activeTank match {
-      case Some(i) => Some(i.copy())
+      case Some(i) => Some(i)
       case None => None
     }
     this.passiveTank = gameStatusBackUp.passiveTank match {
-      case Some(i) => Some(i.copy())
+      case Some(i) => Some(i)
       case None => None
     }
     this.movesLeft = gameStatusBackUp.movesLeft
@@ -88,5 +87,6 @@ object GameStatus {
     GameStatus.currentPlayerActions = 2
     GameStatus.currentHitChance = 0
   }
+
 }
 

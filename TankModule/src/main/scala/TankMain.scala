@@ -5,8 +5,10 @@ import tankModelComponent.TankModel
 
 object TankMain {
   val controller: TankModelControllerInterface = TankModelController(TankModel(), TankModel())
-  val webserver: HttpServer = new HttpServer()
+  val webserver: HttpServer = new HttpServer(controller)
 
-  def main(args: Array[String]): Unit = {}
+  def main(args: Array[String]): Unit = {
+    println("TankModule started...")
+  }
 
 }

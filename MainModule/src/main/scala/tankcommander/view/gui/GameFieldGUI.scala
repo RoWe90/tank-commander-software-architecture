@@ -5,13 +5,16 @@ import java.awt.Dimension
 import tankcommander.gameState.GameStatus
 import javax.swing.ImageIcon
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
-import tankcommander.util.Observer
+import tankcommander.util.{AttributeHandler, Observer}
 
 import scala.swing.Swing.LineBorder
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
 class GameFieldGUI(controller: Controller, name1: String, name2: String, map: String) extends Frame with Observer {
+
+  val attributeHandler = AttributeHandler()
+
   controller.add(this)
   var cells: Array[Array[CellPanel]] = Array.ofDim[CellPanel](controller.matchfield.gridsX, controller.matchfield.gridsY)
   val statusLine = new TextArea()
@@ -202,9 +205,9 @@ class GameFieldGUI(controller: Controller, name1: String, name2: String, map: St
         cells(row)(column)
       }
     statusLine.text = "aktiver Spieler: " + GameStatus.activePlayer.get + " Hitpoints: " +
-      GameStatus.activeTank.get.hp + "\n" + "MovesLeft: " + GameStatus.currentPlayerActions + "\n" +
+      attributeHandler.getAttribute(GameStatus.activeTank.get, "hp") + "\n" + "MovesLeft: " + GameStatus.currentPlayerActions + "\n" +
       "passiver Spieler: " + GameStatus.passivePlayer.get + " Hitpoints: " +
-      GameStatus.passiveTank.get.hp + "\n" + "Hitchance: " + GameStatus.currentHitChance
+      attributeHandler.getAttribute(GameStatus.passiveTank.get, "hp") + "\n" + "Hitchance: " + GameStatus.currentHitChance
     repaint
   }
 }
