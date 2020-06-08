@@ -5,12 +5,20 @@ lazy val commonSettings = Seq(
 )
 
 
-lazy val root = (project in file(".")).settings(
+lazy val root = (project in file("MainModule")).settings(
   commonSettings,
   libraryDependencies ++= commonDependencies,
 )
 
+lazy val player = (project in file("playerModule")).settings(
+  commonSettings,
+  libraryDependencies ++= commonDependencies,
+)
 
+lazy val tank = (project in file("TankModule")).settings(
+  commonSettings,
+  libraryDependencies ++= commonDependencies,
+)
 
 val commonDependencies = Seq(
   "org.scala-lang.modules" % "scala-swing_2.12" % "2.0.1",
