@@ -1,0 +1,24 @@
+version: '3'
+services:
+  mainmodule:
+    build: ./MainModule
+    image: mainmodule:v1
+    stdin_open: true
+    tty: true
+    ports:
+      - 8080:8080
+    links:
+      - playermodule
+      - tankmodule
+
+  playermodule:
+    build: ./PlayerModule
+    image: playermodule:v1
+    ports:
+      - 54251:54251
+
+  tankmodule:
+    build: ./TankModule
+    image: tankmodule:v1
+    ports:
+      - 54252:54252
