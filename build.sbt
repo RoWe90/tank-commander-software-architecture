@@ -10,7 +10,7 @@ lazy val root = (project in file("MainModule")).settings(
   libraryDependencies ++= commonDependencies,
 )
 
-lazy val player = (project in file("playerModule")).settings(
+lazy val player = (project in file("PlayerModule")).settings(
   commonSettings,
   libraryDependencies ++= commonDependencies,
 )
