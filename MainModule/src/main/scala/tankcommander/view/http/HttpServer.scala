@@ -1,14 +1,14 @@
 package tankcommander.view.http
 
-import tankcommander.controllerComponent.ControllerInterface
+import akka.actor.ActorSystem
+import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import akka.actor.ActorSystem
-import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
+import tankcommander.controllerComponent.ControllerInterface
 
-class HttpServer(controller: ControllerInterface){
+class HttpServer(controller: ControllerInterface) {
 
   implicit val system = ActorSystem("my-system")
   implicit val materializer = ActorMaterializer()
@@ -44,29 +44,29 @@ class HttpServer(controller: ControllerInterface){
   }
 
   def processInputLine(command: String): Unit = {
+    command.toLowerCase match {
+      case "start" => print("Das Spiel startet, macht euch bereit" + "\n")
+        controller.setUpGame()
+      case "exit" => unbind()
+      case "end turn" => controller.endTurnChangeActivePlayer()
+      case "undo" => controller.undo()
+      case "redo" => controller.redo()
+      case "save" => controller.save()
+      case "load" => controller.load()
+      case _ => if (!controller.checkIfPlayerHasMovesLeft())
+        println("no turns left")
+      case _ =>
+    }
+    if (controller.checkIfPlayerHasMovesLeft()) {
       command.toLowerCase match {
-        case "start" => print("Das Spiel startet, macht euch bereit" + "\n")
-          controller.setUpGame()
-        case "exit" => unbind()
-        case "end turn" => controller.endTurnChangeActivePlayer()
-        case "undo" => controller.undo()
-        case "redo" => controller.redo()
-        case "save" => controller.save()
-        case "load" => controller.load()
-        case _ => if (!controller.checkIfPlayerHasMovesLeft())
-          println("no turns left")
+        case "up" => controller.move(command)
+        case "down" => controller.move(command)
+        case "left" => controller.move(command)
+        case "right" => controller.move(command)
+        case "shoot" => controller.shoot()
         case _ =>
       }
-      if (controller.checkIfPlayerHasMovesLeft()) {
-        command.toLowerCase match {
-          case "up" => controller.move(command)
-          case "down" => controller.move(command)
-          case "left" => controller.move(command)
-          case "right" => controller.move(command)
-          case "shoot" => controller.shoot()
-          case _ =>
-        }
-      }
+    }
   }
 
 }

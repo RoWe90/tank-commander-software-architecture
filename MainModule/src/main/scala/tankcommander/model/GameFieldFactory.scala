@@ -78,7 +78,6 @@ object GameFieldFactory {
     private val listRock = Vector((1, 4), (4, 3), (6, 3), (9, 4), (1, 6), (4, 7), (6, 7), (9, 6))
     private val listWater = Vector((4, 0), (6, 0), (4, 2), (6, 2), (4, 8), (6, 8), (4, 10), (6, 10))
     private val listHill = Vector((5, 4), (5, 5), (5, 6))
-    println(listHill)
     override val mvector: Vector[Vector[Cell]]
     = Vector.tabulate(gridsX, gridsY)((i, j) => Cell(pos = (i, j), cobstacle = this
     match {

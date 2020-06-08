@@ -22,6 +22,7 @@ case class TankModelController(var tankModel1: TankModel, var tankModel2: TankMo
       case _ => 0
     }
   }
+
   override def getTankAccuracy(whichTank: Int): Int = {
     whichTank match {
       case 1 => tankModel1.accuracy
@@ -29,6 +30,7 @@ case class TankModelController(var tankModel1: TankModel, var tankModel2: TankMo
       case _ => 0
     }
   }
+
   override def getTankHp(whichTank: Int): Int = {
     whichTank match {
       case 1 => tankModel1.hp
@@ -36,18 +38,20 @@ case class TankModelController(var tankModel1: TankModel, var tankModel2: TankMo
       case _ => 0
     }
   }
+
   override def getTankPosC(whichTank: Int): (Int, Int) = {
     whichTank match {
-    case 1 => tankModel1.posC
-    case 2 => tankModel2.posC
-    case _ => (0,0)
+      case 1 => tankModel1.posC
+      case 2 => tankModel2.posC
+      case _ => (0, 0)
     }
   }
+
   override def getTankFacing(whichTank: Int): String = {
     whichTank match {
-    case 1 => tankModel1.facing
-    case 2 => tankModel2.facing
-    case _ => ""
+      case 1 => tankModel1.facing
+      case 2 => tankModel2.facing
+      case _ => ""
     }
   }
 
@@ -58,6 +62,7 @@ case class TankModelController(var tankModel1: TankModel, var tankModel2: TankMo
       case _ =>
     }
   }
+
   override def setTankAccuracy(whichTank: Int, accuracy: Int): Unit = {
     whichTank match {
       case 1 => tankModel1 = tankModel1.copy(accuracy = accuracy)
@@ -65,6 +70,7 @@ case class TankModelController(var tankModel1: TankModel, var tankModel2: TankMo
       case _ => 0
     }
   }
+
   override def setTankHp(whichTank: Int, hp: Int): Unit = {
     whichTank match {
       case 1 => tankModel1 = tankModel1.copy(hp = hp)
@@ -72,6 +78,7 @@ case class TankModelController(var tankModel1: TankModel, var tankModel2: TankMo
       case _ => 0
     }
   }
+
   override def setTankPosC(whichTank: Int, posC: (Int, Int)): Unit = {
     whichTank match {
       case 1 => tankModel1 = tankModel1.copy(posC = posC)
@@ -79,6 +86,7 @@ case class TankModelController(var tankModel1: TankModel, var tankModel2: TankMo
       case _ => 0
     }
   }
+
   override def setTankFacing(whichTank: Int, facing: String): Unit = {
     whichTank match {
       case 1 => tankModel1 = tankModel1.copy(facing = facing)
