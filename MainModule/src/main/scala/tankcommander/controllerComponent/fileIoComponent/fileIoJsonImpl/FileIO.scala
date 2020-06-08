@@ -1,12 +1,8 @@
 package tankcommander.controllerComponent.fileIoComponent.fileIoJsonImpl
 
 import play.api.libs.json._
-import tankModelComponent.TankModel
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
 import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
-import tankcommander.gameState.GameStatus
-import tankcommander.model.girdComponent.gridBaseImpl.Cell
-import tankcommander.util.AttributeHandler
 
 import scala.io.Source
 
