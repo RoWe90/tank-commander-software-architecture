@@ -1,6 +1,6 @@
-package tankcommander.model.girdComponent
+package tankcommander.model.gridComponent
 
-import tankcommander.model.girdComponent.gridBaseImpl.Cell
+import tankcommander.model.gridComponent.gridBaseImpl.Cell
 
 trait GameFieldInterface extends Cloneable {
   val gridsX: Int

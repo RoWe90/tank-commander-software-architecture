@@ -1,4 +1,4 @@
-package tankcommander.model.girdComponent.gridBaseImpl
+package tankcommander.model.gridComponent.gridBaseImpl
 
 case class Cell(pos: (Int, Int), cobstacle: Option[Obstacle] = None, containsThisTank: Option[Int] = None) {
   val x: Int = pos._1

@@ -1,4 +1,4 @@
-package tankcommander.model.girdComponent.gridBaseImpl
+package tankcommander.model.gridComponent.gridBaseImpl
 
 trait Obstacle {
   val name: String

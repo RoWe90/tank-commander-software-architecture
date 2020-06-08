@@ -1,8 +1,8 @@
 package tankcommander.model
 
 import tankcommander.gameState.GameStatus
-import tankcommander.model.girdComponent.GameFieldInterface
-import tankcommander.model.girdComponent.gridBaseImpl._
+import tankcommander.model.gridComponent.GameFieldInterface
+import tankcommander.model.gridComponent.gridBaseImpl._
 
 object GameFieldFactory {
   // our 'factory' method
@@ -64,16 +64,6 @@ object GameFieldFactory {
 
   private class Map1() extends GameField {
 
-    override val mvector: Vector[Vector[Cell]]
-    = Vector.tabulate(gridsX, gridsY)((i, j) => Cell(pos = (i, j), cobstacle = this
-    match {
-      case _ if listBush.contains((i, j)) => Some(new Bush)
-      case _ if listForest.contains((i, j)) => Some(new Forest)
-      case _ if listHill.contains((i, j)) => Some(new Hill)
-      case _ if listRock.contains((i, j)) => Some(new Rock)
-      case _ if listWater.contains((i, j)) => Some(new Water)
-      case _ => None
-    }))
     //first row
     private val listBush = Vector((0, 0), (1, 0), (9, 0), (10, 0),
       //second row
@@ -88,6 +78,17 @@ object GameFieldFactory {
     private val listRock = Vector((1, 4), (4, 3), (6, 3), (9, 4), (1, 6), (4, 7), (6, 7), (9, 6))
     private val listWater = Vector((4, 0), (6, 0), (4, 2), (6, 2), (4, 8), (6, 8), (4, 10), (6, 10))
     private val listHill = Vector((5, 4), (5, 5), (5, 6))
+
+    override val mvector: Vector[Vector[Cell]]
+    = Vector.tabulate(gridsX, gridsY)((i, j) => Cell(pos = (i, j), cobstacle = this
+    match {
+      case _ if listBush.contains((i, j)) => Some(new Bush)
+      case _ if listForest.contains((i, j)) => Some(new Forest)
+      case _ if listHill.contains((i, j)) => Some(new Hill)
+      case _ if listRock.contains((i, j)) => Some(new Rock)
+      case _ if listWater.contains((i, j)) => Some(new Water)
+      case _ => None
+    }))
   }
 
 

@@ -28,6 +28,8 @@ val commonDependencies = Seq(
 // set the main class for 'sbt run'
 mainClass in(Compile, run) := Some("PlayerMain")
 
+// set the main class for packaging the main jar
+mainClass in (Compile, packageBin) := Some("PlayerMain")
 
 
 
