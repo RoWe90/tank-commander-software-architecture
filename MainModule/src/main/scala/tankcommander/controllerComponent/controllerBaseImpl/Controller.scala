@@ -98,6 +98,7 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
  * Undo manager
  */
 
+
   override def move(s: String): Unit = {
     undoManager.doStep(new MoveCommand(this, s))
     notifyObservers()
