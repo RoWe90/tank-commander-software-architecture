@@ -44,3 +44,10 @@ project/.sbtserver
 
 # Application
 yourgame.log
+
+# Metals
+.metals/
+project/metals.sbt
+# Bloop
+.bloop/
+

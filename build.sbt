@@ -7,6 +7,7 @@ lazy val commonSettings = Seq(
   scalaVersion := "2.12.4"
 )
 
+
 lazy val root = (project in file(".")).
   settings(commonSettings: _*).
   settings(
