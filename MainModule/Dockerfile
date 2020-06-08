@@ -11,4 +11,7 @@ WORKDIR /tankcommander
 COPY src /tankcommander
 
 # Run the specified command within the container.
+CMD cd src
+
+# Run the specified command within the container.
 CMD sbt run
