@@ -4,7 +4,7 @@ import play.api.libs.json._
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
 import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
 import tankcommander.gameState.GameStatus
-import tankcommander.model.girdComponent.gridBaseImpl.Cell
+import tankcommander.model.gridComponent.gridBaseImpl.Cell
 import tankcommander.util.AttributeHandler
 
 import scala.io.Source

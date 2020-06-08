@@ -1,8 +1,8 @@
 package tankcommander.model
 
 import tankcommander.gameState.GameStatus
-import tankcommander.model.girdComponent.GameFieldInterface
-import tankcommander.model.girdComponent.gridBaseImpl.{Cell, Obstacle}
+import tankcommander.model.gridComponent.GameFieldInterface
+import tankcommander.model.gridComponent.gridBaseImpl.{Cell, Obstacle}
 import tankcommander.util.AttributeHandler
 
 class Mover(matchfield: GameFieldInterface) {

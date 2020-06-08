@@ -2,7 +2,7 @@ package tankcommander.controllerComponent.controllerBaseImpl
 
 import tankcommander.gameState.GameStatus
 import tankcommander.model.Mover
-import tankcommander.model.girdComponent.GameFieldInterface
+import tankcommander.model.gridComponent.GameFieldInterface
 import tankcommander.util.Command
 
 //Success or not yet to be implemented

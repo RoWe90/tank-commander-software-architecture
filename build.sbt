@@ -1,5 +1,5 @@
 lazy val commonSettings = Seq(
-  name := "TankCommanderMain",
+  name := "TankCommander",
   version := "0.0.1",
   scalaVersion := "2.12.4"
 )
@@ -29,7 +29,7 @@ val commonDependencies = Seq(
 mainClass in(Compile, run) := Some("tankcommander.TankCommander")
 
 // set the main class for packaging the main jar
-mainClass in (Compile, packageBin) := Some("tankcommander.TankCommander")
+mainClass in(Compile, packageBin) := Some("tankcommander.TankCommander")
 
 
 

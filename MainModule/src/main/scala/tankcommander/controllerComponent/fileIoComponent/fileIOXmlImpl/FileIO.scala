@@ -3,8 +3,8 @@ package tankcommander.controllerComponent.fileIoComponent.fileIOXmlImpl
 import tankcommander.controllerComponent.controllerBaseImpl.Controller
 import tankcommander.controllerComponent.fileIoComponent.FileIOInterface
 import tankcommander.gameState.GameStatus
-import tankcommander.model.girdComponent.GameFieldInterface
-import tankcommander.model.girdComponent.gridBaseImpl.Cell
+import tankcommander.model.gridComponent.GameFieldInterface
+import tankcommander.model.gridComponent.gridBaseImpl.Cell
 import tankcommander.util.AttributeHandler
 
 import scala.xml.{Elem, PrettyPrinter, XML}
