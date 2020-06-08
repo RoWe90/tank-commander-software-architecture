@@ -17,16 +17,6 @@ class HttpServer(tankModelController: TankModelControllerInterface) {
   implicit val materializer: ActorMaterializer = ActorMaterializer()
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
-  //TODO: Race condition:
-  // {"which":1,"attribute":"init","value":""}
-  // {"which":2,"attribute":"init","value":""}
-  // {"which":2,"attribute":"posC","value":"10_5"}
-  // {"which":1,"attribute":"posC","value":"0_5"}
-  // Changed Tank1 posC to 0_5
-  // Changed Tank1 init to
-  // Changed Tank2 posC to 10_5
-  // Changed Tank2 init to
-
   val route: Route = concat(
     get {
       path("tank" / "1" / Segment) {
@@ -42,7 +32,7 @@ class HttpServer(tankModelController: TankModelControllerInterface) {
             case "facing" => container = tankModelController.getTankFacing(1)
             case _ => println("Wrong attribute argument")
           }
-          println("Tank1 " + attribute + "=" + container)
+          println("GET: Tank1 " + attribute + "=" + container)
           complete(Json.toJson(container).toString())
         }
       }
@@ -61,7 +51,7 @@ class HttpServer(tankModelController: TankModelControllerInterface) {
             case "facing" => container = tankModelController.getTankFacing(2)
             case _ => println("Wrong attribute argument")
           }
-          println("Tank2 " + attribute + "=" + container)
+          println("GET: Tank2 " + attribute + "=" + container)
           complete(Json.toJson(container).toString())
         }
       }
@@ -77,7 +67,7 @@ class HttpServer(tankModelController: TankModelControllerInterface) {
 
             if (which >= 1 && which < 3) {
               changeAttribute(which, attribute, value)
-              println("Changed Tank"+ which + " " + attribute + " to " + value)
+              println("POST: Changed Tank"+ which + " " + attribute + " to " + value)
             } else {
               println("Wrong Player argument")
             }
@@ -102,14 +92,13 @@ class HttpServer(tankModelController: TankModelControllerInterface) {
   def changeAttribute(tank: Int, attribute: String, value: String): Unit = {
     attribute match {
       case "init" => tankModelController.initTank(tank)
-      case "tankBaseDamage" => tankModelController.setTankBaseDamage(tank.toInt, value.toInt)
-      case "hp" => tankModelController.setTankHp(tank.toInt, value.toInt)
-      case "accuracy" => tankModelController.setTankAccuracy(tank.toInt, value.toInt)
-      case "posC" => {
+      case "tankBaseDamage" => tankModelController.setTankBaseDamage(tank, value.toInt)
+      case "hp" => tankModelController.setTankHp(tank, value.toInt)
+      case "accuracy" => tankModelController.setTankAccuracy(tank, value.toInt)
+      case "posC" =>
         val tuple = value.split("_")
-        tankModelController.setTankPosC(tank.toInt, (tuple(0).toInt, tuple(1).toInt))
-      }
-      case "facing" => tankModelController.setTankFacing(tank.toInt, value)
+        tankModelController.setTankPosC(tank, (tuple(0).toInt, tuple(1).toInt))
+      case "facing" => tankModelController.setTankFacing(tank, value)
       case _ => println("Wrong Attribute Argument: " + attribute)
     }
   }
