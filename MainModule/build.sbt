@@ -1,34 +1,11 @@
 lazy val commonSettings = Seq(
-  name := "TankCommander",
+  name := "TankCommanderMain",
   version := "0.0.1",
   scalaVersion := "2.12.4"
 )
 
-lazy val root = (project in file(".")).settings(
-  name := "TankCommander",
-  libraryDependencies ++= commonDependencies,
-).aggregate(
-  tankModule,
-  playerModule,
-  MainModule
-)
-
-lazy val MainModule = project.settings(
+lazy val MainModule = (project in file(".")).settings(
   commonSettings,
-  name := "MainModule",
-  libraryDependencies ++= commonDependencies,
-).dependsOn(tankModule).aggregate(tankModule)
-
-lazy val tankModule = project.settings(
-  commonSettings,
-  name := "TankModule",
-  libraryDependencies ++= commonDependencies,
-).dependsOn(playerModule).aggregate(playerModule)
-
-// Player
-lazy val playerModule = project.settings(
-  commonSettings,
-  name := "PlayerModule",
   libraryDependencies ++= commonDependencies,
 )
 
