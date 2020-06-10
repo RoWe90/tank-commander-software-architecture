@@ -4,13 +4,14 @@ services:
     build: ./MainModule
     image: mainmodule:v1
     stdin_open: true
-    tty: true
+    tty: true   
+    entrypoint: "bin/bash"
     ports:
       - 8080:8080
     links:
       - playermodule
       - tankmodule
-
+    
   playermodule:
     build: ./PlayerModule
     image: playermodule:v1
