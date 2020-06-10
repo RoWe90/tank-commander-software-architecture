@@ -1,25 +1,33 @@
 version: '3'
 services:
-  mainmodule:
-    build: ./MainModule
-    image: mainmodule:v1
+  main:
+    image: main-sbt:latest
+    hostname: tankcommander
+    #working_dir: controlModule/src/main/scala/TankCommander.scala
+    tty: true
+    ports:
+      - "8080:8080"
+    depends_on:
+      - player
+      - tank
     stdin_open: true
-    tty: true   
-    entrypoint: "bin/bash"
-    ports:
-      - 8080:8080
-    links:
-      - playermodule
-      - tankmodule
-    
-  playermodule:
-    build: ./PlayerModule
-    image: playermodule:v1
-    ports:
-      - 54251:54251
-
-  tankmodule:
-    build: ./TankModule
-    image: tankmodule:v1
-    ports:
-      - 54252:54252
+    networks:
+      default:
+        aliases:
+          - mymain
+  player:
+    image: player-sbt:latest
+    #working_dir: playerModule/src/main/scala/PlayerMain.scala
+    stdin_open: true
+    networks:
+      default:
+        aliases:
+          - myplayer
+  tank:
+    image: tank-sbt:latest
+    #working_dir: modelModule/src/main/scala/TankMain.scala
+    stdin_open: true
+    networks:
+      default:
+        aliases:
+          - mytank

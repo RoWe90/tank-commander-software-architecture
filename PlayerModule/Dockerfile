@@ -1,11 +1,12 @@
 # Use the official image as a parent image.
-FROM hseeberger/scala-sbt:graalvm-ce-20.0.0-java11_1.3.12_2.13.2
+FROM adoptopenjdk/openjdk14:alpine-slim
+FROM hseeberger/scala-sbt:8u212_1.2.8_2.13.0
+EXPOSE 22222
+WORKDIR /tankCommander
+ADD /target/scala-2.12/PlayerModule-assembly-0.1.0-SNAPSHOT.jar /tankCommander
+ENV DOCKERENV="TRUE"
+ENTRYPOINT ["java", "-jar", "PlayerModule-assembly-0.1.0-SNAPSHOT.jar"]
 
-RUN mkdir -p /PlayerModule
-
-ADD . /PlayerModule
-
-WORKDIR /PlayerModule
-
+# Build it.
+RUN sbt compile
 CMD sbt run
-

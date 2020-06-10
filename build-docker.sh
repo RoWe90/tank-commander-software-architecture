@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-#We should have a script that automatically builds the containers.
+docker build ./PlayerModule -t player-sbt:latest
+docker build ./TankModule -t tank-sbt:latest
+docker build ./MainModule -t main-sbt:latest
