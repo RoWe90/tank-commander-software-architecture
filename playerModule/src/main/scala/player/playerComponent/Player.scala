@@ -1,4 +1,4 @@
-package playerComponent
+package player.playerComponent
 
 import play.api.libs.json.{JsValue, Json}
 

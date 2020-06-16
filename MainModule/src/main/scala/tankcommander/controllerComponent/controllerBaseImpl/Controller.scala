@@ -121,12 +121,17 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
   }
 
   override def save(): Unit = {
-    fileIO.save()
+    //fileIO.save()
+
+    attributeHandler.save()
   }
 
   override def load(): Unit = {
-    matchfield = GameFieldFactory.apply(mapChosen)
-    fileIO.load(this)
+    //matchfield = GameFieldFactory.apply(mapChosen)
+    //fileIO.load(this)
+
+    attributeHandler.load()
+
     notifyObservers()
   }
 

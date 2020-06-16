@@ -1,9 +1,15 @@
-package controller.baseImpl
+package tank.controller.baseImpl
 
-import controller.TankModelControllerInterface
-import tankModelComponent.TankModel
+import com.google.inject.{Guice, Inject, Injector}
+import tank.TankModelModule
+import tank.controller.TankModelControllerInterface
+import tank.tankModelComponent.TankModel
+import tank.tankModelComponent.slickComponent.SlickInterface
 
-case class TankModelController(var tankModel1: TankModel, var tankModel2: TankModel) extends TankModelControllerInterface {
+case class TankModelController @Inject() (var tankModel1: TankModel, var tankModel2: TankModel) extends TankModelControllerInterface {
+
+  val injector: Injector = Guice.createInjector(new TankModelModule)
+  val db : SlickInterface = injector.getInstance(classOf[SlickInterface])
 
   //TODO eventuell mit Options arbeiten
 
@@ -95,5 +101,15 @@ case class TankModelController(var tankModel1: TankModel, var tankModel2: TankMo
     }
   }
 
+  override def save(): Unit = {
+    db.saveTank(tankModel1.tankBaseDamage, tankModel1.accuracy, tankModel1.hp, tankModel1.posC, tankModel1.facing)
+    db.saveTank(tankModel2.tankBaseDamage, tankModel2.accuracy, tankModel2.hp, tankModel2.posC, tankModel2.facing)
+}
 
+  override def load(): Unit = {
+    val result0= db.loadTank(0)
+    tankModel1 = TankModel(result0._1, result0._2, result0._3, result0._4, result0._5)
+    val result1 = db.loadTank(1)
+    tankModel2 = TankModel(result1._1, result1._2, result1._3, result1._4, result1._5)
+  }
 }

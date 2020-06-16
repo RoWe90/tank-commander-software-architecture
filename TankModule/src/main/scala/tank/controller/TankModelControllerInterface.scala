@@ -1,4 +1,4 @@
-package controller
+package tank.controller
 
 trait TankModelControllerInterface {
    def initTank(whichTank: Int): Unit
@@ -14,5 +14,8 @@ trait TankModelControllerInterface {
   def setTankHp(whichTank: Int, hp: Int): Unit
   def setTankPosC(whichTank: Int, posC: (Int, Int)): Unit
   def setTankFacing(whichTank: Int, facing: String): Unit
+
+  def save() : Unit
+  def load() : Unit
 
 }

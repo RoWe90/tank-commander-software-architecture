@@ -1,6 +1,6 @@
-package controller
+package player.controller
 
-import playerComponent.Player
+import player.playerComponent.Player
 
 trait PlayerControllerInterface {
 
@@ -9,9 +9,8 @@ trait PlayerControllerInterface {
 
   def initPlayer(name: String, whichPlayer: Int): Unit
 
-  //def save(): Unit
-
- // def load(): Unit
+  def save(): Unit
+  def load(): Unit
 
   def playerNameList: List[String]
 }

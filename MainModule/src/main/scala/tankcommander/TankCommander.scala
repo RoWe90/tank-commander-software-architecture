@@ -11,7 +11,7 @@ object TankCommander {
   val controller = new Controller()
   val webserver = new HttpServer(controller)
   val tui = new TUI(controller)
-//  val gui = new MainMenu(controller)
+//  val gui = new MainMenu(tank.controller)
 
   def main(args: Array[String]): Unit = {
     var input: String = ""

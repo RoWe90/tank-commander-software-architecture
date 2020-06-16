@@ -1,13 +1,12 @@
-package http
+package tank.http
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
-import controller.TankModelControllerInterface
 import play.api.libs.json.Json
+import tank.controller.TankModelControllerInterface
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 
@@ -54,6 +53,20 @@ class HttpServer(tankModelController: TankModelControllerInterface) {
           println("GET: Tank2 " + attribute + "=" + container)
           complete(Json.toJson(container).toString())
         }
+      }
+    },
+    get {
+      path("tank" / "save") {
+        tankModelController.save()
+        println("Saved to DB")
+        complete("")
+      }
+    },
+    get {
+      path("tank" / "load") {
+        tankModelController.load()
+        println("Loaded from DB")
+        complete("")
       }
     },
     post {

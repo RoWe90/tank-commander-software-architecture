@@ -1,14 +1,12 @@
-package http
+package player.http
 
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
-import controller.PlayerControllerInterface
+import player.controller.PlayerControllerInterface
 import play.api.libs.json.Json
-import playerComponent.Player
 
 import scala.concurrent.Future
 
@@ -29,6 +27,20 @@ class HttpServer(playerController: PlayerControllerInterface){
       path("player" / "player" / "2") {
         val container = playerController.playerNameList(1)
         complete(Json.toJson(container.replace("\"", "")).toString())
+      }
+    },
+    get {
+      path("player" / "player" / "save") {
+        playerController.save()
+        println("Saved to DB")
+        complete("")
+      }
+    },
+    get {
+      path("player" / "player" / "load") {
+        playerController.load()
+        println("Loaded from DB")
+        complete("")
       }
     },
     post {

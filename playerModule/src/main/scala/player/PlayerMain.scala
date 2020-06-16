@@ -1,7 +1,9 @@
-import controller.PlayerControllerInterface
-import controller.baseImpl.PlayerController
-import http.HttpServer
-import playerComponent.Player
+package player
+
+import player.controller.PlayerControllerInterface
+import player.controller.baseImpl.PlayerController
+import player.playerComponent.Player
+import player.http.HttpServer
 
 object PlayerMain {
   val controller: PlayerControllerInterface = PlayerController(Player("1"), Player("2"))
