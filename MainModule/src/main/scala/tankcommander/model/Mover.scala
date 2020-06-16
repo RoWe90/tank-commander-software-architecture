@@ -9,116 +9,6 @@ class Mover(matchfield: GameFieldInterface) {
 
   val attributeHandler = AttributeHandler()
 
-  def lineOfSightContainsTank(obsList: List[Obstacle] = Nil, i: Int = 0):
-  Unit = {
-    val atXY = GameStatus.activeTank match {
-      case Some(i) => {
-        attributeHandler.getPosC(i)
-      }
-      case None => (0, 0)
-    }
-    val ptXY = GameStatus.passiveTank match {
-      case Some(i) => attributeHandler.getPosC(i)
-      case None => (0, 0)
-    }
-    val cXY: (Int, Int) = (atXY._1 - ptXY._1, atXY._2 - ptXY._2)
-    cXY match {
-      //Über oder unter
-      case (0, _) =>
-        cXY match {
-          //Hoch zählt runter
-          case _ if cXY._2 > 0 =>
-            GameStatus.activeTank = GameStatus.activeTank match {
-              case Some(i) => {
-                attributeHandler.setAttribute(i, "facing", "up")
-                Some(i)
-              }
-              case None => None
-            }
-            if (matchfield.mvector(atXY._1)(atXY._2 - 1 - i).cobstacle.isDefined) {
-              if (atXY._2 - 1 - i > ptXY._2 - 1) {
-                lineOfSightContainsTank(matchfield.mvector(atXY._1)(atXY._2 - 1 - i).cobstacle.get :: obsList, i - 1)
-              }
-            }
-            if (matchfield.mvector(atXY._1)(atXY._2 - 1 - i).containsThisTank.isDefined) {
-              val distance = Math.abs(cXY._2)
-              GameStatus.currentHitChance = calcHitChance(distance, obsList)
-            }
-
-          //Runter zählt hoch
-          case _ if cXY._2 < 0 =>
-            GameStatus.activeTank = GameStatus.activeTank match {
-              case Some(i) => {
-                attributeHandler.setAttribute(i, "facing", "down")
-                Some(i)
-              }
-              case None => None
-            }
-            if (matchfield.mvector(atXY._1)(atXY._2 + 1 + i).cobstacle.isDefined) {
-              lineOfSightContainsTank(matchfield.mvector(atXY._1)(atXY._2 + 1 + i).cobstacle.get :: obsList, i + 1)
-            }
-            if (matchfield.mvector(atXY._1)(atXY._2 + 1 + i).containsThisTank.isDefined) {
-              val distance = Math.abs(cXY._2)
-              GameStatus.currentHitChance = calcHitChance(distance, obsList)
-            }
-
-        }
-      //Rechts oder links
-      case (_, 0) =>
-        cXY match {
-          //Links zählt runter
-          case _ if cXY._1 > 0 =>
-            GameStatus.activeTank = GameStatus.activeTank match {
-              case Some(i) => {
-                attributeHandler.setAttribute(i, "facing", "left")
-                Some(i)
-              }
-              case None => None
-            }
-            for (i <- (atXY._1 - 1) to ptXY._1 by -1) {
-              if (matchfield.mvector(atXY._1 - 1 - i)(atXY._2).cobstacle.isDefined) {
-                lineOfSightContainsTank(matchfield.mvector(atXY._1 - 1 - i)(atXY._2).cobstacle.get :: obsList, i - 1)
-              }
-              if (matchfield.mvector(atXY._1 - 1 - i)(atXY._2).containsThisTank.isDefined) {
-                val distance = Math.abs(cXY._1)
-                GameStatus.currentHitChance = calcHitChance(distance, obsList)
-              }
-            }
-          //Rechts zählt hoch
-          case _ if cXY._1 < 0 =>
-            GameStatus.activeTank = GameStatus.activeTank match {
-              case Some(i) => {
-                attributeHandler.setAttribute(i, "facing", "right")
-                Some(i)
-              }
-              case None => None
-            }
-            for (i <- (atXY._1 + 1) to ptXY._1) {
-              if (matchfield.mvector(atXY._1 + 1 + i)(atXY._2).cobstacle.isDefined) {
-                lineOfSightContainsTank(matchfield.mvector(atXY._1 + 1 + i)(atXY._2).cobstacle.get :: obsList, i + 1)
-              }
-              if (matchfield.mvector(atXY._1 + 1 + i)(atXY._2).containsThisTank.isDefined) {
-                val distance = Math.abs(cXY._1)
-                GameStatus.currentHitChance = calcHitChance(distance, obsList)
-
-              }
-            }
-        }
-      case _ => GameStatus.currentHitChance = 0
-    }
-  }
-
-  def calcHitChance(distance: Int, List: List[Obstacle]): Int = {
-    var obstacleMalus = 0
-    List.foreach(n => obstacleMalus += n.hitmalus)
-    val hitchance = attributeHandler.getAttribute(GameStatus.activeTank.get, "accuracy").toInt - (distance * 5) - obstacleMalus
-    if (hitchance > 0) {
-      hitchance
-    } else {
-      0
-    }
-  }
-
   def moveTank(input: String): GameFieldInterface = {
     val activeTank = GameStatus.activeTank.get
     val gameField: GameFieldInterface = input match {
@@ -222,4 +112,129 @@ class Mover(matchfield: GameFieldInterface) {
       matchfield
     }
   } //notifyObservers()
+
+  def lineOfSightContainsTank(obsList: List[Obstacle] = Nil, i: Int = 0): Unit = {
+    val activeTankPos = GameStatus.activeTank match {
+      case Some(i) => {
+        attributeHandler.getPosC(i)
+      }
+      case None => (0, 0)
+    }
+    val passiveTankPos = GameStatus.passiveTank match {
+      case Some(i) => attributeHandler.getPosC(i)
+      case None => (0, 0)
+    }
+    val tankIntersection: (Int, Int) = (activeTankPos._1 - passiveTankPos._1, activeTankPos._2 - passiveTankPos._2)
+    // Ist der feindliche Tank auf einer Linie mit uns?
+    tankIntersection match {
+      // Feindlicher Tank ist über uns
+      case (0, _) if tankIntersection._2 > 0 =>
+        val distance = Math.abs(tankIntersection._2)
+        GameStatus.currentHitChance = calcHitChance(distance, accumulateObstacles(activeTankPos, passiveTankPos, "up"))
+      //Feindlicher Tank ist unter uns
+      case (0, _) if tankIntersection._2 < 0 =>
+        val distance = Math.abs(tankIntersection._2)
+        GameStatus.currentHitChance = calcHitChance(distance, accumulateObstacles(activeTankPos, passiveTankPos, "up"))
+
+      //Feindlicher Tank ist links von uns uns
+      case (_, 0) if tankIntersection._1 > 0 =>
+        val distance = Math.abs(tankIntersection._1)
+        GameStatus.currentHitChance = calcHitChance(distance, accumulateObstacles(activeTankPos, passiveTankPos, "up"))
+      //Feindlicher Tank ist rechts von uns
+      case (_, 0) if tankIntersection._1 < 0 =>
+        val distance = Math.abs(tankIntersection._1)
+        GameStatus.currentHitChance = calcHitChance(distance, accumulateObstacles(activeTankPos, passiveTankPos, "up"))
+      //Tank ist nicht auf einer Linie
+      case _ => GameStatus.currentHitChance = 0
+    }
+  }
+
+  def accumulateObstacles(posActiveTank: (Int, Int), posPassiveTank: (Int, Int), facing: String): List[Obstacle] = {
+    var obsList = List[Obstacle]()
+    obsList = facing match {
+      case "up" =>
+        GameStatus.activeTank = GameStatus.activeTank match {
+          case Some(i) => {
+            attributeHandler.setAttribute(i, "facing", "up")
+            Some(i)
+          }
+          case None => None
+        }
+        for (i <- (posActiveTank._2 - 1) to posPassiveTank._2 by -1) {
+          if (matchfield.mvector(posActiveTank._1)(posActiveTank._2 - 1 - i).cobstacle.isDefined) {
+            if (posActiveTank._2 - 1 - i > posActiveTank._2 - 1) {
+              obsList = matchfield.mvector(posActiveTank._1)(posActiveTank._2 - 1 - i).cobstacle.get :: obsList
+            }
+          }
+          if (matchfield.mvector(posActiveTank._1)(posActiveTank._2 - 1 - i).containsThisTank.isDefined) {
+            obsList
+          }
+        }
+        obsList
+      case "down" =>
+        GameStatus.activeTank = GameStatus.activeTank match {
+          case Some(i) => {
+            attributeHandler.setAttribute(i, "facing", "down")
+            Some(i)
+          }
+          case None => None
+        }
+        for (i <- (posActiveTank._2 + 1) to posPassiveTank._2) {
+          if (matchfield.mvector(posActiveTank._1)(posActiveTank._2 + 1 + i).cobstacle.isDefined) {
+            obsList = matchfield.mvector(posActiveTank._1)(posActiveTank._2 + 1 + i).cobstacle.get :: obsList
+          }
+          if (matchfield.mvector(posActiveTank._1)(posActiveTank._2 + 1 + i).containsThisTank.isDefined) {
+            obsList
+          }
+        }
+        obsList
+      case "left" =>
+        GameStatus.activeTank = GameStatus.activeTank match {
+          case Some(i) => {
+            attributeHandler.setAttribute(i, "facing", "left")
+            Some(i)
+          }
+          case None => None
+        }
+        for (i <- (posActiveTank._1 - 1) to posPassiveTank._1 by -1) {
+          if (matchfield.mvector(posActiveTank._1 - 1 - i)(posActiveTank._2).cobstacle.isDefined) {
+            obsList = matchfield.mvector(posActiveTank._1 - 1 - i)(posActiveTank._2).cobstacle.get :: obsList
+          }
+          if (matchfield.mvector(posActiveTank._1 - 1 - i)(posActiveTank._2).containsThisTank.isDefined) {
+            obsList
+          }
+        }
+        obsList
+      case "right" =>
+        GameStatus.activeTank = GameStatus.activeTank match {
+          case Some(i) => {
+            attributeHandler.setAttribute(i, "facing", "right")
+            Some(i)
+          }
+          case None => None
+        }
+        for (i <- (posActiveTank._1 + 1) to posPassiveTank._1 - 1) {
+          if (matchfield.mvector(posActiveTank._1 + 1 + i)(posActiveTank._2).cobstacle.isDefined) {
+            obsList = matchfield.mvector(posActiveTank._1 + 1 + i)(posActiveTank._2).cobstacle.get :: obsList
+          }
+          if (matchfield.mvector(posActiveTank._1 + 1 + i)(posActiveTank._2).containsThisTank.isDefined) {
+            obsList
+          }
+        }
+        obsList
+      case _ => obsList
+    }
+    obsList
+  }
+
+  def calcHitChance(distance: Int, List: List[Obstacle]): Int = {
+    var obstacleMalus = 0
+    List.foreach(n => obstacleMalus += n.hitmalus)
+    val hitchance = attributeHandler.getAttribute(GameStatus.activeTank.get, "accuracy").toInt - (distance * 5) - obstacleMalus
+    if (hitchance > 0) {
+      hitchance
+    } else {
+      0
+    }
+  }
 }
