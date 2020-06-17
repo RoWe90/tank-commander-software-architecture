@@ -1,12 +1,15 @@
-package player.playerComponent.slickComponent.slickImpl
+package player.playerComponent.daoComponent.slickImpl
 
-import player.playerComponent.slickComponent.SlickInterface
+import player.playerComponent.daoComponent.DAOInterface
 import slick.jdbc.H2Profile.api._
 import slick.lifted.ProvenShape
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
-class SlickImpl extends SlickInterface{
+import scala.concurrent._
+import ExecutionContext.Implicits.global
+
+class SlickImpl extends DAOInterface{
 
   private val players = TableQuery[Player]
 
@@ -17,13 +20,16 @@ class SlickImpl extends SlickInterface{
 
   override def savePlayer(name: String): Unit = {
     db.run(players += (0, name))
+    db.run(players.result).map(_.foreach {
+      case (id, name) =>
+        println("  " + name)
+    })
   }
 
   override def loadPlayer(which: Int): String = {
     val query = db.run(players.filter(_.id === which).result.headOption)
     val playerValues = Await.result(query, Duration.Inf).get
     playerValues._2
-    //TODO: gibt immer nur den obersten player aus nicht beide
   }
 }
 

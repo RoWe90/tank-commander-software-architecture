@@ -4,12 +4,12 @@ import com.google.inject.{Guice, Inject, Injector}
 import tank.TankModelModule
 import tank.controller.TankModelControllerInterface
 import tank.tankModelComponent.TankModel
-import tank.tankModelComponent.slickComponent.SlickInterface
+import tank.tankModelComponent.daoComponent.DAOInterface
 
 case class TankModelController @Inject() (var tankModel1: TankModel, var tankModel2: TankModel) extends TankModelControllerInterface {
 
   val injector: Injector = Guice.createInjector(new TankModelModule)
-  val db : SlickInterface = injector.getInstance(classOf[SlickInterface])
+  val db : DAOInterface = injector.getInstance(classOf[DAOInterface])
 
   //TODO eventuell mit Options arbeiten
 
@@ -107,9 +107,9 @@ case class TankModelController @Inject() (var tankModel1: TankModel, var tankMod
 }
 
   override def load(): Unit = {
-    val result0= db.loadTank(0)
+    val result0 = db.loadTank(1)
     tankModel1 = TankModel(result0._1, result0._2, result0._3, result0._4, result0._5)
-    val result1 = db.loadTank(1)
+    val result1 = db.loadTank(2)
     tankModel2 = TankModel(result1._1, result1._2, result1._3, result1._4, result1._5)
   }
 }

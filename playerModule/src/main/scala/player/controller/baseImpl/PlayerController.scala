@@ -4,14 +4,14 @@ import com.google.inject.{Guice, Inject, Injector}
 import player.PlayerModelModule
 import player.controller.PlayerControllerInterface
 import player.playerComponent.Player
-import player.playerComponent.slickComponent.SlickInterface
+import player.playerComponent.daoComponent.DAOInterface
 
 import scala.util.{Failure, Success}
 
 case class PlayerController @Inject() (var player1: Player, var player2: Player) extends PlayerControllerInterface {
 
   val injector: Injector = Guice.createInjector(new PlayerModelModule)
-  val db: SlickInterface = injector.getInstance(classOf[SlickInterface])
+  val db: DAOInterface = injector.getInstance(classOf[DAOInterface])
 
   override def initPlayer(name: String, whichPlayer: Int): Unit = {
     whichPlayer match {
@@ -27,9 +27,9 @@ case class PlayerController @Inject() (var player1: Player, var player2: Player)
   }
 
   override def load(): Unit = {
-    val result0 = db.loadPlayer(0)
+    val result0 = db.loadPlayer(1)
     player1 = Player(result0)
-    val result1 = db.loadPlayer(1)
+    val result1 = db.loadPlayer(2)
     player2 = Player(result1)
   }
 

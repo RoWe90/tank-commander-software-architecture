@@ -1,12 +1,15 @@
-package tank.tankModelComponent.slickComponent.slickImpl
+package tank.tankModelComponent.daoComponent.slickImpl
 
 import slick.jdbc.H2Profile.api._
 import slick.lifted.ProvenShape
-import tank.tankModelComponent.slickComponent.SlickInterface
+import tank.tankModelComponent.daoComponent.DAOInterface
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
-class SlickImpl extends SlickInterface{
+import scala.concurrent._
+import ExecutionContext.Implicits.global
+
+class SlickImpl extends DAOInterface{
 
   private val tanks = TableQuery[Tank]
 
@@ -17,13 +20,18 @@ class SlickImpl extends SlickInterface{
 
   override def saveTank(tankBaseDamage: Int, accuracy: Int, hp: Int, posC: (Int, Int), facing: String): Unit = {
     db.run(tanks += (0, tankBaseDamage, accuracy, hp, posC._1, posC._2, facing))
+
+    db.run(tanks.result).map(_.foreach {
+      case (id, tankBaseDamage, accuracy, hp, posCx, posCy, facing) =>
+        println("  " + tankBaseDamage + "\t" + accuracy + "\t" + hp + "\t" + posCx + "\t" + posCy + "\t" + facing)
+    })
+
   }
 
   override def loadTank(which: Int): (Int, Int, Int, (Int, Int), String) = {
     val query = db.run(tanks.filter(_.id === which).result.headOption)
     val tankValues = Await.result(query, Duration.Inf).get
     (tankValues._2, tankValues._3, tankValues._4, (tankValues._5, tankValues._6), tankValues._7)
-    //TODO: gibt immer nur den obersten tank aus nicht beide
   }
 }
 

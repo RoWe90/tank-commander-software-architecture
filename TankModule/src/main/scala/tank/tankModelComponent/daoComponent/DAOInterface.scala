@@ -1,6 +1,6 @@
-package tank.tankModelComponent.slickComponent
+package tank.tankModelComponent.daoComponent
 
-trait SlickInterface {
+trait DAOInterface {
 
   def saveTank(tankBaseDamage: Int, accuracy: Int, hp: Int, posC: (Int, Int), facing: String) : Unit
 
