@@ -7,7 +7,12 @@ lazy val commonSettings = Seq(
 lazy val MainModule = (project in file(".")).settings(
   commonSettings,
   libraryDependencies ++= commonDependencies,
-  libraryDependencies ++= slickDependencies
+  libraryDependencies ++= slickDependencies,
+  libraryDependencies ++= mongoDependencies,
+)
+
+val mongoDependencies = Seq(
+  "org.mongodb.scala" %% "mongo-scala-driver" % "2.6.0",
 )
 
 val slickDependencies = Seq(

@@ -102,14 +102,14 @@ case class TankModelController @Inject() (var tankModel1: TankModel, var tankMod
   }
 
   override def save(): Unit = {
-    db.saveTank(tankModel1.tankBaseDamage, tankModel1.accuracy, tankModel1.hp, tankModel1.posC, tankModel1.facing)
-    db.saveTank(tankModel2.tankBaseDamage, tankModel2.accuracy, tankModel2.hp, tankModel2.posC, tankModel2.facing)
+    db.saveTank("tankModel1", tankModel1.tankBaseDamage, tankModel1.accuracy, tankModel1.hp, tankModel1.posC, tankModel1.facing)
+    db.saveTank("tankModel2", tankModel2.tankBaseDamage, tankModel2.accuracy, tankModel2.hp, tankModel2.posC, tankModel2.facing)
 }
 
   override def load(): Unit = {
-    val result0 = db.loadTank(1)
+    val result0 = db.loadTank("tankModel1")
     tankModel1 = TankModel(result0._1, result0._2, result0._3, result0._4, result0._5)
-    val result1 = db.loadTank(2)
+    val result1 = db.loadTank("tankModel2")
     tankModel2 = TankModel(result1._1, result1._2, result1._3, result1._4, result1._5)
   }
 }
