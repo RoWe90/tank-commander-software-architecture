@@ -7,8 +7,9 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import tankcommander.controllerComponent.ControllerInterface
+import tankcommander.controllerComponent.controllerBaseImpl.Controller
 
-class HttpServer(controller: ControllerInterface) {
+class HttpServer(controller: Controller) {
 
   implicit val system = ActorSystem("my-system")
   implicit val materializer = ActorMaterializer()
@@ -20,7 +21,7 @@ class HttpServer(controller: ControllerInterface) {
         complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h2> Welcome to TankCommander </h2>"))
       }
     },
-    put {
+    get {
       path("tankcommander" / Segment) {
         command => {
           processInputLine(command)
@@ -46,7 +47,7 @@ class HttpServer(controller: ControllerInterface) {
   def processInputLine(command: String): Unit = {
     command.toLowerCase match {
       case "start" => print("Das Spiel startet, macht euch bereit" + "\n")
-        controller.setUpGame()
+        controller.setUpGame("dennis", "robin", "1")
       case "exit" => unbind()
       case "end turn" => controller.endTurnChangeActivePlayer()
       case "undo" => controller.undo()
