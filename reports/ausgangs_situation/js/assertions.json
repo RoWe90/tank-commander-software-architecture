@@ -1,0 +1,10 @@
+{
+  "simulation": "tank.RecordedSimulation",
+  "simulationId": "recordedsimulation",
+  "start": 1592838604058,
+  "description": "",
+  "scenarios": ["RecordedSimulation"],
+  "assertions": [
+
+  ]
+}
