@@ -18,27 +18,28 @@ class SlickImpl extends DAOInterface{
     keepAliveConnection = true)
   db.run(DBIO.seq(players.schema.create))
 
-  override def savePlayer(name: String): Unit = {
-    db.run(players += (0, name))
+  override def savePlayer(which: Int, name: String): Unit = {
+    db.run(players += (0, which, name))
     db.run(players.result).map(_.foreach {
-      case (id, name) =>
-        println("  " + name)
+      case (id, which, name) =>
+        println("  " + which + name)
     })
   }
 
   override def loadPlayer(which: Int): String = {
-    val query = db.run(players.filter(_.id === which).result.headOption)
+    val query = db.run(players.filter(_.which === which).sortBy(_.id.desc).result.headOption)
     val playerValues = Await.result(query, Duration.Inf).get
-    playerValues._2
+    playerValues._3
   }
 }
 
-case class Player(tag: Tag) extends Table[(Int, String)](tag, "player") {
+case class Player(tag: Tag) extends Table[(Int, Int, String)](tag, "player") {
 
   def id: Rep[Int] = column[Int]("ID", O.PrimaryKey, O.AutoInc)
 
+  def which: Rep[Int] = column[Int]("which")
   def name: Rep[String] = column[String]("name")
 
-  def * : ProvenShape[(Int, String)] = (id, name)
+  def * : ProvenShape[(Int, Int, String)] = (id, which, name)
 
 }

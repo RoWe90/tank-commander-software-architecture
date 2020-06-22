@@ -22,8 +22,8 @@ case class PlayerController @Inject() (var player1: Player, var player2: Player)
   }
 
   override def save(): Unit = {
-    db.savePlayer(player1.name)
-    db.savePlayer(player2.name)
+    db.savePlayer(1, player1.name)
+    db.savePlayer(2, player2.name)
   }
 
   override def load(): Unit = {
