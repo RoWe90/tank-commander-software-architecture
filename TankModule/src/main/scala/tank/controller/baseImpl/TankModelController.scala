@@ -13,10 +13,10 @@ case class TankModelController @Inject() (var tankModel1: TankModel, var tankMod
 
   //TODO eventuell mit Options arbeiten
 
-  override def initTank(whichTank: Int): Unit = {
+  override def initTank(whichTank: Int, posC: (Int, Int)): Unit = {
     whichTank match {
-      case 1 => tankModel1 = new TankModel()
-      case 2 => tankModel2 = new TankModel()
+      case 1 => tankModel1 = new TankModel(10, 100,100, posC, "up")
+      case 2 => tankModel2 = new TankModel(10, 100,100, posC, "up")
       case _ =>
     }
   }

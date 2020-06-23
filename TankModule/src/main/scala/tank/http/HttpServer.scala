@@ -104,7 +104,9 @@ class HttpServer(tankModelController: TankModelControllerInterface) {
 
   def changeAttribute(tank: Int, attribute: String, value: String): Unit = {
     attribute match {
-      case "init" => tankModelController.initTank(tank)
+      case "init" =>
+        val tuple = value.split("_")
+        tankModelController.initTank(tank, (tuple(0).toInt, tuple(1).toInt))
       case "tankBaseDamage" => tankModelController.setTankBaseDamage(tank, value.toInt)
       case "hp" => tankModelController.setTankHp(tank, value.toInt)
       case "accuracy" => tankModelController.setTankAccuracy(tank, value.toInt)

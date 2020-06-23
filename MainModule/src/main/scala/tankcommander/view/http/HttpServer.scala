@@ -49,7 +49,7 @@ class HttpServer(controller: Controller) {
       case "start" => print("Das Spiel startet, macht euch bereit" + "\n")
         controller.setUpGame("dennis", "robin", "1")
       case "exit" => unbind()
-      case "end turn" => controller.endTurnChangeActivePlayer()
+      case "end" => controller.endTurnChangeActivePlayer()
       case "undo" => controller.undo()
       case "redo" => controller.redo()
       case "save" => controller.save()

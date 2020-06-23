@@ -36,8 +36,6 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     print("Choose your Map: Map 1 or Map 2" + "\n")
     mapChosen = scala.io.StdIn.readLine()
     matchfield = GameFieldFactory.apply(mapChosen)
-    //attributeHandler.setAttribute(1, "init", "")
-    //attributeHandler.setAttribute(2, "init", "")
     fillGameFieldWithTanks((0, 5), (10, 5))
     GameStatus.activePlayer = Some(attributeHandler.getPlayerHttp(1))
     GameStatus.passivePlayer = Some(attributeHandler.getPlayerHttp(2))
@@ -49,8 +47,6 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
     attributeHandler.setPlayerHttp(name2, 2)
     mapChosen = map
     matchfield = GameFieldFactory.apply(mapChosen)
-    //attributeHandler.setAttribute(1, "init", "")
-    //attributeHandler.setAttribute(2, "init", "")
     fillGameFieldWithTanks((0, 5), (10, 5))
     GameStatus.activePlayer = Some(attributeHandler.getPlayerHttp(1))
     GameStatus.passivePlayer = Some(attributeHandler.getPlayerHttp(2))
@@ -60,9 +56,9 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
 
 
   override def fillGameFieldWithTanks(pos: (Int, Int), pos2: (Int, Int)): Unit = {
-    attributeHandler.setAttribute(1, "posC", pos._1 + "_" + pos._2)
+    attributeHandler.setAttribute(1, "init", pos._1 + "_" + pos._2)
     GameStatus.activeTank = Some(1)
-    attributeHandler.setAttribute(2, "posC", pos2._1 + "_" + pos2._2)
+    attributeHandler.setAttribute(2, "init", pos2._1 + "_" + pos2._2)
     GameStatus.passiveTank = Some(2)
     matchfield = matchfield.update(matchfield.mvector.updated(
       pos._1, matchfield.mvector(pos._1).updated(

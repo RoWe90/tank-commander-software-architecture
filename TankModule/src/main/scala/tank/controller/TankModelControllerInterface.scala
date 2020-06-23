@@ -1,7 +1,7 @@
 package tank.controller
 
 trait TankModelControllerInterface {
-   def initTank(whichTank: Int): Unit
+   def initTank(whichTank: Int, posC: (Int, Int)): Unit
 
   def getTankBaseDamage(whichTank: Int): Int
   def getTankAccuracy(whichTank: Int): Int
