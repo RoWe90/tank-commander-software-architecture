@@ -66,7 +66,7 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
 
     matchfield = matchfield.update(matchfield.mvector.updated(
       pos2._1, matchfield.mvector(pos2._1).updated(
-        pos2._2, Cell(pos2, matchfield.mvector(pos2._1)(pos2._2).cobstacle, Some(1)))))
+        pos2._2, Cell(pos2, matchfield.mvector(pos2._1)(pos2._2).cobstacle, Some(2)))))
 
   }
 
@@ -123,10 +123,22 @@ class Controller @Inject()() extends Observable with Publisher with ControllerIn
   }
 
   override def load(): Unit = {
-    //matchfield = GameFieldFactory.apply(mapChosen)
+    matchfield = GameFieldFactory.apply(mapChosen)
     //fileIO.load(this)
 
     attributeHandler.load()
+    GameStatus.updatePlayers()
+
+    val tank1posC = attributeHandler.getPosC(1)
+    val tank2posC = attributeHandler.getPosC(2)
+
+    matchfield = matchfield.update(matchfield.mvector.updated(
+      tank1posC._1, matchfield.mvector(tank1posC._1).updated(
+        tank1posC._2, Cell(tank1posC, matchfield.mvector(tank1posC._1)(tank1posC._2).cobstacle, Some(1)))))
+
+    matchfield = matchfield.update(matchfield.mvector.updated(
+      tank2posC._1, matchfield.mvector(tank2posC._1).updated(
+        tank2posC._2, Cell(tank2posC, matchfield.mvector(tank2posC._1)(tank2posC._2).cobstacle, Some(2)))))
 
     notifyObservers()
   }
