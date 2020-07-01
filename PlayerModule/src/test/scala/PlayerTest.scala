@@ -1,5 +1,5 @@
 //import org.scalatest.{FlatSpec, Matchers}
-//import playerComponent.Player
+//import player.playerComponent.Player
 //
 //class PlayerTest extends FlatSpec with Matchers {
 //

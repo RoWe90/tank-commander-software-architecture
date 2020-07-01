@@ -1,0 +1,10 @@
+{
+  "simulation": "tank.MongoImpl",
+  "simulationId": "mongoimpl",
+  "start": 1592988478124,
+  "description": "",
+  "scenarios": ["MongoImpl"],
+  "assertions": [
+
+  ]
+}

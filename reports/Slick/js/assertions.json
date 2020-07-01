@@ -1,0 +1,10 @@
+{
+  "simulation": "tank.SlickImpl",
+  "simulationId": "slickimpl",
+  "start": 1592988559057,
+  "description": "",
+  "scenarios": ["SlickImpl"],
+  "assertions": [
+
+  ]
+}

@@ -53,5 +53,14 @@ case class AttributeHandler(){
     (posCArray(0).toInt, posCArray(1).toInt)
   }
 
+  def save(): Unit = {
+    Http().singleRequest(Get("http://localhost:54252/tank/save"))
+    Http().singleRequest(Get("http://localhost:54251/player/player/save"))
+  }
+
+  def load(): Unit = {
+    Http().singleRequest(Get("http://localhost:54252/tank/load"))
+    Http().singleRequest(Get("http://localhost:54251/player/player/load"))
+  }
 
 }

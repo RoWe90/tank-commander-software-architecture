@@ -7,6 +7,18 @@ lazy val commonSettings = Seq(
 lazy val MainModule = (project in file(".")).settings(
   commonSettings,
   libraryDependencies ++= commonDependencies,
+  libraryDependencies ++= slickDependencies,
+  libraryDependencies ++= mongoDependencies,
+)
+
+val mongoDependencies = Seq(
+  "org.mongodb.scala" %% "mongo-scala-driver" % "2.6.0",
+)
+
+val slickDependencies = Seq(
+  "com.typesafe.slick" %% "slick" % "3.3.2",
+  "com.h2database" % "h2" % "1.4.199",
+  "ch.qos.logback" % "logback-classic" % "1.1.2",
 )
 
 val commonDependencies = Seq(
@@ -21,7 +33,3 @@ val commonDependencies = Seq(
   "com.typesafe.akka" %% "akka-http"   % "10.1.12",
   "com.typesafe.akka" %% "akka-stream" % "2.6.5"
 )
-
-
-
-

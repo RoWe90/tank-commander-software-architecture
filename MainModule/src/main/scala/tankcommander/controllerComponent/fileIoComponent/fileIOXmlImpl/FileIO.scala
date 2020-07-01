@@ -101,9 +101,9 @@ class FileIO() extends FileIOInterface {
       attributeHandler.getPosC(GameStatus.passiveTank.get)._1, controller.matchfield.mvector(attributeHandler.getPosC(GameStatus.passiveTank.get)._1).updated(
         attributeHandler.getPosC(GameStatus.passiveTank.get)._2, Cell(attributeHandler.getPosC(GameStatus.passiveTank.get),
           controller.matchfield.mvector(attributeHandler.getPosC(GameStatus.passiveTank.get)._1)(attributeHandler.getPosC(GameStatus.passiveTank.get)._1).cobstacle, Some(GameStatus.passiveTank.get)))))
-    //    controller.matchfield.mvector(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._2)
+    //    tank.controller.matchfield.mvector(GameStatus.activeTank.get.posC._1)(GameStatus.activeTank.get.posC._2)
     //      .containsThisTank = Option(tank1)
-    //    controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._2)
+    //    tank.controller.matchfield.mvector(GameStatus.passiveTank.get.posC._1)(GameStatus.passiveTank.get.posC._2)
     //      .containsThisTank = Option(tank2)
   }
 }

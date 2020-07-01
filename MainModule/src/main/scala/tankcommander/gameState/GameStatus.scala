@@ -1,5 +1,7 @@
 package tankcommander.gameState
 
+import tankcommander.util.AttributeHandler
+
 
 case class GameStatus() {
   var activePlayer: Option[String] = GameStatus.activePlayer match {
@@ -30,6 +32,7 @@ object GameStatus {
   var movesLeft: Boolean = true
   var currentPlayerActions: Int = 2
   var currentHitChance: Int = 0
+  var attributeHandler = new AttributeHandler
 
   def changeActivePlayer(): Unit = {
     val temp = activePlayer
@@ -40,6 +43,11 @@ object GameStatus {
     passiveTank = temp2
     currentPlayerActions = 2
     movesLeft = true
+  }
+
+  def updatePlayers(): Unit = {
+    activePlayer = Some(attributeHandler.getPlayerHttp(activeTank.get))
+    passivePlayer  = Some(attributeHandler.getPlayerHttp(passiveTank.get))
   }
 
   def restoreGameStatus(gameStatusBackUp: GameStatus): Unit = {
