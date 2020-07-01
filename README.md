@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
+[![Build Status](https://travis-ci.com/RoWe90/tank-commander-software-architecture.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
 [![Coverage Status](https://coveralls.io/repos/github/RoWe90/TankCommander/badge.svg?branch=master)](https://coveralls.io/github/RoWe90/TankCommander?branch=master)
 
 # Htwg TankCommander Project 
