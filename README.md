@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/RoWe90/tank-commander-software-architecture.svg?branch=master)](https://travis-ci.com/RoWe90/tank-commander-software-architecture)
-[![Coverage Status](https://coveralls.io/repos/github/RoWe90/TankCommander/badge.svg?branch=master)](https://coveralls.io/github/RoWe90/TankCommander?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/RoWe90/tank-commander-software-architecture/badge.svg?branch=master)](https://coveralls.io/github/RoWe90/tank-commander-software-architecture?branch=master)
 
 # Htwg TankCommander Project 
 This is a seed project to create a basic scala project as used in the
