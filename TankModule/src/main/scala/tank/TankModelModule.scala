@@ -8,6 +8,6 @@ import tank.tankModelComponent.daoComponent.slickImpl.SlickImpl
 
 class TankModelModule extends AbstractModule with ScalaModule{
   override def configure(): Unit = {
-    bind[DAOInterface].to[MongoImpl]
+    bind[DAOInterface].to[SlickImpl]
   }
 }

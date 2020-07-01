@@ -8,6 +8,6 @@ import player.playerComponent.daoComponent.slickImpl.SlickImpl
 
 class PlayerModelModule extends AbstractModule with ScalaModule{
   override def configure(): Unit = {
-    bind[DAOInterface].to[MongoImpl]
+    bind[DAOInterface].to[SlickImpl]
   }
 }
